@@ -1,0 +1,1168 @@
+{
+  "exportedAt": "2026-10-11T15:16:16.460Z",
+  "categories": [
+    {
+      "id": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "name": "Abrigos y chaquetas"
+    },
+    {
+      "id": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "name": "Accesorios"
+    },
+    {
+      "id": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "name": "Bañadores"
+    },
+    {
+      "id": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "name": "Bolsos y mochilas"
+    },
+    {
+      "id": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "name": "Calzado"
+    },
+    {
+      "id": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "name": "Camisas"
+    },
+    {
+      "id": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "name": "Camisetas"
+    },
+    {
+      "id": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "name": "Gorras y gorros"
+    },
+    {
+      "id": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "name": "Jerseys y punto"
+    },
+    {
+      "id": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "name": "Pantalones"
+    },
+    {
+      "id": "326a2c4c-cc9c-42f9-b4a1-f04250e1b801",
+      "name": "Polos"
+    },
+    {
+      "id": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "name": "Ropa interior y calcetines"
+    },
+    {
+      "id": "865367e0-09d1-4749-aa43-991380b93dda",
+      "name": "Shorts y faldas"
+    },
+    {
+      "id": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "name": "Sudaderas"
+    },
+    {
+      "id": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "name": "Tops"
+    }
+  ],
+  "rules": [
+    {
+      "keyword": "mocasin",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "loafer",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "slide",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "chancla",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "flipflop",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "mule",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "sandalia",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "clog",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "zueco",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "slipper",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "espadrille",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "sandal",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "footwear",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "botin",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "moccasin",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "bota",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "boot",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "calzado",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "zapato",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "shoe",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "sneaker",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "zapatilla",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "alpargata",
+      "categoryId": "4fb481c8-7680-4591-81b7-5a67461bbc9b",
+      "priority": 30
+    },
+    {
+      "keyword": "bag charm",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 29
+    },
+    {
+      "keyword": "tote",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "bag",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "bolso",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "backpack",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "mochila",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "bandolera",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "crossbody",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "rinonera",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "duffle",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "duffel",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "pouch",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "neceser",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "fanny pack",
+      "categoryId": "77cf4bb0-5bdc-460c-8ab2-591a0a56d6d4",
+      "priority": 28
+    },
+    {
+      "keyword": "bikini",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "swimwear",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "trunk",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "boardshort",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "swimsuit",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "banador",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "swim",
+      "categoryId": "62570af1-e064-4586-9233-65a6cfff74ca",
+      "priority": 27
+    },
+    {
+      "keyword": "bra",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "sujetador",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "lingerie",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "tanga",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "thong",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "ropa interior",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "bralette",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "underwear",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "boxer",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "brief",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "calzoncillo",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "sock",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "calcetin",
+      "categoryId": "50fc4172-e96c-41bf-9641-cf10ebb182dc",
+      "priority": 26
+    },
+    {
+      "keyword": "llavero",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "keychain",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "charm",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "sweater vest",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 25
+    },
+    {
+      "keyword": "knit vest",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 25
+    },
+    {
+      "keyword": "chaleco de punto",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 25
+    },
+    {
+      "keyword": "lanyard",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "pegatina",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "sticker",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 25
+    },
+    {
+      "keyword": "trench",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "jacket",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "chaqueta",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "coat",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "abrigo",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "puffer",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "parka",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "anorak",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "windbreaker",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "cortavientos",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "gilet",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "chaleco",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "blazer",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "americana",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "cazadora",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "plumifero",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "gabardina",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "bomber",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "overcoat",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "outwear",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "outerwear",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "shacket",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 24
+    },
+    {
+      "keyword": "gorro",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "beanie",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "balaclava",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "bucket",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "headwear",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "snapback",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "trucker",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "visera",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "visor",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "gorra",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "hat",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "cap",
+      "categoryId": "6ed4e7c2-416c-4648-81b1-437e18da139e",
+      "priority": 23
+    },
+    {
+      "keyword": "skort",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "minifalda",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "falda",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "skirt",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "jort",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "bermuda",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "short",
+      "categoryId": "865367e0-09d1-4749-aa43-991380b93dda",
+      "priority": 23
+    },
+    {
+      "keyword": "vaquero",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "bootcut",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "pant",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "pantalon",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "trouser",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "jean",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "jogger",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "jogging",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "sweatpants",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "legging",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "chino",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 22
+    },
+    {
+      "keyword": "polo",
+      "categoryId": "326a2c4c-cc9c-42f9-b4a1-f04250e1b801",
+      "priority": 21
+    },
+    {
+      "keyword": "sudadera",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 20
+    },
+    {
+      "keyword": "hoodie",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 20
+    },
+    {
+      "keyword": "crewneck",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 20
+    },
+    {
+      "keyword": "sweatshirt",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 20
+    },
+    {
+      "keyword": "croptop",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "sin mangas",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "sleeveless",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "halter",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "cami",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "corset",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "tank",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "tirantes",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "bodysuit",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 19
+    },
+    {
+      "keyword": "shirt",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "blouse",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "blusa",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "overshirt",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "camisa",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "sobrecamisa",
+      "categoryId": "6a4bc9c4-f7e9-4d96-8a55-1101beafa173",
+      "priority": 18
+    },
+    {
+      "keyword": "tshirt",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 17
+    },
+    {
+      "keyword": "tee",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 17
+    },
+    {
+      "keyword": "camiseta",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 17
+    },
+    {
+      "keyword": "rebeca",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "sweater",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "jersey",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "knit",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "cardigan",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "knitwear",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "punto",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "jumper",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 16
+    },
+    {
+      "keyword": "capucha",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 15
+    },
+    {
+      "keyword": "top",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 15
+    },
+    {
+      "keyword": "henley",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 15
+    },
+    {
+      "keyword": "reloj",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "watch",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "jewelry",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "joya",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "joyeria",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "necklace",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "ring",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "anillo",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "earring",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "pendiente",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "bracelet",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "pulsera",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "mechero",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "lighter",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "jewel",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "body",
+      "categoryId": "0141e7ee-ce18-4ee8-8fed-f9a1c415fcab",
+      "priority": 14
+    },
+    {
+      "keyword": "pin",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "belt",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "cinturon",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "wallet",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "cartera",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "cardholder",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "tarjetero",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "scarf",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "bufanda",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "bandana",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "panuelo",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "glove",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "guante",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "sunglass",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "gafa",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "gafas",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "perfume",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "fragrance",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "colonia",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "towel",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "toalla",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "mug",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "taza",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "poster",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "umbrella",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "paraguas",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "headband",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 14
+    },
+    {
+      "keyword": "cadena",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 12
+    },
+    {
+      "keyword": "longsleeve",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 12
+    },
+    {
+      "keyword": "vest",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 12
+    },
+    {
+      "keyword": "chain",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 12
+    },
+    {
+      "keyword": "zip",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 11
+    },
+    {
+      "keyword": "pullover",
+      "categoryId": "1fc55544-2dcb-4f06-97db-ff4665e25f12",
+      "priority": 10
+    },
+    {
+      "keyword": "tracksuit",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 10
+    },
+    {
+      "keyword": "chandal",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 10
+    },
+    {
+      "keyword": "sweat",
+      "categoryId": "b4898522-f3e1-4faf-8ff2-d5f6ecd2f235",
+      "priority": 9
+    },
+    {
+      "keyword": "merch",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 8
+    },
+    {
+      "keyword": "cargo",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 8
+    },
+    {
+      "keyword": "baggy",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 8
+    },
+    {
+      "keyword": "collectible",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 8
+    },
+    {
+      "keyword": "coleccionable",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 8
+    },
+    {
+      "keyword": "mystery box",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 8
+    },
+    {
+      "keyword": "denim",
+      "categoryId": "a0ca4fd5-0138-419d-b001-77f45938b571",
+      "priority": 7
+    },
+    {
+      "keyword": "complemento",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 6
+    },
+    {
+      "keyword": "accessory",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 6
+    },
+    {
+      "keyword": "accessories",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 6
+    },
+    {
+      "keyword": "accesorio",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 6
+    },
+    {
+      "keyword": "fleece",
+      "categoryId": "bcd1de81-5ac7-4abb-a3e6-42e8bfb22864",
+      "priority": 6
+    },
+    {
+      "keyword": "shortsleeve",
+      "categoryId": "38de51a7-7356-436e-8e0f-4952b5742bf8",
+      "priority": 6
+    },
+    {
+      "keyword": "parche",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 5
+    },
+    {
+      "keyword": "patch",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 5
+    },
+    {
+      "keyword": "collar",
+      "categoryId": "07ecb33b-877e-4c9d-816e-68831e0bcacb",
+      "priority": 3
+    }
+  ],
+  "mappings": []
+}

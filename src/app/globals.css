@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Tokens de diseño: brutalista editorial (igual que la app Emer)      */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Paleta base */
+  --color-cream: #f5f0e8;
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+
+  /* Acentos: SOLO para estados */
+  --color-ok: #1f7a3a;
+  --color-error: #c62828;
+  --color-progress: #f2c94c;
+
+  /* Tipografia */
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-grotesk), ui-monospace, monospace;
+
+  /* Nada de esquinas redondeadas en ningun sitio */
+  --radius-none: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+  --radius-full: 0px;
+
+  /*
+   * Visor de JSON. Unica excepcion a "los colores solo marcan estado": un
+   * resaltado de sintaxis necesita distinguir tipos. Tonos apagados para que
+   * no compitan con los acentos de estado.
+   */
+  --color-json-key: #000000;
+  --color-json-string: #1f7a3a;
+  --color-json-number: #1a4f8a;
+  --color-json-boolean: #8a4b1a;
+  --color-json-null: #8a8a8a;
+
+  /* Sombras duras */
+  --shadow-hard: 4px 4px 0 var(--color-ink);
+  --shadow-hard-sm: 2px 2px 0 var(--color-ink);
+  --shadow-hard-lg: 8px 8px 0 var(--color-ink);
+  --shadow-hard-none: 0 0 0 var(--color-ink);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                               */
+/* ------------------------------------------------------------------ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-radius: 0;
+  }
+
+  html {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  /* Titulos: mayusculas y tracking apretado */
+  h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  /* Foco visible y cuadrado */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+  }
+
+  /* Scrollbar sobria */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+    border-left: 2px solid var(--color-ink);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilidades de la casa                                              */
+/* ------------------------------------------------------------------ */
+
+@utility press {
+  /* Elemento con sombra dura que se "hunde" al pasar el raton */
+  box-shadow: var(--shadow-hard);
+  transition:
+    box-shadow 120ms ease-out,
+    transform 120ms ease-out,
+    background-color 120ms ease-out,
+    color 120ms ease-out;
+
+  &:hover:not(:disabled) {
+    box-shadow: var(--shadow-hard-sm);
+    transform: translate(2px, 2px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: var(--shadow-hard-none);
+    transform: translate(4px, 4px);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+@utility title-xl {
+  font-size: var(--text-3xl);
+  line-height: 1.05;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+@utility label-caps {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
