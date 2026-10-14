@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
+import { Spinner } from "@/components/ui/Spinner";
 import { SCRAPE_STATUS_LABELS, SCRAPE_STATUS_TONES } from "@/lib/scrape-status";
 import type { ScrapeStatus } from "@/types/db";
 
@@ -19,11 +20,8 @@ export function RunStatusBadge({
 
   if (status === "running") {
     return (
-      <Badge tone="progress">
-        <span
-          aria-hidden
-          className="border-ink mr-1.5 inline-block size-2.5 animate-spin border-2 border-t-transparent"
-        />
+      <Badge tone="progress" className="stripes">
+        <Spinner size="xs" label="En curso" className="mr-1.5" />
         En curso
       </Badge>
     );
@@ -32,7 +30,7 @@ export function RunStatusBadge({
   // `partial` se pinta en naranja para distinguirlo del amarillo de "en curso".
   if (status === "partial") {
     return (
-      <Badge tone="muted" className="text-paper bg-[#E07B29]">
+      <Badge tone="muted" className="text-paper! bg-[#E07B29]!">
         Parcial
       </Badge>
     );

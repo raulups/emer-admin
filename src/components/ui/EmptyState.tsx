@@ -22,7 +22,7 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "bg-paper shadow-hard flex flex-col items-center justify-center gap-3 border-2 p-10 text-center",
+        "bg-paper shadow-hard animate-rise flex flex-col items-center justify-center gap-3 border-2 p-10 text-center",
         tone === "error" ? "border-error" : "border-ink",
         className,
       )}
@@ -30,7 +30,7 @@ export function EmptyState({
       <div
         aria-hidden
         className={cn(
-          "size-8 rotate-45 border-2",
+          "animate-float shadow-hard-sm size-8 rotate-45 border-2",
           tone === "error" ? "border-error bg-error" : "border-ink bg-cream",
         )}
       />

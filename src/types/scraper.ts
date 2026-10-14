@@ -57,24 +57,13 @@ export const PROBLEM_REASON_LABELS: Record<ProblemReason, string> = {
  * A partir de cuantos minutos se considera atascado un run en `running`.
  * Sin esto, un run que nunca cerró deja el panel refrescando para siempre.
  */
-export const STALE_RUN_MINUTES = 15;
+export const STALE_RUN_MINUTES = 30;
 
 /** Cada cuanto se refresca mientras hay actividad. */
 export const RUNS_POLL_MS = 3000;
 
 /** Cada cuanto comprueba la sidebar si ha arrancado algo (sin actividad conocida). */
 export const IDLE_POLL_MS = 15000;
-
-export const STATUS_FILTER_VALUES = ["all", "running", "success", "partial", "error"] as const;
-export type StatusFilter = (typeof STATUS_FILTER_VALUES)[number];
-
-export const STATUS_FILTER_LABELS: Record<StatusFilter, string> = {
-  all: "Todos",
-  running: "En curso",
-  success: "Correcto",
-  partial: "Parcial",
-  error: "Error",
-};
 
 /** Cuantos runs se muestran en la tabla de seguimiento. */
 export const RUNS_LIMIT = 100;

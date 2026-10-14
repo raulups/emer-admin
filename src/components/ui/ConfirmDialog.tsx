@@ -84,7 +84,7 @@ export function ConfirmDialog({
             value={typed}
             onChange={(event) => setTyped(event.target.value)}
             autoComplete="off"
-            className="border-ink bg-paper focus-visible:outline-ink w-full border-2 px-3 py-2 text-sm focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="border-ink bg-paper focus-visible:outline-ink focus:shadow-hard-sm w-full border-2 px-3 py-2 text-sm transition-[box-shadow,translate] duration-[120ms] focus:-translate-x-px focus:-translate-y-px focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2"
           />
         </div>
       ) : null}

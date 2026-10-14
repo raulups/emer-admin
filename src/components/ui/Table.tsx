@@ -22,7 +22,7 @@ export function THead({ className, children }: { className?: string; children: R
 }
 
 export function TBody({ className, children }: { className?: string; children: ReactNode }) {
-  return <tbody className={className}>{children}</tbody>;
+  return <tbody className={cn("rows-in", className)}>{children}</tbody>;
 }
 
 export interface TRProps extends HTMLAttributes<HTMLTableRowElement> {
@@ -36,7 +36,9 @@ export function TR({ interactive = false, className, children, ...props }: TRPro
     <tr
       className={cn(
         "border-ink border-b-2 last:border-b-0",
-        interactive && "hover:bg-cream cursor-pointer transition-colors duration-[120ms]",
+        "transition-[background-color,box-shadow] duration-[120ms]",
+        interactive &&
+          "hover:bg-cream cursor-pointer hover:shadow-[inset_5px_0_0_var(--color-ink)]",
         className,
       )}
       {...props}

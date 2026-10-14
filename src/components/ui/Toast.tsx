@@ -55,7 +55,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           <div
             key={toast.id}
             className={cn(
-              "border-ink shadow-hard pointer-events-auto flex items-start justify-between gap-3 border-2 p-3",
+              "border-ink shadow-hard animate-slide-in pointer-events-auto flex items-start justify-between gap-3 border-2 p-3",
               TONES[toast.tone],
             )}
           >

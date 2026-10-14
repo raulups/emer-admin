@@ -59,7 +59,7 @@ export function Modal({
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 sm:items-center">
       <div
-        className="bg-ink/60 fixed inset-0"
+        className="bg-ink/60 animate-fade fixed inset-0"
         onClick={dismissable ? onClose : undefined}
         aria-hidden
       />
@@ -68,20 +68,20 @@ export function Modal({
         aria-modal="true"
         aria-label={typeof title === "string" ? title : undefined}
         className={cn(
-          "border-ink bg-paper shadow-hard-lg relative z-10 w-full border-2",
+          "border-ink bg-paper shadow-hard-lg animate-pop relative z-10 w-full border-2",
           SIZES[size],
           className,
         )}
       >
         {title ? (
-          <div className="border-ink flex items-center justify-between gap-3 border-b-2 px-4 py-2.5">
+          <div className="border-ink bg-ink text-cream flex items-center justify-between gap-3 border-b-2 px-4 py-2.5">
             <h2 className="truncate text-sm tracking-wider">{title}</h2>
             {dismissable ? (
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Cerrar"
-                className="press border-ink bg-paper flex size-6 cursor-pointer items-center justify-center border-2 text-xs font-bold"
+                className="border-cream text-cream hover:bg-cream hover:text-ink flex size-6 cursor-pointer items-center justify-center border-2 text-xs font-bold transition-colors duration-[120ms]"
               >
                 X
               </button>

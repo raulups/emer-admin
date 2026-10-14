@@ -26,7 +26,7 @@ export function Checkbox({
         id={inputId}
         name={name}
         className={cn(
-          "border-ink bg-paper mt-0.5 size-4 shrink-0 cursor-pointer appearance-none border-2",
+          "border-ink bg-paper hover:shadow-hard-sm mt-0.5 size-4 shrink-0 cursor-pointer appearance-none border-2 transition-[background-color,box-shadow] duration-[120ms]",
           "checked:bg-ink checked:shadow-[inset_0_0_0_2px_var(--color-paper)]",
           "disabled:cursor-not-allowed disabled:opacity-50",
           className,

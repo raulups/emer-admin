@@ -1,5 +1,6 @@
 import { JsonViewer } from "@/components/products/JsonViewer";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Spinner } from "@/components/ui/Spinner";
 import { fetchShopifyProduct } from "@/lib/queries/products";
 
 /**
@@ -39,7 +40,7 @@ export async function ShopifyJsonTab({
 export function ShopifyJsonSkeleton() {
   return (
     <div className="border-ink bg-paper flex flex-col items-center justify-center gap-3 border-2 p-10">
-      <span className="border-ink inline-block size-10 animate-spin border-4 border-t-transparent" />
+      <Spinner size="lg" />
       <p className="label-caps text-ink/60">Pidiendo el JSON a la tienda…</p>
       <p className="text-ink/50 text-xs">Se cancela a los 10 segundos.</p>
     </div>

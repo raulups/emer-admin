@@ -47,9 +47,11 @@ export function Tabs({ items, defaultTabId, activeTabId, onTabChange, className 
               disabled={item.disabled}
               onClick={() => selectTab(item.id)}
               className={cn(
-                "border-ink -mb-0.5 cursor-pointer border-2 border-b-0 px-4 py-2 text-xs font-bold tracking-widest uppercase transition-colors duration-[120ms]",
+                "border-ink -mb-0.5 cursor-pointer border-2 border-b-0 px-4 py-2 text-xs font-bold tracking-widest uppercase transition-[background-color,color,translate] duration-[120ms]",
                 "disabled:cursor-not-allowed disabled:opacity-45",
-                isActive ? "bg-ink text-cream" : "bg-paper text-ink hover:bg-cream",
+                isActive
+                  ? "bg-ink text-cream"
+                  : "bg-paper text-ink hover:bg-cream hover:-translate-y-0.5",
               )}
             >
               {item.label}

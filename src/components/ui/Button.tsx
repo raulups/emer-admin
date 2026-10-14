@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
+import { Spinner } from "@/components/ui/Spinner";
 import { cn } from "@/lib/utils";
 
 export type ButtonVariant = "primary" | "secondary" | "danger";
@@ -7,7 +8,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: "bg-ink text-cream hover:bg-ink",
-  secondary: "bg-paper text-ink",
+  secondary: "bg-paper text-ink hover:bg-cream",
   danger: "bg-error text-paper",
 };
 
@@ -55,12 +56,7 @@ export function Button({
       className={buttonClasses(variant, size, className)}
       {...props}
     >
-      {loading ? (
-        <span
-          aria-hidden
-          className="inline-block size-3 animate-spin border-2 border-current border-t-transparent"
-        />
-      ) : null}
+      {loading ? <Spinner size="xs" /> : null}
       {children}
     </button>
   );

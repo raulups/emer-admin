@@ -76,8 +76,8 @@ claro en español si falta alguna. La home captura ese error y lo muestra en la 
 
 Igual que la app Emer:
 
-- **Colores**: fondo crema `#F5F0E8` (`bg-cream`), negro `#000000` (`ink`), blanco `#FFFFFF`
-  (`paper`). Acentos **solo para estados**: verde `#1F7A3A` (`ok`), rojo `#C62828` (`error`),
+- **Colores**: fondo blanco `#FFFFFF` (`bg-paper`) en la página y la sidebar; crema `#F5F0E8`
+  (`cream`) solo para hovers y fondos secundarios; negro `#000000` (`ink`). Acentos **solo para estados**: verde `#1F7A3A` (`ok`), rojo `#C62828` (`error`),
   amarillo `#F2C94C` (`progress`).
 - **Tipografía**: Space Grotesk en todo (`next/font/google`, variable `--font-space-grotesk`).
 - **Bordes**: 2px negros (`border-2 border-ink`). `border-radius: 0` siempre.
@@ -89,6 +89,12 @@ Igual que la app Emer:
 - **Layout**: sidebar fija de 240px a la izquierda con el logo `EMER ADMIN` y las secciones Marcas,
   Productos, Clasificación, Tiendas, Scraper. Por debajo de `1024px` la sidebar se colapsa en un
   panel deslizante con barra superior.
+- **Carga**: el loader es `Spinner` (tres cuadrados que laten, `animate-loader-block`, toma
+  `currentColor`); no uses spinners sueltos con `animate-spin`. `app/loading.tsx` da feedback
+  instantáneo al cambiar de sección, `app/template.tsx` hace un fundido de entrada (solo opacidad:
+  un `transform` rompería los `position: fixed` de los modales) y los enlaces de la sidebar
+  muestran el loader mientras navegan (`useLinkStatus`).
+- **Filas de ejecuciones**: el fondo de la fila lleva el color de su estado, igual que el badge.
 
 Utilidades propias definidas en `globals.css`: `press`, `title-xl`, `label-caps`, y los tokens
 `shadow-hard`, `shadow-hard-sm`, `shadow-hard-lg`.
@@ -103,16 +109,18 @@ src/
     globals.css         # tokens de diseño Tailwind v4
     brands/             # listado, /new, /[id], /[id]/edit, actions.ts
     products/           # listado con filtros en la URL, /[id] con 3 pestañas, actions.ts
-    scraper/            # lanzamiento y seguimiento de ejecuciones
+    scraper/            # lanzamiento, contadores, ejecuciones (Realtime) y /[id] con productos
     classification/     # 4 pestañas: sin categoría, revisión, reglas, mappings
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
+    api/scrapes/stream/ # SSE: reenvia Realtime de scrape_runs al navegador
     api/classification/ # review (agregado por marca)
     api/brands/upload/  # subida de imágenes de marca (sharp + Storage)
     tiendas/
   components/
     brands/             # tarjetas, tabla, formulario, borrado, repartos
     products/           # filtros, tabla, galería, tallas, gráfica, visor JSON
-    scraper/            # monitor con polling, lanzadores, marcas con problemas
+    scraper/            # lanzadores, marcas con problemas, progreso del detalle de marca
+    scrapes/            # tabla y filtros de ejecuciones, indicador Realtime, detalle de run
     classification/     # pestañas, probador de reglas, editores inline
     layout/             # Sidebar, PageHeader, Placeholder
     ui/                 # Button, Input, Textarea, Select, Checkbox, Badge, Card, Table,
@@ -137,10 +145,16 @@ src/
   que el endpoint solo confirma el disparo; el progreso se sigue por `scrape_runs`.
   Errores ya cubiertos: `ECONNREFUSED`/timeout → "n8n no está arrancado…"; `404` de n8n → workflow
   inactivo o URL del webhook incorrecta.
-- **Seguimiento**: `GET /api/scraper/runs` es la fuente del polling. `?mode=counts` para el
-  indicador de la sidebar, `?mode=latest&brand=<id>` para el progreso del detalle de marca, y sin
-  `mode` la lista (filtros `brand` y `status`).
-- **Runs atascados**: un run que sigue en `running` más de `STALE_RUN_MINUTES` (15) se considera
+- **Pantalla `/scraper`**: lee de la vista `scrape_runs_admin` (que añade `brand_name` y el estado
+  `stuck`) con filtros `brand` y `status` en la URL; el detalle `/scraper/[id]` lista
+  `scrape_run_products`. `/scrapes` redirige aquí (`next.config.ts`).
+- **Realtime**: el navegador no tiene clave de Supabase, así que `GET /api/scrapes/stream` se
+  suscribe a `scrape_runs` en el servidor y reenvía los cambios por SSE; el cliente hace
+  `router.refresh()`. El paso a `stuck` no genera evento: mientras haya runs en curso se refresca
+  además cada 60 s.
+- **Polling**: `GET /api/scraper/runs` sigue sirviendo `?mode=counts` (indicador de la sidebar) y
+  `?mode=latest&brand=<id>` (progreso del detalle de marca).
+- **Runs atascados**: un run que sigue en `running` más de `STALE_RUN_MINUTES` (30, igual que la vista) se considera
   colgado — n8n se paró sin cerrarlo. No cuenta como actividad: si contara, el panel estaría
   refrescando cada 3 s para siempre. Se marca en la tabla como "Sin terminar".
 - **Ritmo del polling**: 3 s mientras hay algo en curso; la sidebar comprueba cada 15 s cuando no

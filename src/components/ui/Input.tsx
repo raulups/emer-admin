@@ -3,7 +3,7 @@ import type { InputHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export const fieldClasses =
-  "w-full border-2 border-ink bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink/40 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full border-2 border-ink bg-paper px-3 py-2 text-sm text-ink placeholder:text-ink/40 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-50 transition-[box-shadow,translate] duration-[120ms] hover:shadow-hard-sm focus:shadow-hard-sm focus:-translate-x-px focus:-translate-y-px";
 
 export interface FieldWrapperProps {
   label?: ReactNode;
