@@ -50,7 +50,7 @@ export default async function ScraperPage({
 
       <div className="flex flex-col gap-4">
         {counts ? (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <StatCard label="En curso" value={formatNumber(counts.running)} tone="progress" />
             <StatCard
               label="Finalizadas"

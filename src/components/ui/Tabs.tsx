@@ -47,7 +47,7 @@ export function Tabs({ items, defaultTabId, activeTabId, onTabChange, className 
               disabled={item.disabled}
               onClick={() => selectTab(item.id)}
               className={cn(
-                "border-ink -mb-0.5 cursor-pointer border-2 border-b-0 px-4 py-2 text-xs font-bold tracking-widest uppercase transition-[background-color,color,translate] duration-[120ms]",
+                "border-ink -mb-0.5 cursor-pointer border-2 border-b-0 px-2.5 py-2 text-[11px] font-bold tracking-wider uppercase transition-[background-color,color,translate] duration-[120ms] sm:px-4 sm:text-xs sm:tracking-widest",
                 "disabled:cursor-not-allowed disabled:opacity-45",
                 isActive
                   ? "bg-ink text-cream"

@@ -52,7 +52,7 @@ export default async function HomePage() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
         <StatCard label="Marcas" value={formatNumber(brandsCount)} detail="Marcas en catálogo" />
 
         <StatCard
@@ -63,6 +63,7 @@ export default async function HomePage() {
 
         <StatCard
           label="Sin categoría"
+          className="col-span-2 sm:col-span-1"
           value={formatNumber(unclassifiedCount)}
           tone={unclassifiedCount > 0 ? "error" : "ok"}
           detail={
@@ -72,7 +73,7 @@ export default async function HomePage() {
           }
         />
 
-        <div className="border-ink bg-paper shadow-hard flex flex-col gap-2 border-2 p-4 sm:col-span-2">
+        <div className="border-ink bg-paper shadow-hard col-span-2 flex flex-col gap-2 border-2 p-4">
           <span className="label-caps text-ink/70">Último scrape</span>
 
           {lastRun && lastRunStatus ? (
@@ -116,6 +117,7 @@ export default async function HomePage() {
 
         <StatCard
           label="Runs con error (24 h)"
+          className="col-span-2 sm:col-span-1"
           value={formatNumber(failedRuns24h)}
           tone={failedRuns24h > 0 ? "error" : "ok"}
           detail={

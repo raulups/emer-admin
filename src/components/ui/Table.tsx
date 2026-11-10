@@ -5,7 +5,11 @@ import { cn } from "@/lib/utils";
 /** Contenedor con borde y scroll horizontal. Envuelve siempre a `Table`. */
 export function TableWrapper({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <div className={cn("border-ink bg-paper shadow-hard overflow-x-auto border-2", className)}>
+    // `relative`: si no, los `sr-only` (position: absolute) de las cabeceras escapan del
+    // scroll y ensanchan toda la pagina en movil.
+    <div
+      className={cn("border-ink bg-paper shadow-hard relative overflow-x-auto border-2", className)}
+    >
       {children}
     </div>
   );
