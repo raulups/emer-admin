@@ -283,7 +283,10 @@
 }
 
 @utility title-xl {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
+  @media (width >= 40rem) {
+    font-size: var(--text-3xl);
+  }
   line-height: 1.05;
   font-weight: 700;
   text-transform: uppercase;

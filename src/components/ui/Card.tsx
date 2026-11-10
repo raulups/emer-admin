@@ -96,7 +96,7 @@ export function StatCard({ label, value, detail, tone = "default", className }: 
   return (
     <div
       className={cn(
-        "border-ink bg-paper shadow-hard animate-rise group relative flex flex-col gap-1 overflow-hidden border-2 p-4 pt-5",
+        "border-ink bg-paper shadow-hard animate-rise group relative flex flex-col gap-1 overflow-hidden border-2 p-3 pt-4 sm:p-4 sm:pt-5",
         "hover:shadow-hard-lg transition-[box-shadow,translate] duration-[120ms] hover:-translate-x-0.5 hover:-translate-y-0.5",
         STAT_DELAYS,
         className,
@@ -110,7 +110,12 @@ export function StatCard({ label, value, detail, tone = "default", className }: 
         )}
       />
       <span className="label-caps text-ink/70">{label}</span>
-      <span className={cn("text-4xl leading-none font-bold tracking-tighter", STAT_TONES[tone])}>
+      <span
+        className={cn(
+          "text-3xl leading-none font-bold tracking-tighter sm:text-4xl",
+          STAT_TONES[tone],
+        )}
+      >
         {value}
       </span>
       {detail ? <span className="text-ink/60 mt-1 text-xs">{detail}</span> : null}
