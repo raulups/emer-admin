@@ -8,7 +8,7 @@ export type UploadImageResult =
 
 export async function uploadBrandImage(params: {
   file: File;
-  kind: "image" | "logo";
+  kind: "desktop" | "mobile" | "logo";
   brandName: string;
   /** URL anterior, para que el servidor borre el archivo viejo si era suyo. */
   previousUrl?: string | null;

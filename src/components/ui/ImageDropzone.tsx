@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
 import { cn } from "@/lib/utils";
 
 /**
@@ -46,6 +47,11 @@ export interface ImageDropzoneProps {
   onChange: (value: ImageDropzoneValue) => void;
   /** `logo` pinta la vista previa sobre cuadrícula y con `contain`. */
   variant?: "image" | "logo";
+  /**
+   * Proporcion fija de la vista previa (con `cover`), para ver el recorte real.
+   * Sin ella, la caja tiene alto fijo y la imagen va con `contain`.
+   */
+  aspect?: "16/9" | "9/16";
   hint?: string;
   /** Error que viene de fuera (por ejemplo, de la subida al guardar). */
   error?: string | null;
@@ -60,6 +66,7 @@ export function ImageDropzone({
   value,
   onChange,
   variant = "image",
+  aspect,
   hint,
   error,
 }: ImageDropzoneProps) {
@@ -68,6 +75,7 @@ export function ImageDropzone({
   const [localError, setLocalError] = useState<string | null>(null);
   const [pasting, setPasting] = useState(false);
   const [urlDraft, setUrlDraft] = useState("");
+  const [zoomed, setZoomed] = useState(false);
 
   // Vista previa local inmediata, sin pasar por el servidor.
   const previewUrl = useMemo(
@@ -139,6 +147,14 @@ export function ImageDropzone({
   const shown = previewUrl ?? value.url;
   const isLogo = variant === "logo";
   const shownError = localError ?? error ?? null;
+  const boxSize =
+    aspect === "16/9"
+      ? "aspect-video w-full overflow-hidden"
+      : aspect === "9/16"
+        ? "aspect-[9/16] w-full max-w-44 self-center overflow-hidden"
+        : isLogo
+          ? "h-32"
+          : "h-40";
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -154,18 +170,21 @@ export function ImageDropzone({
 
       {shown ? (
         <div className="border-ink bg-paper flex flex-col gap-2 border-2 p-2">
-          <div
-            className={cn("flex items-center justify-center", isLogo ? "h-32" : "h-40")}
+          <button
+            type="button"
+            onClick={() => setZoomed(true)}
+            title="Ver en grande"
+            className={cn("flex cursor-zoom-in items-center justify-center", boxSize)}
             style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-cream)" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={shown}
               alt={`Vista previa de ${label.toLowerCase()}`}
-              className="max-h-full max-w-full object-contain"
+              className={aspect ? "size-full object-cover" : "max-h-full max-w-full object-contain"}
               onError={() => setLocalError("No se ha podido cargar la imagen.")}
             />
-          </div>
+          </button>
 
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-ink/60 text-[11px]">
@@ -207,7 +226,7 @@ export function ImageDropzone({
           onDrop={onDrop}
           className={cn(
             "flex cursor-pointer flex-col items-center justify-center gap-1 border-2 border-dashed p-6 text-center transition-colors duration-[120ms]",
-            isLogo ? "h-32" : "h-40",
+            boxSize,
             dragging ? "border-ink bg-ink text-cream" : "border-ink bg-paper text-ink",
           )}
         >
@@ -255,6 +274,23 @@ export function ImageDropzone({
           Pegar URL
         </button>
       )}
+
+      <Modal
+        open={zoomed && shown !== null}
+        onClose={() => setZoomed(false)}
+        title={label}
+        size="lg"
+      >
+        <div
+          className="flex items-center justify-center"
+          style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-cream)" }}
+        >
+          {shown ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={shown} alt={label} className="max-h-[80vh] max-w-full object-contain" />
+          ) : null}
+        </div>
+      </Modal>
 
       {shownError ? <p className="text-error text-xs font-bold">{shownError}</p> : null}
       {!shownError && hint ? <p className="text-ink/60 text-xs">{hint}</p> : null}

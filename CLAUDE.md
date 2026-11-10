@@ -87,7 +87,7 @@ Igual que la app Emer:
 - **Títulos** grandes en mayúsculas con tracking apretado (`title-xl`, `label-caps`).
 - **Tablas densas**: `px-3 py-1.5` por celda, cabecera negra con texto crema.
 - **Layout**: sidebar fija de 240px a la izquierda con el logo `EMER ADMIN` y las secciones Marcas,
-  Productos, Clasificación, Tiendas, Scraper. Por debajo de `1024px` la sidebar se colapsa en un
+  Productos, Clasificación, Tiendas, Scraper, Contacto. Por debajo de `1024px` la sidebar se colapsa en un
   panel deslizante con barra superior.
 - **Carga**: el loader es `Spinner` (tres cuadrados que laten, `animate-loader-block`, toma
   `currentColor`); no uses spinners sueltos con `animate-spin`. `app/loading.tsx` da feedback
@@ -111,6 +111,7 @@ src/
     products/           # listado con filtros en la URL, /[id] con 3 pestañas, actions.ts
     scraper/            # lanzamiento, contadores, ejecuciones (Realtime) y /[id] con productos
     classification/     # 4 pestañas: sin categoría, revisión, reglas, mappings
+    outreach/           # contacto con marcas: listado con filtros y /[brandId] con estado y mensajes
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
     api/scrapes/stream/ # SSE: reenvia Realtime de scrape_runs al navegador
     api/classification/ # review (agregado por marca)
@@ -121,6 +122,7 @@ src/
     products/           # filtros, tabla, galería, tallas, gráfica, visor JSON
     scraper/            # lanzadores, marcas con problemas, progreso del detalle de marca
     scrapes/            # tabla y filtros de ejecuciones, indicador Realtime, detalle de run
+    outreach/           # formulario de estado, mensajes, filtros y tabla de contacto
     classification/     # pestañas, probador de reglas, editores inline
     layout/             # Sidebar, PageHeader, Placeholder
     ui/                 # Button, Input, Textarea, Select, Checkbox, Badge, Card, Table,
@@ -204,14 +206,15 @@ Bucket **`brands`**, público. `src/lib/storage.ts` lo crea si no existiera (`en
   El navegador solo manda el archivo; nunca habla con Supabase Storage.
 - Tipos admitidos: PNG, JPG, WEBP, AVIF y SVG, hasta **10 MB**. Se valida en el componente y
   **otra vez en el servidor** (lo que diga el navegador no cuenta).
-- Proceso con **sharp**: `image` → máx. 1920 px; `logo` → máx. 800 px; ambos a WEBP calidad 82,
+- Proceso con **sharp**: `desktop` (16/9) → máx. 1920 px de ancho; `mobile` (9/16) → máx. 1080 px;
+  `logo` → máx. 800 px; todos a WEBP calidad 82,
   sin ampliar nunca y conservando la transparencia. Los **SVG se suben tal cual** (rasterizarlos
   sería absurdo). El handler declara `runtime = "nodejs"`: sharp es nativo.
 - Ruta: `${slug}_${kind}_${Date.now()}.${ext}`; el timestamp evita que la CDN sirva la imagen
   vieja. `cacheControl: 31536000`.
 - **Borrado de huérfanos**: el handler borra `previousUrl` si era del bucket, y además
   `updateBrand` borra la imagen anterior cuando deja de usarse (quitarla o pegar una URL externa)
-  y `deleteBrand` borra las dos tras la RPC. Las URLs de Cloudinary u otros dominios **no se tocan**.
+  y `deleteBrand` borra las tres (desktop, mobile y logo) tras la RPC. Las URLs de Cloudinary u otros dominios **no se tocan**.
 - El formulario **no sube al soltar**: valida primero, luego sube en paralelo lo que haya cambiado
   (botón "Subiendo imagen…") y solo entonces guarda la marca. Si una subida falla, no se guarda nada.
 
@@ -219,7 +222,7 @@ Bucket **`brands`**, público. `src/lib/storage.ts` lo crea si no existiera (`en
 
 Postgres en Supabase, schema `public`.
 
-- **brands** — `id uuid pk`, `name` (not null), `url`, `img`, `logo`, `color` (hex **con** `#`, puede
+- **brands** — `id uuid pk`, `name` (not null), `url`, `img_desktop` (horizontal 16/9), `img_mobile` (vertical 9/16), `logo`, `color` (hex **con** `#`, puede
   tener 8 dígitos o venir vacío/null), `created_at`, `tags brand_tag[]` (not null, default `{}`),
   `founded_year int`, `style`.
   Enum **`brand_tag`**: `popular | emergente | novedad | destacada | sostenible | drops`.
@@ -250,6 +253,15 @@ Postgres en Supabase, schema `public`.
   `created_at`.
 - **size_aliases** — `alias pk`, `size_normalized`.
 - **color_dictionary** — `keyword pk`, `color_name`, `color_hex` (**sin** `#`).
+- **brand_outreach** — una fila por marca (`brand_id` único, `on delete cascade`): `status`
+  (`pending|contacted|in_conversation|approved|rejected|no_response`, text con check),
+  `contact_name`, `instagram` (sin `@`), `email`, `notes`, `follow_up_at date`, `decided_at`
+  (se fija al pasar a approved/rejected), `created_at`, `updated_at`. Sin fila = "Sin contactar".
+- **brand_outreach_messages** — `id`, `brand_id` (cascade), `channel`
+  (`instagram|email|whatsapp|phone|web_form|in_person|other`), `direction` (`outbound|inbound`),
+  `body`, `sent_at`, `created_at`. Al registrar un mensaje la Server Action avanza el estado
+  (primer envío → contacted, respuesta → in_conversation); approved/rejected solo a mano.
+  Migración: `supabase/migrations/20261109_brand_outreach.sql` (se ejecuta a mano en el SQL editor).
 
 **Vistas**: `brands_with_preview_products`, `unclassified_products`.
 
