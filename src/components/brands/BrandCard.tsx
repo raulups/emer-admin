@@ -38,7 +38,7 @@ export function BrandCard({ brand }: { brand: BrandListItem }) {
     <article className="press border-ink bg-paper flex flex-col border-2">
       <Link href={`/brands/${brand.id}`} className="block">
         <RemoteImage
-          src={brand.img}
+          src={brand.img_desktop}
           alt={`Imagen de ${brand.name}`}
           fallbackLabel="Sin imagen"
           className="border-ink h-28 w-full border-b-2"

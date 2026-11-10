@@ -21,7 +21,8 @@ function toMessage(error: unknown): string {
   return "Error desconocido al consultar Supabase";
 }
 
-const BRAND_COLUMNS = "id, name, url, img, logo, color, created_at, tags, founded_year, style";
+const BRAND_COLUMNS =
+  "id, name, url, img_desktop, img_mobile, logo, color, created_at, tags, founded_year, style";
 
 /**
  * Contadores por marca en UNA consulta, desde la vista
@@ -129,7 +130,8 @@ export async function getBrandsList(): Promise<
         id: row.id,
         name: row.name,
         url: row.url,
-        img: row.img,
+        img_desktop: row.img_desktop,
+        img_mobile: row.img_mobile,
         logo: row.logo,
         color: row.color,
         created_at: row.created_at,

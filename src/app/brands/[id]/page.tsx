@@ -74,13 +74,6 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
     <div className="flex flex-col gap-4">
       {/* Cabecera */}
       <div className="border-ink bg-paper shadow-hard border-2">
-        <RemoteImage
-          src={brand.img}
-          alt={`Imagen de ${brand.name}`}
-          fallbackLabel="Sin imagen de portada"
-          className="border-ink h-40 w-full border-b-2"
-        />
-
         <div className="flex flex-wrap items-start justify-between gap-4 p-4">
           <div className="flex min-w-0 items-start gap-4">
             <RemoteImage
@@ -169,6 +162,31 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
       {warning ? (
         <p className="border-error bg-paper text-error border-2 p-3 text-xs">{warning}</p>
       ) : null}
+
+      {/* Imagenes */}
+      <Card>
+        <CardHeader title="Imágenes" />
+        <div className="grid max-w-4xl items-start gap-4 p-4 sm:grid-cols-[3fr_1fr]">
+          <figure className="flex flex-col gap-1.5">
+            <figcaption className="label-caps">Desktop · horizontal</figcaption>
+            <RemoteImage
+              src={brand.img_desktop}
+              alt={`Imagen desktop de ${brand.name}`}
+              fallbackLabel="Sin imagen"
+              className="border-ink aspect-video w-full border-2"
+            />
+          </figure>
+          <figure className="flex w-full max-w-44 flex-col gap-1.5 sm:max-w-none">
+            <figcaption className="label-caps">App · vertical</figcaption>
+            <RemoteImage
+              src={brand.img_mobile}
+              alt={`Imagen app de ${brand.name}`}
+              fallbackLabel="Sin imagen"
+              className="border-ink aspect-[9/16] w-full border-2"
+            />
+          </figure>
+        </div>
+      </Card>
 
       {/* Resumen */}
       <Card>

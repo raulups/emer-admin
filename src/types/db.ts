@@ -52,8 +52,10 @@ export interface Brand {
   id: Uuid;
   name: string;
   url: string | null;
-  /** Imagen de portada / hero de la marca. */
-  img: string | null;
+  /** Imagen horizontal (16/9), para ordenador. */
+  img_desktop: string | null;
+  /** Imagen vertical (9/16), para la app. */
+  img_mobile: string | null;
   logo: string | null;
   /** Hex CON almohadilla. Puede tener 8 digitos (alpha) o venir vacio / null. */
   color: string | null;
@@ -68,7 +70,8 @@ export type BrandInsert = {
   id?: Uuid;
   name: string;
   url?: string | null;
-  img?: string | null;
+  img_desktop?: string | null;
+  img_mobile?: string | null;
   logo?: string | null;
   color?: string | null;
   created_at?: IsoDateTime | null;
@@ -397,6 +400,65 @@ export interface StoreLocationWithBrand extends StoreLocation {
 }
 
 /* ------------------------------------------------------------------ */
+/* brand_outreach / brand_outreach_messages                            */
+/* ------------------------------------------------------------------ */
+
+/** Estado de la peticion de permiso a la marca (`text` con `check`). */
+export const OUTREACH_STATUSES = [
+  "pending",
+  "contacted",
+  "in_conversation",
+  "approved",
+  "rejected",
+  "no_response",
+] as const;
+export type OutreachStatus = (typeof OUTREACH_STATUSES)[number];
+
+/** Canal por el que se envio o recibio un mensaje. */
+export const OUTREACH_CHANNELS = [
+  "instagram",
+  "email",
+  "whatsapp",
+  "phone",
+  "web_form",
+  "in_person",
+  "other",
+] as const;
+export type OutreachChannel = (typeof OUTREACH_CHANNELS)[number];
+
+/** `outbound` = lo mandamos nosotros; `inbound` = respuesta de la marca. */
+export const MESSAGE_DIRECTIONS = ["outbound", "inbound"] as const;
+export type MessageDirection = (typeof MESSAGE_DIRECTIONS)[number];
+
+/** Una fila por marca (`brand_id` unico). Se borra en cascada con la marca. */
+export interface BrandOutreach {
+  id: Uuid;
+  brand_id: Uuid;
+  status: OutreachStatus;
+  contact_name: string | null;
+  /** Usuario de Instagram sin `@`. */
+  instagram: string | null;
+  email: string | null;
+  notes: string | null;
+  /** Columna `date`: `YYYY-MM-DD`. */
+  follow_up_at: string | null;
+  /** Cuando paso a `approved` o `rejected`. */
+  decided_at: IsoDateTime | null;
+  created_at: IsoDateTime;
+  updated_at: IsoDateTime;
+}
+
+export interface BrandOutreachMessage {
+  id: Uuid;
+  brand_id: Uuid;
+  channel: OutreachChannel;
+  direction: MessageDirection;
+  body: string;
+  sent_at: IsoDateTime;
+  created_at: IsoDateTime;
+}
+
+/* ------------------------------------------------------------------ */
 /* Diccionarios                                                        */
 /* ------------------------------------------------------------------ */
 
@@ -473,6 +535,8 @@ export const TABLES = {
   categoryKeywordRules: "category_keyword_rules",
   shopCategoryMappings: "shop_category_mappings",
   storeLocations: "store_locations",
+  brandOutreach: "brand_outreach",
+  brandOutreachMessages: "brand_outreach_messages",
   sizeAliases: "size_aliases",
   colorDictionary: "color_dictionary",
   brandsWithPreviewProducts: "brands_with_preview_products",

@@ -87,7 +87,8 @@ export async function createBrand(input: BrandFormInput): Promise<BrandActionRes
       .insert({
         name: values.name,
         url: values.url,
-        img: values.img,
+        img_desktop: values.img_desktop,
+        img_mobile: values.img_mobile,
         logo: values.logo,
         color: values.color,
         founded_year: values.founded_year,
@@ -135,7 +136,8 @@ export async function updateBrand(id: Uuid, input: BrandFormInput): Promise<Bran
 
     // Se guarda lo que había para poder limpiar el bucket después.
     const previous = await getBrandById(id);
-    const previousImg = previous.ok ? (previous.data?.img ?? null) : null;
+    const previousDesktop = previous.ok ? (previous.data?.img_desktop ?? null) : null;
+    const previousMobile = previous.ok ? (previous.data?.img_mobile ?? null) : null;
     const previousLogo = previous.ok ? (previous.data?.logo ?? null) : null;
 
     const { error } = await supabase
@@ -143,7 +145,8 @@ export async function updateBrand(id: Uuid, input: BrandFormInput): Promise<Bran
       .update({
         name: values.name,
         url: values.url,
-        img: values.img,
+        img_desktop: values.img_desktop,
+        img_mobile: values.img_mobile,
         logo: values.logo,
         color: values.color,
         founded_year: values.founded_year,
@@ -156,7 +159,12 @@ export async function updateBrand(id: Uuid, input: BrandFormInput): Promise<Bran
 
     // Ya con la fila guardada: si una imagen nuestra ha dejado de usarse
     // (la han quitado o reemplazado), se borra del bucket.
-    if (previousImg && previousImg !== values.img) await deleteByPublicUrl(previousImg);
+    if (previousDesktop && previousDesktop !== values.img_desktop) {
+      await deleteByPublicUrl(previousDesktop);
+    }
+    if (previousMobile && previousMobile !== values.img_mobile) {
+      await deleteByPublicUrl(previousMobile);
+    }
     if (previousLogo && previousLogo !== values.logo) await deleteByPublicUrl(previousLogo);
 
     revalidateBrand(id);
@@ -179,14 +187,14 @@ export async function deleteBrand(id: Uuid, confirmName: string): Promise<Delete
 
     const { data: brand, error: brandError } = await supabase
       .from("brands")
-      .select("id, name, img, logo")
+      .select("id, name, img_desktop, img_mobile, logo")
       .eq("id", id)
       .maybeSingle();
 
     if (brandError) return { ok: false, error: toMessage(brandError) };
     if (!brand) return { ok: false, error: "La marca ya no existe." };
 
-    const row = brand as Pick<Brand, "id" | "name" | "img" | "logo">;
+    const row = brand as Pick<Brand, "id" | "name" | "img_desktop" | "img_mobile" | "logo">;
     const name = row.name;
     if (confirmName.trim() !== name) {
       return { ok: false, error: "El nombre escrito no coincide con el de la marca." };
@@ -203,7 +211,11 @@ export async function deleteBrand(id: Uuid, confirmName: string): Promise<Delete
         : 0;
 
     // La marca ya no existe: sus imágenes del bucket sobran.
-    await Promise.all([deleteByPublicUrl(row.img), deleteByPublicUrl(row.logo)]);
+    await Promise.all([
+      deleteByPublicUrl(row.img_desktop),
+      deleteByPublicUrl(row.img_mobile),
+      deleteByPublicUrl(row.logo),
+    ]);
 
     revalidateBrand(id);
     return { ok: true, deletedProducts: Number.isFinite(deletedProducts) ? deletedProducts : 0 };

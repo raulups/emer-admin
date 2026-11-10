@@ -18,7 +18,8 @@ function toFormInput(brand: Brand): BrandFormInput {
   return {
     name: brand.name,
     url: brand.url ?? "",
-    img: brand.img ?? "",
+    img_desktop: brand.img_desktop ?? "",
+    img_mobile: brand.img_mobile ?? "",
     logo: brand.logo ?? "",
     color: brand.color ?? "",
     founded_year: brand.founded_year === null ? "" : String(brand.founded_year),

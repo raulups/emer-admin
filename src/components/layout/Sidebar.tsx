@@ -23,6 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/classification", label: "Clasificación", index: "03" },
   { href: "/tiendas", label: "Tiendas", index: "04" },
   { href: "/scraper", label: "Scraper", index: "05", showActivity: true },
+  { href: "/outreach", label: "Contacto", index: "06" },
 ];
 
 function NavPending() {
@@ -96,7 +97,8 @@ export function Sidebar() {
             <span className="animate-marquee inline-flex w-max">
               {[0, 1].map((copy) => (
                 <span key={copy} className="pr-6">
-                  Streetwear español ✦ Marcas ✦ Productos ✦ Clasificación ✦ Tiendas ✦ Scraper ✦{" "}
+                  Streetwear español ✦ Marcas ✦ Productos ✦ Clasificación ✦ Tiendas ✦ Scraper ✦
+                  Contacto ✦{" "}
                 </span>
               ))}
             </span>

@@ -66,7 +66,8 @@ const optionalTextField = z
 export const brandFormSchema = z.object({
   name: z.string().trim().min(1, "El nombre es obligatorio").max(120, "Máximo 120 caracteres"),
   url: requiredUrlField,
-  img: optionalUrlField,
+  img_desktop: optionalUrlField,
+  img_mobile: optionalUrlField,
   logo: optionalUrlField,
   color: optionalColorField,
   founded_year: optionalYearField,
@@ -78,7 +79,8 @@ export const brandFormSchema = z.object({
 export type BrandFormInput = {
   name: string;
   url: string;
-  img: string;
+  img_desktop: string;
+  img_mobile: string;
   logo: string;
   color: string;
   founded_year: string;
@@ -113,7 +115,8 @@ export function toFieldErrors(error: {
 export const EMPTY_BRAND_FORM: BrandFormInput = {
   name: "",
   url: "",
-  img: "",
+  img_desktop: "",
+  img_mobile: "",
   logo: "",
   color: "",
   founded_year: "",

@@ -50,9 +50,13 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
   const [uploading, setUploading] = useState(false);
 
   // Las imagenes se eligen ahora y se suben al guardar.
-  const [image, setImage] = useState<ImageDropzoneValue>({
+  const [desktop, setDesktop] = useState<ImageDropzoneValue>({
     file: null,
-    url: initial.img === "" ? null : initial.img,
+    url: initial.img_desktop === "" ? null : initial.img_desktop,
+  });
+  const [mobile, setMobile] = useState<ImageDropzoneValue>({
+    file: null,
+    url: initial.img_mobile === "" ? null : initial.img_mobile,
   });
   const [logo, setLogo] = useState<ImageDropzoneValue>({
     file: null,
@@ -87,7 +91,8 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
     // archivos huérfanos ni borra la imagen anterior para nada.
     const draft: BrandFormInput = {
       ...values,
-      img: image.file ? "" : (image.url ?? ""),
+      img_desktop: desktop.file ? "" : (desktop.url ?? ""),
+      img_mobile: mobile.file ? "" : (mobile.url ?? ""),
       logo: logo.file ? "" : (logo.url ?? ""),
     };
 
@@ -100,19 +105,28 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
 
     setPending(true);
     try {
-      let imgUrl = image.url;
+      let desktopUrl = desktop.url;
+      let mobileUrl = mobile.url;
       let logoUrl = logo.url;
 
-      if (image.file || logo.file) {
+      if (desktop.file || mobile.file || logo.file) {
         setUploading(true);
         try {
-          const [imageResult, logoResult] = await Promise.all([
-            image.file
+          const [desktopResult, mobileResult, logoResult] = await Promise.all([
+            desktop.file
               ? uploadBrandImage({
-                  file: image.file,
-                  kind: "image",
+                  file: desktop.file,
+                  kind: "desktop",
                   brandName: values.name,
-                  previousUrl: initial.img || null,
+                  previousUrl: initial.img_desktop || null,
+                })
+              : null,
+            mobile.file
+              ? uploadBrandImage({
+                  file: mobile.file,
+                  kind: "mobile",
+                  brandName: values.name,
+                  previousUrl: initial.img_mobile || null,
                 })
               : null,
             logo.file
@@ -125,9 +139,18 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
               : null,
           ]);
 
-          if (imageResult && !imageResult.ok) {
-            setErrors((current) => ({ ...current, img: imageResult.error }));
-            showToast(`La imagen de portada no se ha podido subir: ${imageResult.error}`, "error");
+          if (desktopResult && !desktopResult.ok) {
+            setErrors((current) => ({ ...current, img_desktop: desktopResult.error }));
+            showToast(
+              `La imagen de desktop no se ha podido subir: ${desktopResult.error}`,
+              "error",
+            );
+            return;
+          }
+
+          if (mobileResult && !mobileResult.ok) {
+            setErrors((current) => ({ ...current, img_mobile: mobileResult.error }));
+            showToast(`La imagen de app no se ha podido subir: ${mobileResult.error}`, "error");
             return;
           }
 
@@ -137,14 +160,20 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
             return;
           }
 
-          if (imageResult?.ok) imgUrl = imageResult.url;
+          if (desktopResult?.ok) desktopUrl = desktopResult.url;
+          if (mobileResult?.ok) mobileUrl = mobileResult.url;
           if (logoResult?.ok) logoUrl = logoResult.url;
         } finally {
           setUploading(false);
         }
       }
 
-      const payload: BrandFormInput = { ...values, img: imgUrl ?? "", logo: logoUrl ?? "" };
+      const payload: BrandFormInput = {
+        ...values,
+        img_desktop: desktopUrl ?? "",
+        img_mobile: mobileUrl ?? "",
+        logo: logoUrl ?? "",
+      };
 
       const result =
         mode === "create"
@@ -289,11 +318,21 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
           <h2 className="border-ink border-b-2 pb-2 text-sm tracking-wider">Imágenes</h2>
 
           <ImageDropzone
-            label="Imagen de portada"
-            value={image}
-            onChange={setImage}
-            error={errors.img}
-            hint="Se recorta a 1920 px de ancho como máximo y se guarda en WEBP."
+            label="Desktop · horizontal"
+            aspect="16/9"
+            value={desktop}
+            onChange={setDesktop}
+            error={errors.img_desktop}
+            hint="Proporción 16/9. Hasta 1920 px de ancho; se guarda en WEBP."
+          />
+
+          <ImageDropzone
+            label="App · vertical"
+            aspect="9/16"
+            value={mobile}
+            onChange={setMobile}
+            error={errors.img_mobile}
+            hint="Proporción 9/16. Hasta 1080 px de ancho; se guarda en WEBP."
           />
 
           <ImageDropzone

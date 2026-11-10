@@ -14,20 +14,23 @@ export const dynamic = "force-dynamic";
 /** sharp es nativo: este handler no puede ir en el runtime edge. */
 export const runtime = "nodejs";
 
-/** Ancho maximo segun el uso. No se amplia nunca una imagen pequeña. */
-const MAX_WIDTH = { image: 1920, logo: 800 } as const;
+/**
+ * Ancho maximo segun el uso. No se amplia nunca una imagen pequeña.
+ * `desktop` es horizontal (16/9) y `mobile` vertical (9/16, 1080x1920).
+ */
+const MAX_WIDTH = { desktop: 1920, mobile: 1080, logo: 800 } as const;
 const WEBP_QUALITY = 82;
 
 type Kind = keyof typeof MAX_WIDTH;
 
 function isKind(value: unknown): value is Kind {
-  return value === "image" || value === "logo";
+  return value === "desktop" || value === "mobile" || value === "logo";
 }
 
 /**
  * POST /api/brands/upload (multipart/form-data)
  *
- * Campos: `file`, `kind` ("image" | "logo"), `brandName`, `previousUrl?`.
+ * Campos: `file`, `kind` ("desktop" | "mobile" | "logo"), `brandName`, `previousUrl?`.
  * Procesa con sharp, sube al bucket `brands` y devuelve `{ url }`.
  */
 export async function POST(request: Request) {
@@ -55,7 +58,7 @@ export async function POST(request: Request) {
 
   if (!isKind(kindRaw)) {
     return NextResponse.json(
-      { ok: false, error: '`kind` debe ser "image" o "logo".' },
+      { ok: false, error: '`kind` debe ser "desktop", "mobile" o "logo".' },
       { status: 400 },
     );
   }
