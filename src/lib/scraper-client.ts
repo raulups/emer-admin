@@ -5,7 +5,31 @@
 
 export type LaunchResult = { ok: true; message: string } | { ok: false; error: string };
 
-/** Lanza el scraper. Sin `brandId` se lanzan todas las marcas. */
+/** Detiene la pasada de todas las marcas (la marca en curso termina en n8n). */
+export async function stopScraperQueue(): Promise<LaunchResult> {
+  try {
+    const response = await fetch("/api/scraper/run", { method: "DELETE", cache: "no-store" });
+    const data = (await response.json().catch(() => null)) as {
+      ok?: boolean;
+      message?: string;
+      error?: string;
+    } | null;
+    if (!response.ok || !data?.ok) {
+      return { ok: false, error: data?.error ?? `El servidor ha respondido ${response.status}.` };
+    }
+    return { ok: true, message: data.message ?? "Pasada detenida." };
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof Error
+          ? `No se ha podido contactar con el panel: ${error.message}`
+          : "No se ha podido contactar con el panel.",
+    };
+  }
+}
+
+/** Lanza el scraper. Sin `brandId` se lanzan todas las marcas (una detras de otra). */
 export async function launchScraper(brandId?: string): Promise<LaunchResult> {
   try {
     const response = await fetch("/api/scraper/run", {
