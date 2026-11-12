@@ -16,6 +16,8 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Emer Admin",
   description: "Panel local de administración de la base de datos de Emer",
+  // Nombre al anadirla a la pantalla de inicio del iPhone (el icono es app/apple-icon.png).
+  appleWebApp: { title: "Emer Admin", statusBarStyle: "default" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
