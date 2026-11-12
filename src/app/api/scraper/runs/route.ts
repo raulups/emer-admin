@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getLatestRunForBrand, getRunningCounts, getScrapeRuns } from "@/lib/queries/scraper";
+import { getQueueState } from "@/lib/scraper-queue";
 import { SCRAPE_STATUSES, type ScrapeStatus } from "@/types/db";
 import { RUNS_LIMIT } from "@/types/scraper";
 
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
   if (mode === "counts") {
     const result = await getRunningCounts();
     return result.ok
-      ? NextResponse.json({ ok: true, ...result.data })
+      ? NextResponse.json({ ok: true, ...result.data, queue: getQueueState() })
       : NextResponse.json({ ok: false, error: result.error }, { status: 500 });
   }
 

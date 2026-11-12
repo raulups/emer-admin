@@ -142,11 +142,18 @@ src/
 
 ## Scraper
 
-- **Lanzar**: `POST /api/scraper/run` con `{ brandId? }` reenvía a `N8N_SCRAPER_WEBHOOK_URL` un
-  `{ brand_id }` (una marca) o `{}` (todas), con **timeout de 5 s**. n8n responde al instante, así
+- **Lanzar**: `POST /api/scraper/run` con `{ brandId }` reenvía a `N8N_SCRAPER_WEBHOOK_URL` un
+  `{ brand_id }` (`src/lib/n8n.ts`), con **timeout de 5 s**. n8n responde al instante, así
   que el endpoint solo confirma el disparo; el progreso se sigue por `scrape_runs`.
   Errores ya cubiertos: `ECONNREFUSED`/timeout → "n8n no está arrancado…"; `404` de n8n → workflow
   inactivo o URL del webhook incorrecta.
+- **Todas las marcas**: el panel **nunca manda `{}`** a n8n. El contenedor de n8n corta cada
+  ejecución a los 15 min (`EXECUTIONS_TIMEOUT=900`) y una pasada completa en una sola ejecución
+  tarda más: el 10/11/2026 se cortó en la marca 31 de 43. `POST` sin `brandId` arranca
+  `src/lib/scraper-queue.ts`, que lanza marca a marca (orden alfabético, solo con `url`), espera a
+  que su run deje `running` (90 s para aparecer, 16 min para terminar) y sigue con la siguiente.
+  Si n8n no responde, corta la pasada. `DELETE /api/scraper/run` la detiene; el estado viaja en
+  `?mode=counts` (`queue`). Vive en memoria del servidor de Next: reiniciar `npm run dev` la pierde.
 - **Pantalla `/scraper`**: lee de la vista `scrape_runs_admin` (que añade `brand_name` y el estado
   `stuck`) con filtros `brand` y `status` en la URL; el detalle `/scraper/[id]` lista
   `scrape_run_products`. `/scrapes` redirige aquí (`next.config.ts`).

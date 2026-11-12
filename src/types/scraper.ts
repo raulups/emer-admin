@@ -65,5 +65,43 @@ export const RUNS_POLL_MS = 3000;
 /** Cada cuanto comprueba la sidebar si ha arrancado algo (sin actividad conocida). */
 export const IDLE_POLL_MS = 15000;
 
+/** Marca que la pasada completa no ha podido scrapear (o no ha visto terminar). */
+export interface QueueFailure {
+  brandId: Uuid;
+  brandName: string;
+  error: string;
+}
+
+/**
+ * Estado de la pasada "todas las marcas" que orquesta el panel. Vive en la
+ * memoria del servidor de Next: si se reinicia `npm run dev`, se pierde.
+ */
+export interface ScraperQueueState {
+  status: "idle" | "running" | "stopping";
+  total: number;
+  /** Marcas ya procesadas (terminadas, con error o saltadas). */
+  done: number;
+  current: { id: Uuid; name: string } | null;
+  startedAt: string | null;
+  finishedAt: string | null;
+  /** `true` si la ultima pasada la paro alguien desde el panel. */
+  stopped: boolean;
+  /** Error que corto la pasada entera (p. ej. n8n caido). */
+  abortError: string | null;
+  failures: QueueFailure[];
+}
+
+export const IDLE_QUEUE: ScraperQueueState = {
+  status: "idle",
+  total: 0,
+  done: 0,
+  current: null,
+  startedAt: null,
+  finishedAt: null,
+  stopped: false,
+  abortError: null,
+  failures: [],
+};
+
 /** Cuantos runs se muestran en la tabla de seguimiento. */
 export const RUNS_LIMIT = 100;
