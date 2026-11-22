@@ -17,6 +17,8 @@ const envSchema = z.object({
   N8N_SCRAPER_WEBHOOK_URL: z.url(
     "N8N_SCRAPER_WEBHOOK_URL debe ser una URL valida (http://localhost:5678/webhook/...)",
   ),
+  /** Opcional: con ella el buscador de tiendas usa Google Places (y da place_id). */
+  GOOGLE_PLACES_API_KEY: z.string().trim().min(1).optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -42,6 +44,7 @@ export function getEnv(): Env {
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
     N8N_SCRAPER_WEBHOOK_URL: process.env.N8N_SCRAPER_WEBHOOK_URL,
+    GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY || undefined,
   });
 
   if (!parsed.success) {

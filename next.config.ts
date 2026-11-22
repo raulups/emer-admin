@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/scrapes", destination: "/scraper", permanent: false },
       { source: "/scrapes/:id", destination: "/scraper/:id", permanent: false },
+      { source: "/tiendas", destination: "/stores", permanent: false },
     ];
   },
 };

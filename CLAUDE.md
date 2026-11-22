@@ -38,6 +38,7 @@ Otros scripts: `npm run build`, `npm run lint`, `npm run lint:fix`, `npm run typ
 | `SUPABASE_URL`              | URL del proyecto de Supabase               |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role key (**nunca** al cliente)    |
 | `N8N_SCRAPER_WEBHOOK_URL`   | Webhook del flujo padre del scraper de n8n |
+| `GOOGLE_PLACES_API_KEY`     | Opcional: buscador de tiendas con Google Places (da `place_id`) |
 
 `src/lib/env.ts` las valida con zod de forma perezosa (`getEnv()`) y lanza `EnvError` con un mensaje
 claro en español si falta alguna. La home captura ese error y lo muestra en la UI en lugar de romper.
@@ -121,7 +122,7 @@ src/
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
     api/classification/ # review (agregado por marca)
     api/brands/upload/  # subida de imágenes de marca (sharp + Storage)
-    tiendas/
+    stores/             # tiendas fisicas: listado con filtros, alta/edicion en pop-up, actions.ts (/tiendas redirige aqui)
   components/
     brands/             # tarjetas, tabla, formulario, borrado, repartos
     products/           # filtros, tabla, galería, tallas, gráfica, visor JSON
@@ -192,6 +193,13 @@ src/
 - Atajos: `/` buscar, `N` nueva marca, `Enter` en el buscador abre la única coincidencia.
 - `Modal` admite `size="xl"`, `subtitle`, cuerpo con scroll propio y solo cierra con Escape el
   modal de más arriba (el zoom de `ImageDropzone` dentro del pop-up no cierra los dos).
+
+## Tiendas físicas
+
+- `/stores` (antes `/tiendas`, que redirige): todas las `store_locations` (son pocas, sin paginar) con filtros de marca, ciudad, estado (activas, ocultas, sin place_id, place_id dudoso) y búsqueda. Desde la ficha de una marca: «Gestionar» (`?brand=`) y «Añadir tienda» (`?brand=&new=1`).
+- Alta/edición en `StoreFormModal`. Tres formas de rellenarla: **buscador** (Google Places si hay `GOOGLE_PLACES_API_KEY`; si no, OpenStreetMap/Nominatim, que no da `place_id`), **pegar un enlace** de Google Maps u OSM o unas coordenadas (`lib/geo.ts` lee el pin `!3d…!4d…`, `@lat,lng`, `query=`, `query_place_id=`; los cortos `maps.app.goo.gl` se resuelven en el servidor) o a mano. Mapa de OSM embebido para comprobar el punto. `source` = `manual|google|osm`.
+- **`place_id` importa**: la app lo usa para pedir a Google la ficha de la tienda (fotos, horario). `looksLikeFakePlaceId` marca los inventados (patrones repetidos, muchos `_`, cola de dígitos) y con clave de Google «Comprobar place_id» los verifica de verdad.
+- Ocultar (`is_active = false`) en vez de borrar: el backend solo devuelve las activas. Al guardar se avisa si la marca ya tiene otra tienda a menos de 40 m.
 
 ## Clasificación
 
