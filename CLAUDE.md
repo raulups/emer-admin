@@ -116,6 +116,7 @@ src/
     scraper/            # lanzamiento, contadores, ejecuciones (auto-refresco) y /[id] con productos
     classification/     # 5 pestañas: sin categoría, revisión, reglas, mappings, orden de categorías
     outreach/           # contacto con marcas: listado con filtros y /[brandId] con estado y mensajes
+    waitlist/           # lista de espera de la app: emails, copiar/CSV, marcar avisados, borrar
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
     api/classification/ # review (agregado por marca)
     api/brands/upload/  # subida de imágenes de marca (sharp + Storage)
@@ -290,6 +291,11 @@ Postgres en Supabase, schema `public`.
   `body`, `sent_at`, `created_at`. Al registrar un mensaje la Server Action avanza el estado
   (primer envío → contacted, respuesta → in_conversation); approved/rejected solo a mano.
   Migración: `supabase/migrations/20261109_brand_outreach.sql` (se ejecuta a mano en el SQL editor).
+
+- **app_waitlist** — `id`, `email` (único, en minúsculas), `source` (`web-mobile|web|app`), `created_at`,
+  `notified_at` (null = por avisar). La escribe el backend (`POST /waitlist`, desde el aviso de la web
+  de móvil) y RLS sin políticas: solo la service key la lee. Migración V6 del backend. Se gestiona en
+  `/waitlist` (copiar emails, CSV con `;` y BOM, marcar avisados, borrar).
 
 **Vistas**: `brands_with_preview_products`, `unclassified_products`.
 

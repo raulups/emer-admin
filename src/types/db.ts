@@ -535,6 +535,25 @@ export interface AdminDeleteBrandResult {
 /* Nombres de tabla y vista                                            */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* app_waitlist                                                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Lista de espera de la app: emails que se apuntan desde el aviso de la web de movil (via
+ * `POST /waitlist` del backend). `email` unico y en minusculas. RLS sin politicas: solo la
+ * service key lo lee. Migracion V6 del backend.
+ */
+export interface AppWaitlistEntry {
+  id: Uuid;
+  email: string;
+  /** `web-mobile` | `web` | `app`. */
+  source: string;
+  created_at: IsoDateTime;
+  /** Cuando se le aviso del lanzamiento; null = pendiente. */
+  notified_at: IsoDateTime | null;
+}
+
 export const TABLES = {
   brands: "brands",
   categories: "categories",
@@ -547,6 +566,7 @@ export const TABLES = {
   storeLocations: "store_locations",
   brandOutreach: "brand_outreach",
   brandOutreachMessages: "brand_outreach_messages",
+  appWaitlist: "app_waitlist",
   sizeAliases: "size_aliases",
   colorDictionary: "color_dictionary",
   brandsWithPreviewProducts: "brands_with_preview_products",
