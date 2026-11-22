@@ -1,16 +1,25 @@
+"use client";
+
 import Link from "next/link";
 
 import { ColorSwatch } from "@/components/brands/ColorSwatch";
+import { QuickTags } from "@/components/brands/QuickTags";
 import { RemoteImage } from "@/components/brands/RemoteImage";
-import { TagBadges } from "@/components/brands/TagBadges";
 import { ScrapeStatusBadge } from "@/components/ScrapeStatusBadge";
 import { buttonClasses } from "@/components/ui/Button";
 import { Table, TableWrapper, TBody, TD, TH, THead, TR } from "@/components/ui/Table";
 import { displayUrl } from "@/lib/url";
 import { formatNumber, formatRelativeTime } from "@/lib/utils";
 import type { BrandListItem } from "@/types/brands";
+import type { Uuid } from "@/types/db";
 
-export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
+export function BrandsTable({
+  brands,
+  onEdit,
+}: {
+  brands: BrandListItem[];
+  onEdit: (id: Uuid) => void;
+}) {
   return (
     <TableWrapper>
       <Table>
@@ -19,7 +28,7 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
             <TH>Marca</TH>
             <TH>Tienda</TH>
             <TH>Color</TH>
-            <TH>Tags</TH>
+            <TH>Tags · clic para cambiar</TH>
             <TH className="text-right">Prod.</TH>
             <TH className="text-right">Sin cat.</TH>
             <TH>Último scrape</TH>
@@ -30,7 +39,11 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
           {brands.map((brand) => (
             <TR key={brand.id} interactive>
               <TD>
-                <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onEdit(brand.id)}
+                  className="flex cursor-pointer items-center gap-2 text-left"
+                >
                   <RemoteImage
                     src={brand.logo}
                     alt={`Logo de ${brand.name}`}
@@ -38,13 +51,10 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
                     fit="contain"
                     className="border-ink size-7 shrink-0 border-2"
                   />
-                  <Link
-                    href={`/brands/${brand.id}`}
-                    className="font-bold tracking-tight uppercase hover:underline"
-                  >
+                  <span className="font-bold tracking-tight uppercase hover:underline">
                     {brand.name}
-                  </Link>
-                </div>
+                  </span>
+                </button>
               </TD>
 
               <TD>
@@ -58,7 +68,7 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
                     {displayUrl(brand.url)} ↗
                   </a>
                 ) : (
-                  <span className="text-ink/40 text-xs">—</span>
+                  <span className="text-error text-xs font-bold">Sin tienda</span>
                 )}
               </TD>
 
@@ -67,7 +77,7 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
               </TD>
 
               <TD>
-                <TagBadges tags={brand.tags} emptyLabel="—" />
+                <QuickTags brandId={brand.id} brandName={brand.name} tags={brand.tags} size="sm" />
               </TD>
 
               <TD className="text-right font-bold">
@@ -99,14 +109,15 @@ export function BrandsTable({ brands }: { brands: BrandListItem[] }) {
 
               <TD className="text-right">
                 <div className="flex justify-end gap-1">
-                  <Link href={`/brands/${brand.id}`} className={buttonClasses("secondary", "sm")}>
-                    Ver
-                  </Link>
-                  <Link
-                    href={`/brands/${brand.id}/edit`}
-                    className={buttonClasses("secondary", "sm")}
+                  <button
+                    type="button"
+                    onClick={() => onEdit(brand.id)}
+                    className={buttonClasses("primary", "sm")}
                   >
                     Editar
+                  </button>
+                  <Link href={`/brands/${brand.id}`} className={buttonClasses("secondary", "sm")}>
+                    Ficha
                   </Link>
                 </div>
               </TD>

@@ -1,8 +1,5 @@
-import Link from "next/link";
-
 import { BrandsBrowser } from "@/components/brands/BrandsBrowser";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { buttonClasses } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getBrandsList } from "@/lib/queries/brands";
 
@@ -17,12 +14,7 @@ export default async function BrandsPage() {
     <>
       <PageHeader
         title="Marcas"
-        description="Marcas del marketplace, con sus productos y el estado del último scrape."
-        actions={
-          <Link href="/brands/new" className={buttonClasses("primary", "md")}>
-            Nueva marca
-          </Link>
-        }
+        description="Edita desde la vista previa: clic en una marca para abrir el pop-up, clic en un tag para activarlo o quitarlo."
       />
 
       {result.ok ? (

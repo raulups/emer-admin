@@ -123,3 +123,28 @@ export const EMPTY_BRAND_FORM: BrandFormInput = {
   style: "",
   tags: [],
 };
+
+/** Pasa de la fila de `brands` a los campos de texto del formulario. */
+export function brandToFormInput(brand: {
+  name: string;
+  url: string | null;
+  img_desktop: string | null;
+  img_mobile: string | null;
+  logo: string | null;
+  color: string | null;
+  founded_year: number | null;
+  style: string | null;
+  tags: BrandTag[];
+}): BrandFormInput {
+  return {
+    name: brand.name,
+    url: brand.url ?? "",
+    img_desktop: brand.img_desktop ?? "",
+    img_mobile: brand.img_mobile ?? "",
+    logo: brand.logo ?? "",
+    color: brand.color ?? "",
+    founded_year: brand.founded_year === null ? "" : String(brand.founded_year),
+    style: brand.style ?? "",
+    tags: brand.tags,
+  };
+}

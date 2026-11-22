@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode, Ref } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -38,6 +38,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   hint?: ReactNode;
   error?: ReactNode;
   wrapperClassName?: string;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export function Input({

@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { BrandCard } from "@/components/brands/BrandCard";
+import { BrandQuickEditModal } from "@/components/brands/BrandQuickEditModal";
 import { BrandsTable } from "@/components/brands/BrandsTable";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -19,13 +21,38 @@ import {
   type BrandSort,
   type BrandViewMode,
 } from "@/types/brands";
-import { BRAND_TAGS, type BrandTag } from "@/types/db";
+import { BRAND_TAGS, type BrandTag, type Uuid } from "@/types/db";
 
 const VIEW_STORAGE_KEY = "emer-admin:brands:view";
 
 /** Normaliza para buscar sin tildes ni mayusculas. */
 function normalize(value: string): string {
   return value.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+
+/** Marca con algo que revisar: sin tienda, sin imagenes, productos sin categoria o ultimo scrape fallido. */
+function needsAttention(brand: BrandListItem): boolean {
+  return (
+    !brand.url ||
+    !brand.img_desktop ||
+    !brand.img_mobile ||
+    !brand.logo ||
+    (brand.unclassifiedCount ?? 0) > 0 ||
+    brand.lastRun?.status === "error" ||
+    brand.lastRun?.status === "partial"
+  );
+}
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  return target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName);
+}
+
+function chipClasses(active: boolean): string {
+  return cn(
+    "border-ink cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
+    active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+  );
 }
 
 export function BrandsBrowser({
@@ -35,6 +62,11 @@ export function BrandsBrowser({
   brands: BrandListItem[];
   countsAvailable: boolean;
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchRef = useRef<HTMLInputElement>(null);
+
   const [view, setView] = useStoredOption<BrandViewMode>(
     VIEW_STORAGE_KEY,
     "grid",
@@ -42,7 +74,44 @@ export function BrandsBrowser({
   );
   const [query, setQuery] = useState("");
   const [activeTags, setActiveTags] = useState<BrandTag[]>([]);
+  const [onlyAttention, setOnlyAttention] = useState(false);
   const [sort, setSort] = useState<BrandSort>("name");
+
+  const editId = searchParams.get("edit");
+  const creating = searchParams.get("new") === "1";
+  const editing = editId ? (brands.find((brand) => brand.id === editId) ?? null) : null;
+  const modalOpen = creating || editing !== null;
+
+  const setModalParam = useCallback(
+    (key: "edit" | "new" | null, value?: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("edit");
+      params.delete("new");
+      if (key) params.set(key, value ?? "1");
+      const qs = params.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
+
+  const openEdit = useCallback((id: Uuid) => setModalParam("edit", id), [setModalParam]);
+  const closeModal = useCallback(() => setModalParam(null), [setModalParam]);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (modalOpen || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+      if (event.key === "/") {
+        event.preventDefault();
+        searchRef.current?.focus();
+      } else if (event.key.toLowerCase() === "n") {
+        event.preventDefault();
+        setModalParam("new");
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [modalOpen, setModalParam]);
 
   function toggleTag(tag: BrandTag) {
     setActiveTags((current) =>
@@ -53,18 +122,21 @@ export function BrandsBrowser({
   function clearFilters() {
     setQuery("");
     setActiveTags([]);
+    setOnlyAttention(false);
     setSort("name");
   }
+
+  const attentionCount = useMemo(() => brands.filter(needsAttention).length, [brands]);
 
   const visible = useMemo(() => {
     const needle = normalize(query.trim());
 
     const filtered = brands.filter((brand) => {
       if (needle !== "" && !normalize(brand.name).includes(needle)) return false;
-      // Multiseleccion de tags: la marca debe tener TODOS los seleccionados.
       if (activeTags.length > 0 && !activeTags.every((tag) => brand.tags.includes(tag))) {
         return false;
       }
+      if (onlyAttention && !needsAttention(brand)) return false;
       return true;
     });
 
@@ -75,20 +147,31 @@ export function BrandsBrowser({
       }
       return (b.productsCount ?? 0) - (a.productsCount ?? 0);
     });
-  }, [brands, query, activeTags, sort]);
+  }, [brands, query, activeTags, onlyAttention, sort]);
 
-  const filtersActive = query.trim() !== "" || activeTags.length > 0 || sort !== "name";
+  const filtersActive =
+    query.trim() !== "" || activeTags.length > 0 || onlyAttention || sort !== "name";
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Controles */}
-      <div className="border-ink bg-paper shadow-hard flex flex-col gap-3 border-2 p-3">
+      <div className="border-ink bg-paper shadow-hard sticky top-0 z-20 flex flex-col gap-3 border-2 p-3 max-lg:top-[60px]">
         <div className="flex flex-wrap items-end gap-3">
           <Input
-            label="Buscar por nombre"
-            placeholder="Nombre de la marca…"
+            ref={searchRef}
+            id="brand-search"
+            label="Buscar"
+            placeholder="Nombre de la marca…  ( / )"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                setQuery("");
+                event.currentTarget.blur();
+              }
+              if (event.key === "Enter" && visible.length === 1 && visible[0]) {
+                openEdit(visible[0].id);
+              }
+            }}
             wrapperClassName="min-w-56 flex-1"
             autoComplete="off"
           />
@@ -98,7 +181,7 @@ export function BrandsBrowser({
             value={sort}
             onChange={(event) => setSort(event.target.value as BrandSort)}
             options={BRAND_SORTS.map((value) => ({ value, label: BRAND_SORT_LABELS[value] }))}
-            wrapperClassName="w-60"
+            wrapperClassName="w-56"
           />
 
           <div className="flex flex-col gap-1.5">
@@ -121,42 +204,46 @@ export function BrandsBrowser({
               ))}
             </div>
           </div>
+
+          <Button onClick={() => setModalParam("new")} title="Nueva marca (N)">
+            + Nueva marca
+          </Button>
         </div>
 
-        {/* Filtro por tag (multiseleccion) */}
-        <div className="flex flex-col gap-1.5">
-          <span className="label-caps">Filtrar por tag</span>
-          <div className="flex flex-wrap gap-1.5">
-            {BRAND_TAGS.map((tag) => {
-              const active = activeTags.includes(tag);
-              return (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => toggleTag(tag)}
-                  aria-pressed={active}
-                  title={BRAND_TAG_DESCRIPTIONS[tag]}
-                  className={cn(
-                    "border-ink cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-                    active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
-                  )}
-                >
-                  {tag}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => setOnlyAttention((current) => !current)}
+            aria-pressed={onlyAttention}
+            title="Sin tienda, sin imágenes, con productos sin categoría o con el último scrape fallido"
+            className={cn(
+              "border-ink cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
+              onlyAttention ? "bg-progress" : "bg-paper hover:bg-cream",
+            )}
+          >
+            Por revisar · {formatNumber(attentionCount)}
+          </button>
+          <span aria-hidden className="bg-ink/20 mx-1 h-5 w-0.5" />
+          {BRAND_TAGS.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              onClick={() => toggleTag(tag)}
+              aria-pressed={activeTags.includes(tag)}
+              title={BRAND_TAG_DESCRIPTIONS[tag]}
+              className={chipClasses(activeTags.includes(tag))}
+            >
+              {tag}
+            </button>
+          ))}
 
-        <div className="border-ink flex items-center justify-between gap-3 border-t-2 pt-2.5">
-          <p className="text-ink/60 text-xs">
+          <span className="text-ink/60 ml-auto text-xs">
             {formatNumber(visible.length)} de {formatNumber(brands.length)}{" "}
             {brands.length === 1 ? "marca" : "marcas"}
-            {activeTags.length > 1 ? " · con todos los tags seleccionados" : ""}
-          </p>
+          </span>
           {filtersActive ? (
             <Button variant="secondary" size="sm" onClick={clearFilters}>
-              Limpiar filtros
+              Limpiar
             </Button>
           ) : null}
         </div>
@@ -169,7 +256,6 @@ export function BrandsBrowser({
         </p>
       ) : null}
 
-      {/* Resultados */}
       {visible.length === 0 ? (
         <EmptyState
           title={brands.length === 0 ? "Todavía no hay marcas" : "Sin resultados"}
@@ -183,18 +269,32 @@ export function BrandsBrowser({
               <Button variant="secondary" onClick={clearFilters}>
                 Limpiar filtros
               </Button>
-            ) : null
+            ) : (
+              <Button onClick={() => setModalParam("new")}>Nueva marca</Button>
+            )
           }
         />
       ) : view === "grid" ? (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {visible.map((brand) => (
-            <BrandCard key={brand.id} brand={brand} />
+            <BrandCard key={brand.id} brand={brand} onEdit={() => openEdit(brand.id)} />
           ))}
         </div>
       ) : (
-        <BrandsTable brands={visible} />
+        <BrandsTable brands={visible} onEdit={openEdit} />
       )}
+
+      <p className="text-ink/40 text-[11px]">
+        Atajos: <kbd className="font-bold">/</kbd> buscar · <kbd className="font-bold">N</kbd> nueva
+        marca · <kbd className="font-bold">Enter</kbd> en el buscador abre la única coincidencia ·{" "}
+        <kbd className="font-bold">Esc</kbd> cierra el pop-up.
+      </p>
+
+      <BrandQuickEditModal
+        brand={creating ? null : editing}
+        open={modalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 }
