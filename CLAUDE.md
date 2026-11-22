@@ -218,7 +218,7 @@ El fixture se regenera con `npm run export-rules` (lee `.env.local`) → `tests/
 
 ### Clasificar a mano rápido
 
-- **Sin categoría**: cada grupo (marca × product_type) enseña sus productos (3 y «Ver los N») con un desplegable por producto que guarda al elegir, y «Asignar a los N» para todo el grupo (`setProductsCategory`, por tandas de 200). Ambos bloquean la categoría (`category_locked`). Lo asignado desaparece al momento.
+- **Sin categoría** tiene dos vistas (conmutador segmentado). **Lista** (por defecto, `UnclassifiedList`): todos los productos en una tabla plana con imagen, filtros de marca, product_type (con recuentos, depende de la marca) y nombre, 50 por página en el cliente, desplegable por fila y selección con casillas («Seleccionar los N filtrados») para asignar en bloque. **Por grupos**: cada grupo (marca × product_type) enseña sus productos (3 y «Ver los N») con un desplegable por producto que guarda al elegir, y «Asignar a los N» para todo el grupo (`setProductsCategory`, por tandas de 200). Ambos bloquean la categoría (`category_locked`). Lo asignado desaparece al momento.
 - **Productos**: en la tabla, los productos sin categoría llevan el desplegable en la celda de categoría (no abre el producto).
 
 ### Rendimiento de las pestañas

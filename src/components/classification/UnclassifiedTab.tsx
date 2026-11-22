@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 
 import { createKeywordRule, upsertShopCategoryMapping } from "@/app/classification/actions";
 import { setProductCategory, setProductsCategory } from "@/app/products/actions";
+import { UnclassifiedList } from "@/components/classification/UnclassifiedList";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -37,12 +38,21 @@ function suggestKeyword(group: UnclassifiedGroup): string {
   return words.sort((a, b) => b.length - a.length)[0] ?? "";
 }
 
+type View = "list" | "groups";
+
+const VIEWS: Array<{ id: View; label: string }> = [
+  { id: "list", label: "Lista" },
+  { id: "groups", label: "Por grupos" },
+];
+
 /** Ejemplos visibles por grupo antes de desplegar la lista entera. */
 const PREVIEW = 3;
 
 export function UnclassifiedTab({ groups, total, truncated, categories }: UnclassifiedTabProps) {
   const router = useRouter();
   const { showToast } = useToast();
+
+  const [view, setView] = useState<View>("list");
 
   // Productos ya clasificados desde aqui: se quitan al momento, sin esperar al refresco.
   const [done, setDone] = useState<Set<string>>(new Set());
@@ -212,8 +222,46 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
     }
   }
 
+  const viewSwitch = (
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <div role="tablist" aria-label="Vista" className="bg-subtle inline-flex rounded-lg p-0.5">
+        {VIEWS.map((option) => (
+          <button
+            key={option.id}
+            type="button"
+            role="tab"
+            aria-selected={view === option.id}
+            onClick={() => setView(option.id)}
+            className={cn(
+              "rounded-md px-3 py-1 text-xs font-medium transition-colors",
+              view === option.id ? "bg-paper text-ink shadow-sm" : "text-ink/60 hover:text-ink",
+            )}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-ink/60 text-xs">{formatNumber(pendingTotal)} productos sin categoría</p>
+    </div>
+  );
+
+  if (view === "list") {
+    return (
+      <div className="flex flex-col gap-3">
+        {viewSwitch}
+        {truncated ? (
+          <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
+            Hay más productos sin categoría de los que se leen de una vez: la lista está recortada.
+          </p>
+        ) : null}
+        <UnclassifiedList groups={pending} categories={categories} onAssigned={markDone} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-3">
+      {viewSwitch}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <Input
           label="Buscar marca, product_type o producto"
@@ -224,8 +272,7 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
           autoComplete="off"
         />
         <p className="text-ink/60 text-xs">
-          {formatNumber(pendingTotal)} productos sin categoría en {formatNumber(pending.length)}{" "}
-          grupos
+          {formatNumber(pending.length)} grupos
           {visible.length !== pending.length ? ` · ${formatNumber(visible.length)} visibles` : ""}
         </p>
       </div>
