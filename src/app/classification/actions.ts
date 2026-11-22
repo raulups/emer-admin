@@ -12,6 +12,8 @@ import type { Uuid } from "@/types/db";
  * use: esta es la seccion que manda sobre estas dos tablas.
  */
 
+// Un fichero "use server" solo puede exportar funciones async (y tipos): exportar un esquema de zod
+// hacia fallar TODAS sus acciones en tiempo de ejecucion ("can only export async functions").
 export type ActionResult = { ok: true; message: string } | { ok: false; error: string };
 
 function toMessage(error: unknown): string {
@@ -62,7 +64,7 @@ const priorityField = z
   .min(0, "La prioridad no puede ser negativa")
   .max(1000, "Máximo 1000");
 
-export const keywordRuleSchema = z.object({
+const keywordRuleSchema = z.object({
   keyword: keywordField,
   categoryId: uuid,
   priority: priorityField,
@@ -183,7 +185,7 @@ export async function deleteKeywordRule(id: Uuid): Promise<ActionResult> {
 /* Mapeos por tienda                                                   */
 /* ------------------------------------------------------------------ */
 
-export const shopMappingSchema = z.object({
+const shopMappingSchema = z.object({
   brandId: uuid,
   externalCategoryName: z
     .string()
