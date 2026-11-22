@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import { createKeywordRule, upsertShopCategoryMapping } from "@/app/classification/actions";
+import { setProductCategory, setProductsCategory } from "@/app/products/actions";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -12,7 +13,7 @@ import { Modal } from "@/components/ui/Modal";
 import { Select } from "@/components/ui/Select";
 import { Table, TableWrapper, TBody, TD, TH, THead, TR } from "@/components/ui/Table";
 import { useToast } from "@/components/ui/Toast";
-import { formatNumber } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import type { UnclassifiedGroup } from "@/types/classification";
 import type { Category } from "@/types/db";
 
@@ -25,7 +26,7 @@ export interface UnclassifiedTabProps {
 
 /** Palabra mas larga del titulo que sirva como keyword de partida. */
 function suggestKeyword(group: UnclassifiedGroup): string {
-  const source = group.productType || group.samples[0]?.name || "";
+  const source = group.productType || group.products[0]?.name || "";
   const words = source
     .toLowerCase()
     .normalize("NFD")
@@ -36,9 +37,17 @@ function suggestKeyword(group: UnclassifiedGroup): string {
   return words.sort((a, b) => b.length - a.length)[0] ?? "";
 }
 
+/** Ejemplos visibles por grupo antes de desplegar la lista entera. */
+const PREVIEW = 3;
+
 export function UnclassifiedTab({ groups, total, truncated, categories }: UnclassifiedTabProps) {
   const router = useRouter();
   const { showToast } = useToast();
+
+  // Productos ya clasificados desde aqui: se quitan al momento, sin esperar al refresco.
+  const [done, setDone] = useState<Set<string>>(new Set());
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [savingProduct, setSavingProduct] = useState<string | null>(null);
 
   const [query, setQuery] = useState("");
   // Categoría elegida en cada fila para el mapeo rápido.
@@ -52,14 +61,90 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
   const [priority, setPriority] = useState("20");
   const [savingRule, setSavingRule] = useState(false);
 
+  // Grupos sin los productos ya clasificados aqui (y sin los que se quedan vacios).
+  const pending = useMemo(
+    () =>
+      groups
+        .map((group) => {
+          const products = group.products.filter((product) => !done.has(product.id));
+          return { ...group, products, count: products.length };
+        })
+        .filter((group) => group.count > 0),
+    [groups, done],
+  );
+  const pendingTotal = total - done.size;
+
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    if (needle === "") return groups;
-    return groups.filter(
+    if (needle === "") return pending;
+    return pending.filter(
       (group) =>
-        group.brandName.toLowerCase().includes(needle) || group.productTypeKey.includes(needle),
+        group.brandName.toLowerCase().includes(needle) ||
+        group.productTypeKey.includes(needle) ||
+        group.products.some((product) => product.name?.toLowerCase().includes(needle)),
     );
-  }, [groups, query]);
+  }, [pending, query]);
+
+  const categoryOptions = categories.map((category) => ({
+    value: category.id,
+    label: category.name,
+  }));
+  const categoryName = (id: string) =>
+    categories.find((category) => category.id === id)?.name ?? "";
+
+  function markDone(ids: string[]) {
+    setDone((current) => new Set([...current, ...ids]));
+  }
+
+  /** Un producto: se guarda al elegir la categoria. */
+  async function assignProduct(productId: string, categoryId: string) {
+    if (!categoryId) return;
+    setSavingProduct(productId);
+    try {
+      const result = await setProductCategory(productId, categoryId);
+      if (!result.ok) {
+        showToast(result.error, "error");
+        return;
+      }
+      markDone([productId]);
+      showToast(`Movido a ${categoryName(categoryId)}.`, "ok", 1800);
+    } finally {
+      setSavingProduct(null);
+    }
+  }
+
+  /** Todo el grupo a la categoria elegida en su fila. */
+  async function assignGroup(group: UnclassifiedGroup) {
+    const key = keyOf(group);
+    const categoryId = picked[key];
+    if (!categoryId) {
+      showToast("Elige antes una categoría.", "error");
+      return;
+    }
+    setBusyKey(key);
+    try {
+      const ids = group.products.map((product) => product.id);
+      const result = await setProductsCategory(ids, categoryId);
+      if (!result.ok) {
+        showToast(result.error, "error");
+        return;
+      }
+      markDone(ids);
+      showToast(result.message, "ok");
+      router.refresh();
+    } finally {
+      setBusyKey(null);
+    }
+  }
+
+  function toggleExpanded(key: string) {
+    setExpanded((current) => {
+      const next = new Set(current);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
 
   const keyOf = (group: UnclassifiedGroup) => `${group.brandId}|${group.productTypeKey}`;
 
@@ -131,16 +216,17 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <Input
-          label="Buscar marca o product_type"
-          placeholder="scuffers, hoodie…"
+          label="Buscar marca, product_type o producto"
+          placeholder="scuffers, hoodie, trucker…"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           wrapperClassName="min-w-64 flex-1"
           autoComplete="off"
         />
         <p className="text-ink/60 text-xs">
-          {formatNumber(total)} productos sin categoría en {formatNumber(groups.length)} grupos
-          {visible.length !== groups.length ? ` · ${formatNumber(visible.length)} visibles` : ""}
+          {formatNumber(pendingTotal)} productos sin categoría en {formatNumber(pending.length)}{" "}
+          grupos
+          {visible.length !== pending.length ? ` · ${formatNumber(visible.length)} visibles` : ""}
         </p>
       </div>
 
@@ -153,7 +239,7 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
       {visible.length === 0 ? (
         <div className="border-line bg-paper border p-8 text-center">
           <p className="text-ok text-sm">
-            {groups.length === 0
+            {pending.length === 0
               ? "No hay productos sin categoría. Todo el catálogo está clasificado."
               : "Ningún grupo coincide con la búsqueda."}
           </p>
@@ -166,7 +252,7 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
                 <TH>Marca</TH>
                 <TH>product_type</TH>
                 <TH className="text-right">Productos</TH>
-                <TH>Ejemplos</TH>
+                <TH>Productos del grupo</TH>
                 <TH>Acciones rápidas</TH>
               </TR>
             </THead>
@@ -194,19 +280,49 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
 
                     <TD className="text-right font-semibold">{formatNumber(group.count)}</TD>
 
-                    <TD>
-                      <ul className="flex flex-col gap-0.5">
-                        {group.samples.map((sample) => (
-                          <li key={sample.id}>
+                    <TD className="min-w-72">
+                      <ul className="flex flex-col gap-1">
+                        {(expanded.has(key)
+                          ? group.products
+                          : group.products.slice(0, PREVIEW)
+                        ).map((product) => (
+                          <li
+                            key={product.id}
+                            className={cn(
+                              "flex items-center gap-2",
+                              savingProduct === product.id && "opacity-50",
+                            )}
+                          >
                             <Link
-                              href={`/products/${sample.id}`}
-                              className="decoration-ink/30 hover:decoration-ink text-xs underline"
+                              href={`/products/${product.id}`}
+                              className="decoration-ink/30 hover:decoration-ink min-w-0 flex-1 truncate text-xs underline"
+                              title={product.name ?? undefined}
                             >
-                              {sample.name ?? "(sin nombre)"}
+                              {product.name ?? "(sin nombre)"}
                             </Link>
+                            <Select
+                              value=""
+                              onChange={(event) => assignProduct(product.id, event.target.value)}
+                              placeholder="Asignar…"
+                              options={categoryOptions}
+                              disabled={savingProduct === product.id}
+                              className="h-7 w-36 px-2 text-xs"
+                              aria-label={`Categoría de ${product.name ?? "producto"}`}
+                            />
                           </li>
                         ))}
                       </ul>
+                      {group.count > PREVIEW ? (
+                        <button
+                          type="button"
+                          onClick={() => toggleExpanded(key)}
+                          className="text-accent mt-1.5 text-xs font-medium hover:underline"
+                        >
+                          {expanded.has(key)
+                            ? "Ver menos"
+                            : `Ver los ${formatNumber(group.count)} productos`}
+                        </button>
+                      ) : null}
                     </TD>
 
                     <TD>
@@ -217,19 +333,26 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
                             setPicked((current) => ({ ...current, [key]: event.target.value }))
                           }
                           placeholder="Categoría…"
-                          options={categories.map((category) => ({
-                            value: category.id,
-                            label: category.name,
-                          }))}
-                          className="w-44 py-1 text-xs"
+                          options={categoryOptions}
+                          className="h-8 w-44 text-xs"
                           aria-label={`Categoría para ${group.brandName} / ${group.productType}`}
                         />
+                        <Button
+                          size="sm"
+                          onClick={() => assignGroup(group)}
+                          loading={busyKey === key}
+                          disabled={!picked[key]}
+                          title="Fija esa categoría a todos los productos del grupo (y los bloquea)"
+                        >
+                          {group.count === 1
+                            ? "Asignar"
+                            : `Asignar a los ${formatNumber(group.count)}`}
+                        </Button>
                         <Button
                           variant="secondary"
                           size="sm"
                           onClick={() => mapGroup(group)}
-                          loading={busyKey === key}
-                          disabled={!group.productType}
+                          disabled={busyKey === key || !group.productType}
                           title={
                             group.productType
                               ? "Crea el mapeo product_type → categoría para esta marca"

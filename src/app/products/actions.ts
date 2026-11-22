@@ -21,6 +21,7 @@ function toMessage(error: unknown): string {
 function revalidateProduct(productId: Uuid) {
   revalidatePath("/");
   revalidatePath("/products");
+  revalidatePath("/classification");
   revalidatePath(`/products/${productId}`);
 }
 
@@ -56,6 +57,45 @@ export async function setProductCategory(
 
     revalidateProduct(productId);
     return { ok: true, message: "Categoría fijada; el scraper no la cambiará." };
+  } catch (error) {
+    return { ok: false, error: toMessage(error) };
+  }
+}
+
+const BULK_CHUNK = 200;
+
+/**
+ * Fija la misma categoria a varios productos (y los bloquea), p. ej. todo un grupo de "Sin
+ * categoria". Va por tandas para no pasar del largo de URL de PostgREST con el `in`.
+ */
+export async function setProductsCategory(
+  productIds: Uuid[],
+  categoryId: Uuid,
+): Promise<ActionResult> {
+  const parsed = z.array(uuid).min(1, "No hay productos.").max(5000).safeParse(productIds);
+  if (!parsed.success)
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Productos no válidos." };
+  if (!uuid.safeParse(categoryId).success) return { ok: false, error: "Categoría no válida." };
+
+  try {
+    const supabase = getSupabase();
+    const ids = [...new Set(parsed.data)];
+    for (let i = 0; i < ids.length; i += BULK_CHUNK) {
+      const { error } = await supabase
+        .from("products")
+        .update({ category_id: categoryId, category_locked: true })
+        .in("id", ids.slice(i, i + BULK_CHUNK));
+      if (error) return { ok: false, error: toMessage(error) };
+    }
+
+    revalidatePath("/");
+    revalidatePath("/products");
+    revalidatePath("/classification");
+    const n = ids.length;
+    return {
+      ok: true,
+      message: `${n === 1 ? "1 producto clasificado" : `${n} productos clasificados`}; el scraper no los cambiará.`,
+    };
   } catch (error) {
     return { ok: false, error: toMessage(error) };
   }

@@ -2,12 +2,69 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
+import { setProductCategory } from "@/app/products/actions";
 import { RemoteImage } from "@/components/brands/RemoteImage";
 import { Badge } from "@/components/ui/Badge";
+import { Select } from "@/components/ui/Select";
 import { Table, TableWrapper, TBody, TD, TH, THead, TR } from "@/components/ui/Table";
+import { useToast } from "@/components/ui/Toast";
 import { cn, formatPrice, formatRelativeTime } from "@/lib/utils";
+import type { Category } from "@/types/db";
 import { GENDER_LABELS, type ProductListItem } from "@/types/products";
+
+type CategoryOption = Pick<Category, "id" | "name">;
+
+/**
+ * Sin categoria: un desplegable para asignarla desde la lista (la fija y la bloquea). No abre el
+ * producto: la fila entera es un enlace.
+ */
+function AssignCategory({
+  product,
+  categories,
+}: {
+  product: ProductListItem;
+  categories: CategoryOption[];
+}) {
+  const router = useRouter();
+  const { showToast } = useToast();
+  const [saving, setSaving] = useState(false);
+
+  async function assign(categoryId: string) {
+    if (!categoryId) return;
+    setSaving(true);
+    try {
+      const result = await setProductCategory(product.id, categoryId);
+      if (!result.ok) {
+        showToast(result.error, "error");
+        return;
+      }
+      const name = categories.find((category) => category.id === categoryId)?.name ?? "";
+      showToast(`${product.name ?? "Producto"} → ${name}`, "ok", 2000);
+      router.refresh();
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div
+      onClick={(event) => event.stopPropagation()}
+      onKeyDown={(event) => event.stopPropagation()}
+    >
+      <Select
+        value=""
+        onChange={(event) => assign(event.target.value)}
+        placeholder="Sin categoría · asignar"
+        options={categories.map((category) => ({ value: category.id, label: category.name }))}
+        disabled={saving}
+        className="border-error/40 text-error h-7 w-48 px-2 text-xs"
+        aria-label={`Asignar categoría a ${product.name ?? "producto"}`}
+      />
+    </div>
+  );
+}
 
 const HEX6 = /^[0-9a-fA-F]{6}$/;
 
@@ -50,7 +107,13 @@ function PriceCell({ product }: { product: ProductListItem }) {
   );
 }
 
-function ProductRow({ product }: { product: ProductListItem }) {
+function ProductRow({
+  product,
+  categories,
+}: {
+  product: ProductListItem;
+  categories: CategoryOption[];
+}) {
   const router = useRouter();
   const href = `/products/${product.id}`;
 
@@ -91,6 +154,8 @@ function ProductRow({ product }: { product: ProductListItem }) {
         <span className="flex items-center gap-1.5 whitespace-nowrap">
           {product.categoryName ? (
             <Badge tone="muted">{product.categoryName}</Badge>
+          ) : categories.length > 0 ? (
+            <AssignCategory product={product} categories={categories} />
           ) : (
             <Badge tone="error">Sin categoría</Badge>
           )}
@@ -151,7 +216,14 @@ function ProductRow({ product }: { product: ProductListItem }) {
   );
 }
 
-export function ProductsTable({ products }: { products: ProductListItem[] }) {
+export function ProductsTable({
+  products,
+  categories = [],
+}: {
+  products: ProductListItem[];
+  /** Con categorias, los productos sin ella se pueden asignar desde la fila. */
+  categories?: CategoryOption[];
+}) {
   return (
     <TableWrapper>
       <Table>
@@ -172,7 +244,7 @@ export function ProductsTable({ products }: { products: ProductListItem[] }) {
         </THead>
         <TBody>
           {products.map((product) => (
-            <ProductRow key={product.id} product={product} />
+            <ProductRow key={product.id} product={product} categories={categories} />
           ))}
         </TBody>
       </Table>
