@@ -12,6 +12,7 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "export-rules": "node --env-file=.env.local scripts/export-rules.mjs",
+    "import-stores": "node --env-file=.env.local scripts/import-stores.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

@@ -1,0 +1,433 @@
+{
+  "_comment": "Tiendas fisicas propias encontradas en las webs oficiales de cada marca y en prensa (noviembre de 2026). Las entradas con `id` corrigen una tienda que ya existe; el resto se crean. Las coordenadas las calcula `npm run import-stores` al ejecutarse.",
+  "stores": [
+    {
+      "id": "599e935a-d252-4d02-ae71-edd395bbbc60",
+      "brand": "Cold Culture",
+      "name": "Flagship Madrid",
+      "address": "Calle de Fuencarral, 41",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": "ChIJUZYwmc4nQg0RX409c5ToFtY",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Cold Culture Woman",
+      "address": "Calle de Colón, 4",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Barcelona",
+      "address": "Carrer de la Canuda, 13",
+      "postcode": "08002",
+      "city": "Barcelona",
+      "country": "España",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Valencia",
+      "address": "Carrer del Comte de Salvatierra, 17",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "La Roca Village (outlet)",
+      "address": "La Roca Village",
+      "postcode": "08430",
+      "city": "Santa Agnès de Malanyanes",
+      "country": "España",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Amsterdam",
+      "address": "Leidsestraat 12",
+      "postcode": "1017 PA",
+      "city": "Amsterdam",
+      "country": "Países Bajos",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Milano",
+      "address": "Corso di Porta Ticinese, 75",
+      "postcode": "20123",
+      "city": "Milano",
+      "country": "Italia",
+      "source": "https://coldcultureworldwide.com/es/pages/stores"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "London",
+      "address": "35 Marshall Street",
+      "postcode": "W1F 7EX",
+      "city": "London",
+      "country": "Reino Unido",
+      "source": "https://londonfashionweek.co.uk/citywide/cold-culture"
+    },
+    {
+      "brand": "Cold Culture",
+      "name": "Paris",
+      "address": "67 Rue du Temple",
+      "postcode": "75003",
+      "city": "Paris",
+      "country": "Francia",
+      "source": "https://retailboss.co/cold-culture-makes-its-paris-le-marais-store-permanent-after-pop-up-run/"
+    },
+
+    {
+      "id": "b3f2d6d7-fd90-4e51-ade9-8a062faaba6e",
+      "brand": "Eme Studios",
+      "name": "Flagship Madrid",
+      "address": "Calle de Fuencarral, 47",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": null,
+      "source": "https://emestudios.com/je/es/"
+    },
+    {
+      "brand": "Eme Studios",
+      "name": "Barcelona",
+      "address": "Carrer del Duc, 14",
+      "postcode": "08002",
+      "city": "Barcelona",
+      "country": "España",
+      "source": "https://www.modaes.com/empresas/eme-studios-aterriza-en-barcelona-su-primera-tienda-como-parte-de-la-expansion-fisica"
+    },
+    {
+      "brand": "Eme Studios",
+      "name": "Valencia",
+      "address": "Carrer de Martínez Ferrando, 2",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://es.fashionnetwork.com/news/Eme-studios-se-instala-en-pleno-centro-de-valencia-con-una-tienda-permanente,1751974.html"
+    },
+    {
+      "brand": "Eme Studios",
+      "name": "London",
+      "address": "57 Carnaby Street",
+      "postcode": "W1F 9QF",
+      "city": "London",
+      "country": "Reino Unido",
+      "source": "https://www.thisissoho.co.uk/brands/emestudios/"
+    },
+
+    {
+      "id": "168de9b4-bca8-4bce-a601-39290039aae4",
+      "brand": "Fake Gods",
+      "name": "Flagship Madrid",
+      "address": "Calle de Fuencarral, 72",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": null,
+      "source": "https://gods-brand-kerb9k2klpb.gorgias.help/es-ES/donde-estan-nuestras-tiendas-5407721"
+    },
+    {
+      "brand": "Fake Gods",
+      "name": "Barcelona",
+      "address": "Carrer del Duc, 8",
+      "postcode": "08002",
+      "city": "Barcelona",
+      "country": "España",
+      "source": "https://gods-brand-kerb9k2klpb.gorgias.help/es-ES/donde-estan-nuestras-tiendas-5407721"
+    },
+    {
+      "brand": "Fake Gods",
+      "name": "Valencia",
+      "address": "Carrer del Comte de Salvatierra, 29",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://fakegodsbrand.com/en/pages/tienda-valencia"
+    },
+
+    {
+      "id": "56e68da2-75ae-4f6b-8ece-f885f1666621",
+      "brand": "Nude Project",
+      "name": "Madrid",
+      "address": "Calle de Fuencarral, 18",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": null,
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "id": "c8e5c1eb-c544-4257-8fcc-f40c757f189a",
+      "brand": "Nude Project",
+      "name": "Barcelona",
+      "address": "Carrer dels Boters, 6",
+      "postcode": "08002",
+      "city": "Barcelona",
+      "country": "España",
+      "placeId": null,
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Valencia",
+      "address": "Carrer de Martínez Ferrando, 1",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Ibiza",
+      "address": "Avinguda de Bartomeu de Roselló, 5",
+      "postcode": "07800",
+      "city": "Eivissa",
+      "country": "España",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Las Rozas Village",
+      "address": "Calle Juan Ramón Jiménez, 3",
+      "postcode": "28232",
+      "city": "Las Rozas de Madrid",
+      "country": "España",
+      "source": "https://nude-project.com/"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "La Roca Village",
+      "address": "La Roca Village",
+      "postcode": "08430",
+      "city": "Santa Agnès de Malanyanes",
+      "country": "España",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Milano",
+      "address": "Corso di Porta Ticinese, 64",
+      "postcode": "20123",
+      "city": "Milano",
+      "country": "Italia",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Roma",
+      "address": "Via Frattina, 101",
+      "postcode": "00187",
+      "city": "Roma",
+      "country": "Italia",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Lisboa",
+      "address": "Rua Áurea, 153",
+      "postcode": "1100-060",
+      "city": "Lisboa",
+      "country": "Portugal",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Amsterdam",
+      "address": "Leidsestraat 31",
+      "postcode": "1017 NT",
+      "city": "Amsterdam",
+      "country": "Países Bajos",
+      "source": "https://nude-project.com/es-eu/pages/stores"
+    },
+    {
+      "brand": "Nude Project",
+      "name": "Berlin",
+      "address": "Alte Schönhauser Straße 28",
+      "postcode": "10119",
+      "city": "Berlin",
+      "country": "Alemania",
+      "source": "https://www.modaes.com/global/companies/nude-project-lands-in-germany-with-a-flagship-store-in-berlin"
+    },
+
+    {
+      "id": "97aeedb4-678e-4d76-a63c-c770eb94684b",
+      "brand": "Scuffers",
+      "name": "Madrid",
+      "address": "Calle de Fuencarral, 74",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": null,
+      "source": "https://scuffers.com/pages/stores"
+    },
+    {
+      "brand": "Scuffers",
+      "name": "Valencia",
+      "address": "Carrer del Comte de Salvatierra, 19",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://fashionunited.es/noticias/retail/scuffers-salta-a-internacional-con-una-primera-tienda-permanente-en-amsterdam/2026022548493"
+    },
+
+    {
+      "id": "f9cc2d49-fdad-471e-9970-7ab4ca40bd66",
+      "brand": "TwoJeys",
+      "name": "Rambla de Catalunya",
+      "address": "Rambla de Catalunya, 42",
+      "postcode": "08007",
+      "city": "Barcelona",
+      "country": "España",
+      "placeId": null,
+      "source": "https://twojeys.com/es/products/tj-icon-earring"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "Canuda (flagship)",
+      "address": "Carrer de la Canuda, 24",
+      "postcode": "08002",
+      "city": "Barcelona",
+      "country": "España",
+      "source": "https://es.twojeys.com/pages/our-stores"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "Madrid",
+      "address": "Calle de Fuencarral, 71",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "source": "https://es.twojeys.com/pages/our-stores"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "Valencia",
+      "address": "Carrer del Comte de Salvatierra, 22",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://twojeys.com/products/01-earrings"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "La Roca Village",
+      "address": "La Roca Village",
+      "postcode": "08430",
+      "city": "Santa Agnès de Malanyanes",
+      "country": "España",
+      "source": "https://twojeys.com/products/01-earrings"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "Paris",
+      "address": "72 Rue Vieille du Temple",
+      "postcode": "75003",
+      "city": "Paris",
+      "country": "Francia",
+      "source": "https://twojeys.com/products/01-earrings"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "London Brewer",
+      "address": "21 Brewer Street",
+      "postcode": "W1F 0RL",
+      "city": "London",
+      "country": "Reino Unido",
+      "source": "https://twojeys.com/products/01-earrings"
+    },
+    {
+      "brand": "TwoJeys",
+      "name": "London Regent",
+      "address": "310 Regent Street",
+      "postcode": "W1B 3AU",
+      "city": "London",
+      "country": "Reino Unido",
+      "source": "https://twojeys.com/products/01-earrings"
+    },
+
+    {
+      "id": "a76e88b4-dcfc-47f8-b709-778962ea7993",
+      "brand": "Yuxus",
+      "name": "Flagship Madrid",
+      "address": "Calle de Fuencarral, 74",
+      "postcode": "28004",
+      "city": "Madrid",
+      "country": "España",
+      "placeId": null,
+      "source": "https://www.yuxus.com/es/pages/stores"
+    },
+    {
+      "brand": "Yuxus",
+      "name": "Valencia",
+      "address": "Carrer del Comte de Salvatierra, 17",
+      "postcode": "46004",
+      "city": "Valencia",
+      "country": "España",
+      "source": "https://www.yuxus.com/es/pages/stores"
+    },
+    {
+      "brand": "Yuxus",
+      "name": "Sevilla",
+      "address": "Calle Sierpes, 48",
+      "postcode": "41004",
+      "city": "Sevilla",
+      "country": "España",
+      "source": "https://www.yuxus.com/es/pages/stores"
+    },
+
+    {
+      "brand": "Suspicious Antwerp",
+      "name": "Antwerpen",
+      "address": "Kammenstraat 30",
+      "postcode": "2000",
+      "city": "Antwerpen",
+      "country": "Bélgica",
+      "source": "https://www.suspiciousantwerp.com/pages/stores"
+    },
+    {
+      "brand": "Suspicious Antwerp",
+      "name": "Gent",
+      "address": "Walpoortstraat 28",
+      "postcode": "9000",
+      "city": "Gent",
+      "country": "Bélgica",
+      "source": "https://www.suspiciousantwerp.com/pages/stores"
+    },
+    {
+      "brand": "Suspicious Antwerp",
+      "name": "Amsterdam",
+      "address": "Reestraat 26",
+      "postcode": "1016 DN",
+      "city": "Amsterdam",
+      "country": "Países Bajos",
+      "source": "https://www.suspiciousantwerp.com/pages/stores"
+    },
+    {
+      "brand": "Suspicious Antwerp",
+      "name": "Rotterdam",
+      "address": "Meent 42A",
+      "postcode": "3011 JN",
+      "city": "Rotterdam",
+      "country": "Países Bajos",
+      "source": "https://last-bucks.com/blog/merken-zoals-suspicious-antwerp/"
+    },
+    {
+      "brand": "Suspicious Antwerp",
+      "name": "Utrecht",
+      "address": "Oudegracht 135",
+      "postcode": "3511 AJ",
+      "city": "Utrecht",
+      "country": "Países Bajos",
+      "source": "https://www.suspiciousantwerp.com/pages/stores"
+    }
+  ]
+}
