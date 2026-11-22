@@ -20,7 +20,7 @@ export function RunStatusBadge({
 
   if (status === "running") {
     return (
-      <Badge tone="progress" className="stripes">
+      <Badge tone="progress">
         <Spinner size="xs" label="En curso" className="mr-1.5" />
         En curso
       </Badge>

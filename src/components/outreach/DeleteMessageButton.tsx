@@ -39,8 +39,8 @@ export function DeleteMessageButton({
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "cursor-pointer text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-          tone === "dark" ? "text-cream/60 hover:text-cream" : "text-ink/50 hover:text-error",
+          "cursor-pointer text-[11px] font-semibold transition-colors duration-150",
+          tone === "dark" ? "text-white/60 hover:text-white" : "text-ink/50 hover:text-error",
         )}
       >
         Borrar

@@ -23,7 +23,7 @@ function SummaryItem({ label, children }: { label: string; children: ReactNode }
   return (
     <div className="flex flex-col gap-1">
       <dt className="label-caps text-ink/60">{label}</dt>
-      <dd className="text-sm font-bold">{children}</dd>
+      <dd className="text-sm font-semibold">{children}</dd>
     </div>
   );
 }
@@ -107,7 +107,7 @@ export default async function ScrapeDetailPage({
         </Card>
 
         {run.status === "error" || run.error_message ? (
-          <div className="border-error bg-paper shadow-hard border-2 p-4">
+          <div className="border-error/25 bg-error-soft rounded-xl border p-4">
             <p className="label-caps text-error">
               {run.status === "error" ? errorCodeLabel(run.error_code) : "Avisos"}
               {run.error_code ? ` · ${run.error_code}` : ""}

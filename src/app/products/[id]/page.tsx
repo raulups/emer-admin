@@ -54,15 +54,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="flex flex-col gap-4">
       {/* Cabecera */}
-      <div className="border-ink bg-paper shadow-hard flex flex-col gap-3 border-2 p-4">
+      <div className="border-line bg-paper flex flex-col gap-3 border p-4 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="text-ink/50 flex flex-wrap items-center gap-2 text-xs uppercase">
+            <div className="text-ink/50 flex flex-wrap items-center gap-2 text-xs">
               <Link href="/products" className="hover:underline">
                 Productos /
               </Link>
               {brand ? (
-                <Link href={`/brands/${brand.id}`} className="font-bold hover:underline">
+                <Link href={`/brands/${brand.id}`} className="font-semibold hover:underline">
                   {brand.name}
                 </Link>
               ) : null}
@@ -117,7 +117,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         />
 
         {!categoriesResult.ok ? (
-          <p className="border-error text-error border-2 p-2 text-xs">
+          <p className="border-error text-error border p-2 text-xs">
             No se han podido cargar las categorías: {categoriesResult.error}
           </p>
         ) : null}

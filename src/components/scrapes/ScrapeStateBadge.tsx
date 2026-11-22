@@ -9,7 +9,7 @@ import {
 export function ScrapeStateBadge({ status }: { status: ScrapeRunState }) {
   if (status === "running") {
     return (
-      <Badge tone="progress" className="stripes">
+      <Badge tone="progress">
         <Spinner size="xs" label="En curso" className="mr-1.5" />
         {SCRAPE_RUN_STATE_LABELS.running}
       </Badge>

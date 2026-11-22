@@ -40,15 +40,15 @@ export function ScrapesAutoRefresh() {
   return (
     <span
       className={cn(
-        "border-ink inline-flex items-center gap-2 border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase",
-        visible ? "bg-paper" : "bg-cream",
+        "border-line inline-flex items-center gap-2 border px-2 py-1 text-[11px] font-semibold",
+        visible ? "bg-paper" : "bg-subtle",
       )}
       title="La tabla se actualiza sola al empezar o terminar cada ejecución."
     >
       <span
         aria-hidden
         className={cn(
-          "border-ink size-2.5 border-2",
+          "border-line size-2.5 border",
           visible && busy ? "bg-progress animate-pulse" : "bg-paper",
         )}
       />

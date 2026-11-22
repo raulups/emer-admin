@@ -38,7 +38,7 @@ function StringValue({ value }: { value: string }) {
         <button
           type="button"
           onClick={() => setExpanded((current) => !current)}
-          className="border-ink bg-cream text-ink ml-1.5 cursor-pointer border-2 px-1 text-[10px] font-bold uppercase"
+          className="border-line bg-subtle text-ink ml-1.5 cursor-pointer border px-1 text-[11px] font-semibold"
         >
           {expanded ? "menos" : `+${value.length - LONG_STRING}`}
         </button>
@@ -54,7 +54,7 @@ function Primitive({ value }: { value: JsonValue }) {
     case "number":
       return <span className="text-json-number">{String(value)}</span>;
     case "boolean":
-      return <span className="text-json-boolean font-bold">{String(value)}</span>;
+      return <span className="text-json-boolean font-semibold">{String(value)}</span>;
     case "null":
       return <span className="text-json-null italic">null</span>;
     default:
@@ -79,7 +79,7 @@ function JsonNode({ name, value, depth, openDepth, comma }: NodeProps) {
   const [open, setOpen] = useState(depth < openDepth);
 
   const label =
-    name === null ? null : <span className="text-json-key font-bold">&quot;{name}&quot;</span>;
+    name === null ? null : <span className="text-json-key font-semibold">&quot;{name}&quot;</span>;
 
   if (!isBranch) {
     return (
@@ -108,7 +108,7 @@ function JsonNode({ name, value, depth, openDepth, comma }: NodeProps) {
           type="button"
           onClick={() => setOpen((current) => !current)}
           aria-expanded={open}
-          className="border-ink bg-cream mt-0.5 shrink-0 cursor-pointer border-2 px-1 text-[10px] leading-none font-bold"
+          className="border-line bg-subtle mt-0.5 shrink-0 cursor-pointer border px-1 text-[11px] leading-none font-semibold"
           aria-label={open ? "Plegar" : "Desplegar"}
         >
           {open ? "−" : "+"}
@@ -129,7 +129,7 @@ function JsonNode({ name, value, depth, openDepth, comma }: NodeProps) {
 
       {open ? (
         <>
-          <div className="border-ink/15 border-l-2 pl-1">
+          <div className="border-line border-l pl-1">
             {entries.length === 0 ? (
               <div className="text-ink/40 pl-4 text-xs">(vacío)</div>
             ) : (
@@ -207,7 +207,7 @@ export function JsonViewer({ value, filename, defaultDepth = 2, note }: JsonView
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="border-ink bg-cream flex flex-wrap items-center justify-between gap-2 border-2 p-2">
+      <div className="border-line bg-subtle flex flex-wrap items-center justify-between gap-2 border p-2">
         <p className="text-ink/60 text-xs">
           {note ? `${note} · ` : ""}
           {sizeKb} KB
@@ -230,7 +230,7 @@ export function JsonViewer({ value, filename, defaultDepth = 2, note }: JsonView
 
       <div
         className={cn(
-          "border-ink bg-paper max-h-[70vh] overflow-auto border-2 p-3",
+          "border-line bg-paper max-h-[70vh] overflow-auto border p-3",
           "font-mono text-xs leading-relaxed",
         )}
       >

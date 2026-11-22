@@ -7,9 +7,7 @@ export function TableWrapper({ className, children }: { className?: string; chil
   return (
     // `relative`: si no, los `sr-only` (position: absolute) de las cabeceras escapan del
     // scroll y ensanchan toda la pagina en movil.
-    <div
-      className={cn("border-ink bg-paper shadow-hard relative overflow-x-auto border-2", className)}
-    >
+    <div className={cn("bg-paper relative overflow-x-auto rounded-xl border shadow-xs", className)}>
       {children}
     </div>
   );
@@ -22,7 +20,7 @@ export function Table({ className, children }: { className?: string; children: R
 }
 
 export function THead({ className, children }: { className?: string; children: ReactNode }) {
-  return <thead className={cn("bg-ink text-cream", className)}>{children}</thead>;
+  return <thead className={cn("bg-subtle/60 text-ink/55 border-b", className)}>{children}</thead>;
 }
 
 export function TBody({ className, children }: { className?: string; children: ReactNode }) {
@@ -39,10 +37,9 @@ export function TR({ interactive = false, className, children, ...props }: TRPro
   return (
     <tr
       className={cn(
-        "border-ink border-b-2 last:border-b-0",
-        "transition-[background-color,box-shadow] duration-[120ms]",
-        interactive &&
-          "hover:bg-cream cursor-pointer hover:shadow-[inset_5px_0_0_var(--color-ink)]",
+        "border-b last:border-b-0",
+        "transition-colors duration-150",
+        interactive && "hover:bg-subtle/70 cursor-pointer",
         className,
       )}
       {...props}
@@ -58,13 +55,7 @@ export interface THProps extends ThHTMLAttributes<HTMLTableCellElement> {
 
 export function TH({ className, children, ...props }: THProps) {
   return (
-    <th
-      className={cn(
-        "px-3 py-2 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase",
-        className,
-      )}
-      {...props}
-    >
+    <th className={cn("px-3 py-2.5 text-xs font-medium whitespace-nowrap", className)} {...props}>
       {children}
     </th>
   );
@@ -76,7 +67,7 @@ export interface TDProps extends TdHTMLAttributes<HTMLTableCellElement> {
 
 export function TD({ className, children, ...props }: TDProps) {
   return (
-    <td className={cn("px-3 py-1.5 align-middle", className)} {...props}>
+    <td className={cn("px-3 py-2.5 align-middle", className)} {...props}>
       {children}
     </td>
   );

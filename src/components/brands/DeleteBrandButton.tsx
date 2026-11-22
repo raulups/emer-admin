@@ -67,7 +67,7 @@ export function DeleteBrandButton({ brandId, brandName, productsCount }: DeleteB
               <li>Las ejecuciones del scraper de esta marca</li>
               <li>Sus tiendas físicas y sus mapeos de categorías</li>
             </ul>
-            <p className="text-error font-bold">Esta acción no se puede deshacer.</p>
+            <p className="text-error font-semibold">Esta acción no se puede deshacer.</p>
           </div>
         }
       />

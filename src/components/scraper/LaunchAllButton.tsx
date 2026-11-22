@@ -77,9 +77,9 @@ export function LaunchAllButton({ brandsCount }: { brandsCount: number }) {
 
   if (busy) {
     return (
-      <div className="border-ink bg-progress flex items-center gap-3 border-2 px-3 py-1.5 text-sm">
+      <div className="border-line bg-progress flex items-center gap-3 border px-3 py-1.5 text-sm">
         <Spinner size="xs" />
-        <span className="font-bold">
+        <span className="font-semibold">
           {queue.status === "stopping" ? "Deteniendo…" : "Todas las marcas"}{" "}
           {formatNumber(Math.min(queue.done + 1, queue.total))}/{formatNumber(queue.total)}
         </span>
@@ -116,7 +116,7 @@ export function LaunchAllButton({ brandsCount }: { brandsCount: number }) {
             </p>
             <p>
               Cada marca lee su{" "}
-              <code className="bg-cream px-1 font-mono text-xs">/products.json</code> y actualiza
+              <code className="bg-subtle px-1 font-mono text-xs">/products.json</code> y actualiza
               sus productos. Tarda unos 20 minutos; puedes detenerla en cualquier momento.
             </p>
             <p className="text-ink/60">

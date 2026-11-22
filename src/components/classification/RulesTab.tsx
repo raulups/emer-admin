@@ -125,7 +125,7 @@ export function RulesTab({ rules, categories }: RulesTabProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="border-ink bg-cream border-2 p-3 text-xs">
+      <p className="border-line bg-subtle border p-3 text-xs">
         <strong>Prioridad mayor gana.</strong> Las palabras se buscan como palabra completa (admiten
         plural s/es) primero en el título y luego en el product_type. Los cambios se aplican en el
         próximo scrape.
@@ -134,7 +134,7 @@ export function RulesTab({ rules, categories }: RulesTabProps) {
       <RuleTester rules={classifyRules} categories={categories} />
 
       {/* Alta */}
-      <div className="border-ink bg-paper flex flex-wrap items-end gap-3 border-2 p-3">
+      <div className="border-line bg-paper flex flex-wrap items-end gap-3 border p-3">
         <Input
           label="Nueva palabra clave"
           placeholder="hoodie"
@@ -206,7 +206,7 @@ export function RulesTab({ rules, categories }: RulesTabProps) {
           <TBody>
             {visible.map((rule) => (
               <TR key={rule.id} className={busyId === rule.id ? "opacity-50" : undefined}>
-                <TD className="font-mono font-bold">{rule.keyword}</TD>
+                <TD className="font-mono font-semibold">{rule.keyword}</TD>
 
                 <TD>
                   <Select
@@ -235,7 +235,7 @@ export function RulesTab({ rules, categories }: RulesTabProps) {
                         void patch(rule, { priority: value });
                       }
                     }}
-                    className="border-ink bg-paper w-20 border-2 px-2 py-1 text-right text-xs"
+                    className="border-line bg-paper w-20 border px-2 py-1 text-right text-xs"
                   />
                 </TD>
 
@@ -256,7 +256,7 @@ export function RulesTab({ rules, categories }: RulesTabProps) {
       </TableWrapper>
 
       {visible.length === 0 ? (
-        <p className="border-ink bg-paper text-ink/60 border-2 p-6 text-center text-sm">
+        <p className="border-line bg-paper text-ink/60 border p-6 text-center text-sm">
           Ninguna regla coincide con el filtro.
         </p>
       ) : null}

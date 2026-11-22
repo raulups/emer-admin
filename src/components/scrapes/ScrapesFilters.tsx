@@ -34,7 +34,7 @@ export function ScrapesFilters({ filters, brands, total, limit }: ScrapesFilters
   const active = filters.brand !== null || filters.status !== null;
 
   return (
-    <div className="border-ink bg-paper shadow-hard flex flex-wrap items-end justify-between gap-3 border-2 p-3">
+    <div className="border-line bg-paper flex flex-wrap items-end justify-between gap-3 border p-3 shadow-sm">
       <div className="flex flex-wrap items-end gap-3">
         <Select
           label="Estado"

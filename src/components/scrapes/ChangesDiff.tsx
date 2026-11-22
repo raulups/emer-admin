@@ -62,7 +62,7 @@ export function ChangesDiff({ changes }: { changes: Json | null }) {
 
   if (entries === null) {
     return (
-      <pre className="border-ink bg-cream max-w-3xl overflow-x-auto border-2 p-2 text-[11px] whitespace-pre-wrap">
+      <pre className="border-line bg-subtle max-w-3xl overflow-x-auto border p-2 text-[11px] whitespace-pre-wrap">
         {JSON.stringify(changes, null, 2)}
       </pre>
     );
@@ -73,19 +73,19 @@ export function ChangesDiff({ changes }: { changes: Json | null }) {
   }
 
   return (
-    <div className="border-ink max-w-3xl overflow-x-auto border-2">
+    <div className="border-line max-w-3xl overflow-x-auto border">
       <table className="w-full border-collapse text-left text-xs">
-        <thead className="bg-cream">
-          <tr className="border-ink border-b-2">
-            <th className="px-2 py-1 text-[10px] font-bold tracking-widest uppercase">Campo</th>
-            <th className="px-2 py-1 text-[10px] font-bold tracking-widest uppercase">Antes</th>
-            <th className="px-2 py-1 text-[10px] font-bold tracking-widest uppercase">Después</th>
+        <thead className="bg-subtle">
+          <tr className="border-line border-b">
+            <th className="px-2 py-1 text-[11px] font-semibold">Campo</th>
+            <th className="px-2 py-1 text-[11px] font-semibold">Antes</th>
+            <th className="px-2 py-1 text-[11px] font-semibold">Después</th>
           </tr>
         </thead>
         <tbody>
           {entries.map((entry) => (
-            <tr key={entry.field} className="border-ink border-b last:border-b-0">
-              <td className="px-2 py-1 align-top font-bold whitespace-nowrap">{entry.field}</td>
+            <tr key={entry.field} className="border-line border-b last:border-b-0">
+              <td className="px-2 py-1 align-top font-semibold whitespace-nowrap">{entry.field}</td>
               <td className="text-error px-2 py-1 align-top break-all whitespace-pre-wrap">
                 {formatValue(entry.before)}
               </td>

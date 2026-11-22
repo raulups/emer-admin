@@ -12,7 +12,7 @@ export function Gallery({ images, alt }: { images: GalleryImage[]; alt: string }
 
   if (!current) {
     return (
-      <div className="border-ink/30 bg-cream flex aspect-square w-full items-center justify-center border-2 border-dashed">
+      <div className="border-line bg-subtle flex aspect-square w-full items-center justify-center border border-dashed">
         <span className="label-caps text-ink/40">Sin imágenes</span>
       </div>
     );
@@ -24,7 +24,7 @@ export function Gallery({ images, alt }: { images: GalleryImage[]; alt: string }
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="border-ink bg-paper border-2" style={{ aspectRatio: ratio }}>
+      <div className="border-line bg-paper border" style={{ aspectRatio: ratio }}>
         <RemoteImage
           key={current.src}
           src={current.src}
@@ -48,8 +48,10 @@ export function Gallery({ images, alt }: { images: GalleryImage[]; alt: string }
                 aria-current={position === index}
                 aria-label={`Imagen ${position + 1} de ${images.length}`}
                 className={cn(
-                  "block cursor-pointer border-2 transition-colors duration-[120ms]",
-                  position === index ? "border-ink bg-ink" : "border-ink/30 hover:border-ink",
+                  "block cursor-pointer border transition-colors duration-150",
+                  position === index
+                    ? "border-accent ring-accent/20 ring-2"
+                    : "border-line hover:border-line-strong",
                 )}
               >
                 <RemoteImage

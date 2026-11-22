@@ -35,7 +35,7 @@ export function Spinner({ size = "md", className, label = "Cargando" }: SpinnerP
           key={delay}
           aria-hidden
           className={cn(
-            "animate-loader-block inline-block bg-current motion-reduce:animate-none",
+            "animate-loader-block inline-block rounded-full bg-current motion-reduce:animate-none",
             box,
           )}
           style={{ animationDelay: delay }}
@@ -48,9 +48,9 @@ export function Spinner({ size = "md", className, label = "Cargando" }: SpinnerP
 /** Loader centrado con texto, para estados de carga de una seccion. */
 export function LoadingBlock({ text = "Cargando…" }: { text?: string }) {
   return (
-    <div className="border-ink bg-paper shadow-hard flex flex-col items-center justify-center gap-4 border-2 p-10">
+    <div className="bg-paper text-ink/40 flex flex-col items-center justify-center gap-3 rounded-xl border p-10">
       <Spinner size="lg" />
-      <p className="label-caps text-ink/70">{text}</p>
+      <p className="text-ink/55 text-sm">{text}</p>
     </div>
   );
 }

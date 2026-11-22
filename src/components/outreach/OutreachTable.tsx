@@ -43,7 +43,7 @@ export function OutreachTable({ items }: { items: OutreachListItem[] }) {
               >
                 <TD className="whitespace-nowrap">
                   <div className="flex flex-col">
-                    <span className="font-bold">{item.brand.name}</span>
+                    <span className="font-semibold">{item.brand.name}</span>
                     {item.brand.url ? (
                       <span className="text-ink/50 text-xs">{displayUrl(item.brand.url)}</span>
                     ) : null}
@@ -68,7 +68,7 @@ export function OutreachTable({ items }: { items: OutreachListItem[] }) {
                 <TD className="text-xs whitespace-nowrap">
                   {lastMessage ? (
                     <div className="flex flex-col">
-                      <span className="font-bold">
+                      <span className="font-semibold">
                         {MESSAGE_DIRECTION_LABELS[lastMessage.direction]} ·{" "}
                         {OUTREACH_CHANNEL_LABELS[lastMessage.channel]}
                       </span>
@@ -83,7 +83,7 @@ export function OutreachTable({ items }: { items: OutreachListItem[] }) {
                 <TD className="text-right">{item.messageCount}</TD>
                 <TD className="text-xs whitespace-nowrap">
                   {outreach?.follow_up_at ? (
-                    <span className={cn(item.followUpDue && "text-error font-bold")}>
+                    <span className={cn(item.followUpDue && "text-error font-semibold")}>
                       {formatDate(`${outreach.follow_up_at}T00:00:00`)}
                       {item.followUpDue ? " · vencido" : ""}
                     </span>

@@ -13,7 +13,7 @@ export function MessageTimeline({
 }) {
   if (messages.length === 0) {
     return (
-      <p className="text-ink/60 border-ink/30 border-2 border-dashed p-4 text-center text-sm">
+      <p className="text-ink/60 border-line border border-dashed p-4 text-center text-sm">
         Todavía no hay mensajes. Registra el primero arriba.
       </p>
     );
@@ -27,17 +27,17 @@ export function MessageTimeline({
           <li
             key={message.id}
             className={cn(
-              "border-ink border-2",
-              inbound ? "bg-cream mr-6 sm:mr-12" : "bg-paper ml-6 sm:ml-12",
+              "border-line border",
+              inbound ? "bg-subtle mr-6 sm:mr-12" : "bg-paper ml-6 sm:ml-12",
             )}
           >
             <div
               className={cn(
-                "border-ink flex flex-wrap items-center justify-between gap-2 border-b-2 px-3 py-1.5",
-                inbound ? "bg-ink text-cream" : "bg-cream",
+                "border-line flex flex-wrap items-center justify-between gap-2 border-b px-3 py-1.5",
+                inbound ? "bg-accent-soft text-accent" : "bg-subtle",
               )}
             >
-              <span className="text-[10px] font-bold tracking-widest uppercase">
+              <span className="text-[11px] font-semibold">
                 {inbound ? "← " : "→ "}
                 {MESSAGE_DIRECTION_LABELS[message.direction]} ·{" "}
                 {OUTREACH_CHANNEL_LABELS[message.channel]}

@@ -59,11 +59,11 @@ export function QuickTags({
             aria-pressed={active}
             title={`${active ? "Quitar" : "Añadir"} «${tag}»: ${BRAND_TAG_DESCRIPTIONS[tag]}`}
             className={cn(
-              "cursor-pointer border-2 font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-              size === "sm" ? "px-1 py-px text-[9px]" : "px-1.5 py-0.5 text-[10px]",
+              "cursor-pointer rounded-full border font-medium transition-colors duration-150",
+              size === "sm" ? "px-1.5 py-px text-[11px]" : "px-2 py-0.5 text-xs",
               active
-                ? "border-ink bg-ink text-cream"
-                : "border-ink/25 bg-paper text-ink/35 hover:border-ink hover:bg-cream hover:text-ink",
+                ? "border-accent/40 bg-accent-soft text-accent"
+                : "border-line bg-paper text-ink/40 hover:border-line-strong hover:text-ink",
             )}
           >
             {tag}

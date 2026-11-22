@@ -50,8 +50,10 @@ function isTypingTarget(target: EventTarget | null): boolean {
 
 function chipClasses(active: boolean): string {
   return cn(
-    "border-ink cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-    active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+    "cursor-pointer rounded-full border px-2.5 py-1 text-xs font-medium transition-colors duration-150",
+    active
+      ? "border-accent/40 bg-accent-soft text-accent"
+      : "border-line bg-paper text-ink/70 hover:border-line-strong hover:text-ink",
   );
 }
 
@@ -154,7 +156,7 @@ export function BrandsBrowser({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="border-ink bg-paper shadow-hard sticky top-0 z-20 flex flex-col gap-3 border-2 p-3 max-lg:top-[60px]">
+      <div className="bg-paper/95 z-20 flex flex-col gap-3 rounded-xl border p-3 shadow-xs backdrop-blur lg:sticky lg:top-4">
         <div className="flex flex-wrap items-end gap-3">
           <Input
             ref={searchRef}
@@ -186,7 +188,7 @@ export function BrandsBrowser({
 
           <div className="flex flex-col gap-1.5">
             <span className="label-caps">Vista</span>
-            <div className="flex">
+            <div className="bg-subtle flex h-9 items-center gap-1 rounded-lg p-1">
               {BRAND_VIEW_MODES.map((mode) => (
                 <button
                   key={mode}
@@ -194,9 +196,8 @@ export function BrandsBrowser({
                   onClick={() => setView(mode)}
                   aria-pressed={view === mode}
                   className={cn(
-                    "border-ink cursor-pointer border-2 px-3 py-2 text-xs font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-                    mode === "table" && "-ml-0.5",
-                    view === mode ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+                    "h-7 cursor-pointer rounded-md px-3 text-xs font-medium transition-[background-color,color,box-shadow] duration-150",
+                    view === mode ? "bg-paper text-ink shadow-sm" : "text-ink/55 hover:text-ink",
                   )}
                 >
                   {mode === "grid" ? "Cards" : "Tabla"}
@@ -217,8 +218,10 @@ export function BrandsBrowser({
             aria-pressed={onlyAttention}
             title="Sin tienda, sin imágenes, con productos sin categoría o con el último scrape fallido"
             className={cn(
-              "border-ink cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-              onlyAttention ? "bg-progress" : "bg-paper hover:bg-cream",
+              "cursor-pointer rounded-full border px-2.5 py-1 text-xs font-medium transition-colors duration-150",
+              onlyAttention
+                ? "border-progress/60 bg-progress-soft text-[#8a5a00]"
+                : "border-line bg-paper text-ink/70 hover:border-line-strong hover:text-ink",
             )}
           >
             Por revisar · {formatNumber(attentionCount)}
@@ -250,7 +253,7 @@ export function BrandsBrowser({
       </div>
 
       {!countsAvailable ? (
-        <p className="border-error bg-paper text-error border-2 p-3 text-xs">
+        <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
           No se han podido calcular los contadores de productos. Se muestran las marcas sin
           contadores.
         </p>
@@ -285,9 +288,10 @@ export function BrandsBrowser({
       )}
 
       <p className="text-ink/40 text-[11px]">
-        Atajos: <kbd className="font-bold">/</kbd> buscar · <kbd className="font-bold">N</kbd> nueva
-        marca · <kbd className="font-bold">Enter</kbd> en el buscador abre la única coincidencia ·{" "}
-        <kbd className="font-bold">Esc</kbd> cierra el pop-up.
+        Atajos: <kbd className="font-semibold">/</kbd> buscar ·{" "}
+        <kbd className="font-semibold">N</kbd> nueva marca ·{" "}
+        <kbd className="font-semibold">Enter</kbd> en el buscador abre la única coincidencia ·{" "}
+        <kbd className="font-semibold">Esc</kbd> cierra el pop-up.
       </p>
 
       <BrandQuickEditModal

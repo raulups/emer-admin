@@ -43,11 +43,11 @@ export function RemoteImage({
     return (
       <div
         className={cn(
-          "border-ink/30 bg-cream flex items-center justify-center border-2 border-dashed",
+          "border-line bg-subtle flex items-center justify-center border border-dashed",
           className,
         )}
       >
-        <span className="text-ink/40 px-2 text-center text-[10px] font-bold tracking-widest uppercase">
+        <span className="text-ink/40 px-2 text-center text-[11px] font-semibold">
           {fallbackLabel}
         </span>
       </div>
@@ -63,7 +63,7 @@ export function RemoteImage({
       height={height ?? undefined}
       loading={loading}
       onError={() => setFailedSrc(trimmed)}
-      className={cn("bg-cream", fit === "cover" ? "object-cover" : "object-contain", className)}
+      className={cn("bg-subtle", fit === "cover" ? "object-cover" : "object-contain", className)}
     />
   );
 }

@@ -169,13 +169,13 @@ export function ImageDropzone({
       />
 
       {shown ? (
-        <div className="border-ink bg-paper flex flex-col gap-2 border-2 p-2">
+        <div className="border-line bg-paper flex flex-col gap-2 border p-2">
           <button
             type="button"
             onClick={() => setZoomed(true)}
             title="Ver en grande"
             className={cn("flex cursor-zoom-in items-center justify-center", boxSize)}
-            style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-cream)" }}
+            style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-subtle)" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -190,8 +190,8 @@ export function ImageDropzone({
             <span className="text-ink/60 text-[11px]">
               {value.file ? (
                 <>
-                  <span className="font-bold">{value.file.name}</span> · {formatKb(value.file.size)}{" "}
-                  · se subirá al guardar
+                  <span className="font-semibold">{value.file.name}</span> ·{" "}
+                  {formatKb(value.file.size)} · se subirá al guardar
                 </>
               ) : (
                 "Imagen guardada"
@@ -225,15 +225,15 @@ export function ImageDropzone({
           onDragLeave={() => setDragging(false)}
           onDrop={onDrop}
           className={cn(
-            "flex cursor-pointer flex-col items-center justify-center gap-1 border-2 border-dashed p-6 text-center transition-colors duration-[120ms]",
+            "flex cursor-pointer flex-col items-center justify-center gap-1 border border-dashed p-6 text-center transition-colors duration-150",
             boxSize,
-            dragging ? "border-ink bg-ink text-cream" : "border-ink bg-paper text-ink",
+            dragging
+              ? "border-accent bg-accent-soft text-accent"
+              : "border-line-strong bg-subtle/40 text-ink hover:border-ink/30 hover:bg-subtle",
           )}
         >
-          <span className="text-xs font-bold tracking-widest uppercase">
-            Arrastra la imagen o haz click
-          </span>
-          <span className={cn("text-[11px]", dragging ? "text-cream/70" : "text-ink/50")}>
+          <span className="text-xs font-semibold">Arrastra la imagen o haz click</span>
+          <span className={cn("text-[11px]", dragging ? "text-accent/70" : "text-ink/50")}>
             PNG, JPG, WEBP, AVIF o SVG · hasta {MAX_MB} MB
           </span>
         </div>
@@ -253,7 +253,7 @@ export function ImageDropzone({
             }}
             placeholder="https://res.cloudinary.com/…"
             autoComplete="off"
-            className="border-ink bg-paper min-w-0 flex-1 border-2 px-2 py-1 text-xs"
+            className="border-line bg-paper min-w-0 flex-1 border px-2 py-1 text-xs"
           />
           <Button variant="secondary" size="sm" onClick={applyUrl}>
             Usar
@@ -283,7 +283,7 @@ export function ImageDropzone({
       >
         <div
           className="flex items-center justify-center"
-          style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-cream)" }}
+          style={isLogo ? CHECKERBOARD : { backgroundColor: "var(--color-subtle)" }}
         >
           {shown ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -292,7 +292,7 @@ export function ImageDropzone({
         </div>
       </Modal>
 
-      {shownError ? <p className="text-error text-xs font-bold">{shownError}</p> : null}
+      {shownError ? <p className="text-error text-xs font-semibold">{shownError}</p> : null}
       {!shownError && hint ? <p className="text-ink/60 text-xs">{hint}</p> : null}
     </div>
   );

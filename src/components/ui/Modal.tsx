@@ -83,7 +83,7 @@ export function Modal({
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-start justify-center p-3 sm:items-center sm:p-6">
       <div
-        className="bg-ink/60 animate-fade fixed inset-0"
+        className="bg-ink/40 animate-fade fixed inset-0 backdrop-blur-[2px]"
         onClick={dismissable ? onClose : undefined}
         aria-hidden
       />
@@ -92,16 +92,16 @@ export function Modal({
         aria-modal="true"
         aria-label={typeof title === "string" ? title : undefined}
         className={cn(
-          "border-ink bg-paper shadow-hard-lg animate-pop relative z-10 flex max-h-[calc(100dvh-1.5rem)] w-full flex-col border-2 sm:max-h-[calc(100dvh-3rem)]",
+          "bg-paper animate-pop relative z-10 flex max-h-[calc(100dvh-1.5rem)] w-full flex-col overflow-hidden rounded-2xl border shadow-lg sm:max-h-[calc(100dvh-3rem)]",
           SIZES[size],
           className,
         )}
       >
         {title ? (
-          <div className="border-ink bg-ink text-cream flex shrink-0 items-center justify-between gap-3 border-b-2 px-4 py-2.5">
+          <div className="flex shrink-0 items-start justify-between gap-3 border-b px-5 py-4">
             <div className="min-w-0">
-              <h2 className="truncate text-sm tracking-wider">{title}</h2>
-              {subtitle ? <p className="text-cream/60 truncate text-[11px]">{subtitle}</p> : null}
+              <h2 className="truncate text-base font-semibold">{title}</h2>
+              {subtitle ? <p className="text-ink/50 mt-0.5 truncate text-xs">{subtitle}</p> : null}
             </div>
             {dismissable ? (
               <button
@@ -109,18 +109,18 @@ export function Modal({
                 onClick={onClose}
                 aria-label="Cerrar"
                 title="Cerrar (Esc)"
-                className="border-cream text-cream hover:bg-cream hover:text-ink flex size-6 shrink-0 cursor-pointer items-center justify-center border-2 text-xs font-bold transition-colors duration-[120ms]"
+                className="text-ink/50 hover:bg-subtle hover:text-ink -mt-1 -mr-1 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-sm transition-colors duration-150"
               >
-                X
+                ✕
               </button>
             ) : null}
           </div>
         ) : null}
 
-        <div className={cn("min-h-0 flex-1 overflow-y-auto p-4", bodyClassName)}>{children}</div>
+        <div className={cn("min-h-0 flex-1 overflow-y-auto p-5", bodyClassName)}>{children}</div>
 
         {footer ? (
-          <div className="border-ink bg-paper flex shrink-0 items-center justify-end gap-2 border-t-2 px-4 py-2.5">
+          <div className="bg-subtle/50 flex shrink-0 items-center justify-end gap-2 border-t px-5 py-3">
             {footer}
           </div>
         ) : null}

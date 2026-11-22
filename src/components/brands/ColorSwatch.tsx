@@ -27,7 +27,7 @@ export function ColorSwatch({ color, showValue = true, size = "sm", className }:
     <span className={cn("inline-flex items-center gap-1.5", className)}>
       <span
         aria-hidden
-        className={cn("border-ink shrink-0 border-2", box, !valid && "bg-cream")}
+        className={cn("border-line shrink-0 border", box, !valid && "bg-subtle")}
         style={valid ? { backgroundColor: value } : undefined}
         title={value}
       />

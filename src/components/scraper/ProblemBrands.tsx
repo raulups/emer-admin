@@ -68,7 +68,7 @@ export function ProblemBrands({ brands }: { brands: ProblemBrand[] }) {
               {brands.map((brand) => (
                 <TR key={brand.id}>
                   <TD>
-                    <Link href={`/brands/${brand.id}`} className="font-bold hover:underline">
+                    <Link href={`/brands/${brand.id}`} className="font-semibold hover:underline">
                       {brand.name}
                     </Link>
                   </TD>
@@ -97,7 +97,7 @@ export function ProblemBrands({ brands }: { brands: ProblemBrand[] }) {
                     ) : null}
                   </TD>
 
-                  <TD className="text-right font-bold">
+                  <TD className="text-right font-semibold">
                     <span className={brand.productsCount === 0 ? "text-error" : undefined}>
                       {formatNumber(brand.productsCount)}
                     </span>

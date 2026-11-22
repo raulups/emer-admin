@@ -3,7 +3,7 @@ import type { InputHTMLAttributes, ReactNode, Ref } from "react";
 import { cn } from "@/lib/utils";
 
 export const fieldClasses =
-  "w-full border-2 border-ink bg-paper px-3 py-2 text-base text-ink sm:text-sm placeholder:text-ink/40 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-50 transition-[box-shadow,translate] duration-[120ms] hover:shadow-hard-sm focus:shadow-hard-sm focus:-translate-x-px focus:-translate-y-px";
+  "h-9 w-full rounded-md border border-line bg-paper px-3 text-base text-ink shadow-xs sm:text-sm placeholder:text-ink/40 transition-[border-color,box-shadow] duration-150 hover:border-line-strong focus:border-accent focus:outline-none focus:ring-3 focus:ring-accent/15 disabled:cursor-not-allowed disabled:bg-subtle disabled:opacity-60";
 
 export interface FieldWrapperProps {
   label?: ReactNode;
@@ -25,9 +25,9 @@ export function Field({ label, hint, error, htmlFor, className, children }: Fiel
       ) : null}
       {children}
       {error ? (
-        <p className="text-error text-xs font-bold">{error}</p>
+        <p className="text-error text-xs font-medium">{error}</p>
       ) : hint ? (
-        <p className="text-ink/60 text-xs">{hint}</p>
+        <p className="text-ink/50 text-xs">{hint}</p>
       ) : null}
     </div>
   );

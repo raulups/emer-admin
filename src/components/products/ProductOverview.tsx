@@ -14,7 +14,7 @@ const HEX6 = /^[0-9a-fA-F]{6}$/;
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border-ink/10 flex flex-col gap-0.5 border-b-2 py-1.5 last:border-b-0">
+    <div className="border-line flex flex-col gap-0.5 border-b py-1.5 last:border-b-0">
       <dt className="label-caps text-ink/50">{label}</dt>
       <dd className="text-sm break-words">{children}</dd>
     </div>
@@ -62,7 +62,7 @@ export function ProductOverview({ detail }: { detail: ProductDetailData }) {
             <CardHeader title="Precio" />
             <CardBody className="flex flex-col gap-2">
               <div className="flex flex-wrap items-baseline gap-3">
-                <span className="text-4xl leading-none font-bold tracking-tighter">
+                <span className="text-4xl leading-none font-semibold tracking-tight">
                   {formatPrice(product.current_price, product.currency)}
                 </span>
                 {onSale ? (
@@ -87,9 +87,9 @@ export function ProductOverview({ detail }: { detail: ProductDetailData }) {
                 ) : null}
                 <Row label="Disponible">
                   {product.available === true ? (
-                    <span className="text-ok font-bold">Sí</span>
+                    <span className="text-ok font-semibold">Sí</span>
                   ) : product.available === false ? (
-                    <span className="text-error font-bold">No</span>
+                    <span className="text-error font-semibold">No</span>
                   ) : (
                     <Empty />
                   )}
@@ -120,7 +120,7 @@ export function ProductOverview({ detail }: { detail: ProductDetailData }) {
                   {HEX6.test(colorHex) ? (
                     <span
                       aria-hidden
-                      className="border-ink size-4 border-2"
+                      className="border-line size-4 border"
                       style={{ backgroundColor: `#${colorHex}` }}
                     />
                   ) : null}
@@ -186,12 +186,12 @@ export function ProductOverview({ detail }: { detail: ProductDetailData }) {
           </dl>
 
           {attrOptions.length > 0 ? (
-            <div className="border-ink mt-3 border-t-2 pt-3">
+            <div className="border-line mt-3 border-t pt-3">
               <span className="label-caps text-ink/60">Options</span>
               <ul className="mt-1.5 flex flex-col gap-1">
                 {attrOptions.map((option, index) => (
                   <li key={`${option?.name ?? index}`} className="text-sm">
-                    <span className="font-bold">{option?.name ?? "—"}</span>
+                    <span className="font-semibold">{option?.name ?? "—"}</span>
                     <span className="text-ink/50"> → </span>
                     <span>{(option?.values ?? []).join(", ") || "—"}</span>
                   </li>
@@ -200,7 +200,7 @@ export function ProductOverview({ detail }: { detail: ProductDetailData }) {
             </div>
           ) : null}
 
-          <div className="border-ink mt-3 border-t-2 pt-3">
+          <div className="border-line mt-3 border-t pt-3">
             <span className="label-caps text-ink/60">Fechas</span>
             <dl className="mt-1.5 grid gap-x-8 sm:grid-cols-2 xl:grid-cols-3">
               <Row label="published_at">{formatDateTime(product.published_at)}</Row>

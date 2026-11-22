@@ -59,7 +59,7 @@ export function PriceHistoryChart({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="border-ink bg-paper border-2 p-2">
+      <div className="border-line bg-paper border p-2">
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           className="h-44 w-full"
@@ -177,7 +177,7 @@ export function PriceHistoryChart({
               return (
                 <TR key={point.iso + index}>
                   <TD className="whitespace-nowrap">{formatDateTime(point.iso)}</TD>
-                  <TD className="text-right font-bold">
+                  <TD className="text-right font-semibold">
                     {formatPrice(point.price, point.currency)}
                   </TD>
                   <TD className="text-right">

@@ -52,8 +52,9 @@ claro en español si falta alguna. La home captura ese error y lo muestra en la 
    llamando a `revalidatePath("/ruta")` al terminar. Nada de `fetch` desde el cliente a Supabase.
 3. **Componentes de UI propios**, en `src/components/ui`. Sin librerías de UI externas (ni shadcn, ni
    Radix, ni MUI). Si falta un componente, se añade ahí.
-4. **Nada de `border-radius`.** Cero esquinas redondeadas en todo el panel; el reset de
-   `globals.css` lo fuerza, no lo reintroduzcas con clases.
+4. **Esquinas redondeadas con los tokens del tema** (`rounded-md`, `rounded-lg`, `rounded-xl`,
+   `rounded-full` para pills). Cualquier elemento con la clase `border` lleva `--radius-lg` por
+   defecto desde `globals.css`.
 5. **Todos los textos de la UI en español** (etiquetas, botones, errores, estados vacíos). El código,
    los nombres de variables y los comentarios técnicos van en inglés o español neutro, pero sin
    tildes en comentarios de código para evitar problemas de codificación.
@@ -72,32 +73,35 @@ claro en español si falta alguna. La home captura ese error y lo muestra en la 
     `{ ok: true, ... } | { ok: false, error }` para que la página pinte el error en la UI (ver
     `getDashboardStats`). Las Server Actions sí pueden devolver un error de formulario.
 
-## Sistema de diseño (brutalista editorial)
+## Sistema de diseño (neutro moderno)
 
-Igual que la app Emer:
+Rediseño del 22/11/2026: se dejó el estilo brutalista por uno neutro y moderno (tipo Linear/Vercel).
 
-- **Colores**: fondo blanco `#FFFFFF` (`bg-paper`) en la página y la sidebar; crema `#F5F0E8`
-  (`cream`) solo para hovers y fondos secundarios; negro `#000000` (`ink`). Acentos **solo para estados**: verde `#1F7A3A` (`ok`), rojo `#C62828` (`error`),
-  amarillo `#F2C94C` (`progress`).
-- **Tipografía**: Space Grotesk en todo (`next/font/google`, variable `--font-space-grotesk`).
-- **Bordes**: 2px negros (`border-2 border-ink`). `border-radius: 0` siempre.
-- **Sombra dura**: `shadow-hard` = `4px 4px 0 #000`. En botones y cards clicables se usa la utilidad
-  `press`: al hover la sombra pasa a `2px 2px` y el elemento se desplaza `translate(2px, 2px)`;
-  transiciones de **120ms**.
-- **Títulos** grandes en mayúsculas con tracking apretado (`title-xl`, `label-caps`).
-- **Tablas densas**: `px-3 py-1.5` por celda, cabecera negra con texto crema.
-- **Layout**: sidebar fija de 240px a la izquierda con el logo `EMER ADMIN` y las secciones Marcas,
-  Productos, Clasificación, Tiendas, Scraper, Contacto. Por debajo de `1024px` la sidebar se colapsa en un
-  panel deslizante con barra superior.
-- **Carga**: el loader es `Spinner` (tres cuadrados que laten, `animate-loader-block`, toma
-  `currentColor`); no uses spinners sueltos con `animate-spin`. `app/loading.tsx` da feedback
-  instantáneo al cambiar de sección, `app/template.tsx` hace un fundido de entrada (solo opacidad:
-  un `transform` rompería los `position: fixed` de los modales) y los enlaces de la sidebar
-  muestran el loader mientras navegan (`useLinkStatus`).
-- **Filas de ejecuciones**: el fondo de la fila lleva el color de su estado, igual que el badge.
+- **Colores** (tokens en `globals.css`): fondo de página `canvas` `#F7F7F8`; superficies `paper`
+  `#FFFFFF`; `subtle` `#F1F1F3` para hovers y fondos secundarios; bordes `line` `#E5E5E9` y
+  `line-strong` `#D1D1D7`; texto `ink` `#111114` (con opacidades `/55`, `/70` para texto
+  secundario). Acento `accent` `#5B5BD6` (y `accent-soft`) para foco, selección y elementos
+  activos. Estados con versión suave: `ok`/`ok-soft`, `error`/`error-soft`,
+  `progress`/`progress-soft`.
+- **Tipografía**: Geist y Geist Mono (`next/font/google`, variables `--font-geist` y
+  `--font-geist-mono`). Sin mayúsculas forzadas; títulos en `font-semibold` con tracking apretado.
+- **Bordes**: 1px `border-line`. Radios: `rounded-md` (inputs y botones pequeños), `rounded-lg`
+  (por defecto), `rounded-xl` (cards, tablas), `rounded-2xl` (modales), `rounded-full` (pills).
+- **Sombras suaves**: `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg` (tokens propios). La
+  utilidad `press` da una sombra mínima, sube al hover y escala a 0,98 al pulsar.
+- **Selección/activo**: chips y toggles activos usan `border-accent/40 bg-accent-soft text-accent`;
+  los conmutadores de vista son segmentados (`bg-subtle` con la opción activa en `bg-paper shadow-sm`).
+- **Botones**: variantes `primary` (negro), `secondary` (blanco con borde), `ghost`, `accent` y `danger`.
+- **Badges**: pills suaves con punto de color para los estados.
+- **Tablas**: cabecera `bg-subtle/60` con texto gris, filas con `border-b` y hover suave.
+- **Modales**: fondo con desenfoque, cabecera clara con título y subtítulo, pie en `bg-subtle/50`.
+- **Layout**: sidebar blanca de 240px con iconos SVG en línea y el ítem activo en `bg-subtle`
+  con el icono en `accent`. Por debajo de `1024px`, barra superior de 60px y panel deslizante.
+  El contenido va centrado con `max-w-[1400px]`.
+- **Carga**: `Spinner` (tres puntos que laten, `currentColor`); `app/loading.tsx` con skeletons.
 
-Utilidades propias definidas en `globals.css`: `press`, `title-xl`, `label-caps`, y los tokens
-`shadow-hard`, `shadow-hard-sm`, `shadow-hard-lg`.
+Utilidades propias en `globals.css`: `press`, `title-xl`, `label-caps` (etiqueta pequeña gris, ya
+sin mayúsculas), `skeleton`, `stagger`, `rows-in`.
 
 ## Estructura
 

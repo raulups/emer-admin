@@ -29,7 +29,7 @@ export function RunProductsTable({ items }: { items: ScrapeRunProductRow[] }) {
             const summary = changesSummary(row);
             return (
               <TR key={row.id}>
-                <TD className="align-top font-bold">
+                <TD className="align-top font-semibold">
                   {row.product_id ? (
                     <Link href={`/products/${row.product_id}`} className="hover:underline">
                       {row.name ?? "(sin nombre)"}
@@ -49,7 +49,7 @@ export function RunProductsTable({ items }: { items: ScrapeRunProductRow[] }) {
                 <TD className="align-top">
                   {summary ? (
                     <details className="group">
-                      <summary className="cursor-pointer text-xs font-bold uppercase underline select-none">
+                      <summary className="cursor-pointer text-xs font-semibold underline select-none">
                         <span className="group-open:hidden">{summary}</span>
                         <span className="hidden group-open:inline">Ocultar</span>
                       </summary>

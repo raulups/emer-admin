@@ -50,7 +50,7 @@ export function RunProductsFilters({ runId, filters, total }: RunProductsFilters
   }
 
   return (
-    <div className="border-ink bg-paper flex flex-wrap items-end justify-between gap-3 border-b-2 p-3">
+    <div className="border-line bg-paper flex flex-wrap items-end justify-between gap-3 border-b p-3">
       <div className="flex flex-wrap items-end gap-3">
         <Input
           label="Buscar por nombre"

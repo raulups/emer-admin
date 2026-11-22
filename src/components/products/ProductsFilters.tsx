@@ -67,7 +67,7 @@ export function ProductsFilters({ filters, brands, categories, total }: Products
   const active = hasActiveFilters(filters);
 
   return (
-    <div className="border-ink bg-paper shadow-hard mb-4 flex flex-col gap-3 border-2 p-3">
+    <div className="border-line bg-paper mb-4 flex flex-col gap-3 border p-3 shadow-sm">
       <div className="flex flex-wrap items-end gap-3">
         <Input
           label="Buscar por nombre"
@@ -150,7 +150,7 @@ export function ProductsFilters({ filters, brands, categories, total }: Products
         />
       </div>
 
-      <div className="border-ink flex items-center justify-between gap-3 border-t-2 pt-2.5">
+      <div className="border-line flex items-center justify-between gap-3 border-t pt-2.5">
         <p className="text-ink/60 flex items-center gap-2 text-xs">
           {pending ? <Spinner size="sm" /> : null}
           {formatNumber(total)} {total === 1 ? "producto" : "productos"}

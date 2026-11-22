@@ -109,14 +109,14 @@ export function MappingsTab({ mappings, brands, categories }: MappingsTabProps) 
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="border-ink bg-cream border-2 p-3 text-xs">
+      <p className="border-line bg-subtle border p-3 text-xs">
         Un mapeo fuerza la categoría de todos los productos de <strong>una marca</strong> cuyo{" "}
         <code className="font-mono">product_type</code> coincida. Es lo primero que mira el scraper,
         por delante de cualquier regla. Se aplica en el próximo scrape.
       </p>
 
       {/* Alta */}
-      <div className="border-ink bg-paper flex flex-wrap items-end gap-3 border-2 p-3">
+      <div className="border-line bg-paper flex flex-wrap items-end gap-3 border p-3">
         <Select
           label="Marca"
           value={newBrand}
@@ -163,7 +163,7 @@ export function MappingsTab({ mappings, brands, categories }: MappingsTabProps) 
       </div>
 
       {visible.length === 0 ? (
-        <div className="border-ink bg-paper border-2 p-8 text-center">
+        <div className="border-line bg-paper border p-8 text-center">
           <p className="text-ink/60 text-sm">
             {mappings.length === 0
               ? "Todavía no hay mapeos. Créalos desde aquí o desde la pestaña Sin categoría."
@@ -186,7 +186,10 @@ export function MappingsTab({ mappings, brands, categories }: MappingsTabProps) 
               {visible.map((mapping) => (
                 <TR key={mapping.id} className={busyId === mapping.id ? "opacity-50" : undefined}>
                   <TD className="whitespace-nowrap">
-                    <Link href={`/brands/${mapping.brandId}`} className="font-bold hover:underline">
+                    <Link
+                      href={`/brands/${mapping.brandId}`}
+                      className="font-semibold hover:underline"
+                    >
                       {mapping.brandName ?? "(marca desconocida)"}
                     </Link>
                   </TD>
@@ -211,7 +214,7 @@ export function MappingsTab({ mappings, brands, categories }: MappingsTabProps) 
                     ) : (
                       <Link
                         href={`/products?brand=${mapping.brandId}`}
-                        className="font-bold hover:underline"
+                        className="font-semibold hover:underline"
                       >
                         {formatNumber(mapping.productsCount)}
                       </Link>

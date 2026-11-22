@@ -31,16 +31,15 @@ export function DistributionBars({
         return (
           <li key={item.label} className="flex flex-col gap-1">
             <div className="flex items-baseline justify-between gap-3">
-              <span className="truncate text-xs font-bold tracking-wide uppercase">
-                {item.label}
-              </span>
+              <span className="truncate text-xs font-semibold">{item.label}</span>
               <span className="text-ink/60 shrink-0 text-xs">
-                <span className="text-ink font-bold">{formatNumber(item.count)}</span> · {percent}%
+                <span className="text-ink font-semibold">{formatNumber(item.count)}</span> ·{" "}
+                {percent}%
               </span>
             </div>
-            <div className="border-ink bg-cream h-4 w-full border-2">
+            <div className="bg-subtle h-2 w-full overflow-hidden rounded-full">
               <div
-                className="bg-ink h-full"
+                className="bg-accent h-full rounded-full"
                 style={{ width: `${Math.max((item.count / max) * 100, 2)}%` }}
                 role="presentation"
               />

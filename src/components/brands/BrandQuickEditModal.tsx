@@ -47,7 +47,7 @@ export function BrandQuickEditModal({ brand, open, onClose, onSaved }: BrandQuic
         title={brand ? `Editar: ${brand.name}` : "Nueva marca"}
         subtitle={
           brand && pathname !== `/brands/${brand.id}` ? (
-            <Link href={`/brands/${brand.id}`} className="hover:text-cream underline">
+            <Link href={`/brands/${brand.id}`} className="hover:text-ink underline">
               Abrir ficha completa →
             </Link>
           ) : (
