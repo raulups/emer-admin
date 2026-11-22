@@ -8,6 +8,13 @@ export interface ProductSample {
   name: string | null;
 }
 
+/** Producto sin categoria, con lo necesario para reconocerlo en la vista de lista. */
+export interface UnclassifiedProduct extends ProductSample {
+  image: string | null;
+  price: number | null;
+  currency: string | null;
+}
+
 /** Grupo de la pestaña SIN CATEGORÍA: marca × product_type. */
 export interface UnclassifiedGroup {
   brandId: Uuid;
@@ -18,7 +25,7 @@ export interface UnclassifiedGroup {
   productTypeKey: string;
   count: number;
   /** Todos los productos del grupo (para asignarles categoria desde la lista). */
-  products: ProductSample[];
+  products: UnclassifiedProduct[];
 }
 
 /** Fila de la pestaña REVISIÓN: marca × product_type × categoría asignada. */

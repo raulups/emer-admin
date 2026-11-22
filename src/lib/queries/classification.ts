@@ -27,6 +27,10 @@ const PAGE_SIZE = 1000;
 interface ProductGroupRow {
   id: Uuid;
   name: string | null;
+  thumbnail_image_url?: string | null;
+  main_image_url?: string | null;
+  current_price?: number | null;
+  currency?: string | null;
   brand_id: Uuid;
   product_type: string | null;
   category_id?: Uuid | null;
@@ -76,7 +80,9 @@ export async function getUnclassifiedGroups(): Promise<
       paginate((from, to) =>
         supabase
           .from("products")
-          .select("id, name, brand_id, product_type")
+          .select(
+            "id, name, brand_id, product_type, thumbnail_image_url, main_image_url, current_price, currency",
+          )
           .is("category_id", null)
           .order("id", { ascending: true })
           .range(from, to),
@@ -115,7 +121,13 @@ export async function getUnclassifiedGroups(): Promise<
       }
 
       group.count += 1;
-      group.products.push({ id: row.id, name: row.name });
+      group.products.push({
+        id: row.id,
+        name: row.name,
+        image: row.thumbnail_image_url ?? row.main_image_url ?? null,
+        price: row.current_price ?? null,
+        currency: row.currency ?? null,
+      });
     }
 
     const sorted = [...groups.values()].sort(
