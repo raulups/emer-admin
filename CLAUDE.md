@@ -159,15 +159,17 @@ src/
   `scrape_run_products`. `/scrapes` redirige aquí (`next.config.ts`).
 - **Realtime**: el navegador no tiene clave de Supabase, así que `GET /api/scrapes/stream` se
   suscribe a `scrape_runs` en el servidor y reenvía los cambios por SSE; el cliente hace
-  `router.refresh()`. El paso a `stuck` no genera evento: mientras haya runs en curso se refresca
+  `router.refresh()` (agrupado en 2 s). El paso a `stuck` no genera evento: mientras haya runs en curso se refresca
   además cada 60 s.
 - **Polling**: `GET /api/scraper/runs` sigue sirviendo `?mode=counts` (indicador de la sidebar) y
   `?mode=latest&brand=<id>` (progreso del detalle de marca).
 - **Runs atascados**: un run que sigue en `running` más de `STALE_RUN_MINUTES` (30, igual que la vista) se considera
   colgado — n8n se paró sin cerrarlo. No cuenta como actividad: si contara, el panel estaría
   refrescando cada 3 s para siempre. Se marca en la tabla como "Sin terminar".
-- **Ritmo del polling**: 3 s mientras hay algo en curso; la sidebar comprueba cada 15 s cuando no
-  hay actividad (un scrape puede arrancarlo n8n por su cuenta). Al terminar un run, el detalle de
+- **Ritmo del polling**: 5 s mientras hay algo en curso; la sidebar comprueba cada 60 s cuando no
+  hay actividad (un scrape puede arrancarlo n8n por su cuenta). Con la pestaña en segundo plano
+  no se consulta nada y el stream de Realtime se cierra (`usePageVisible`); al volver se comprueba
+  al momento. Supabase está en el plan Free: cada consulta periódica cuenta. Al terminar un run, el detalle de
   marca llama a `router.refresh()` para recargar contadores y repartos.
 
 ## Clasificación
@@ -290,6 +292,8 @@ Postgres en Supabase, schema `public`.
 - **Las funciones de agregado están deshabilitadas** (`PGRST123: Use of aggregate functions is not
 allowed`), así que `select=brand_id,count()` no es una opción.
 - **Cómo contar bien, entonces**:
+  - Por marca, solo el total: `brands?select=id,name,products(count)` (un único alias, sin filtros).
+    La vista es cara; no la uses en nada que se refresque solo.
   - Por marca (listado): la vista `brands_with_preview_products` →
     `total_product_count`, `on_sale_count` y `category_counts`. Los productos sin categoría son
     `total_product_count - suma(category_counts)` (comprobado contra `count(*)` en las 31 marcas).

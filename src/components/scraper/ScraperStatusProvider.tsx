@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 
+import { isPageVisible } from "@/lib/use-page-visible";
 import { IDLE_POLL_MS, IDLE_QUEUE, RUNS_POLL_MS, type ScraperQueueState } from "@/types/scraper";
 
 interface ScraperStatus {
@@ -29,9 +30,10 @@ const ScraperStatusContext = createContext<ScraperStatus | null>(null);
 /**
  * Vigila si hay scrapes en curso para el indicador de la sidebar.
  *
- * El ritmo se adapta: cada 3 s mientras hay actividad (runs en curso o la
- * pasada completa avanzando) y cada 15 s cuando no la hay (un scrape puede
+ * El ritmo se adapta: cada 5 s mientras hay actividad (runs en curso o la
+ * pasada completa avanzando) y cada 60 s cuando no la hay (un scrape puede
  * arrancarlo n8n por su cuenta, asi que hay que seguir mirando de vez en cuando).
+ * Con la pestana en segundo plano no se consulta nada; al volver se comprueba al momento.
  */
 export function ScraperStatusProvider({ children }: { children: ReactNode }) {
   const [counts, setCounts] = useState({ activeCount: 0, staleCount: 0 });
@@ -68,10 +70,17 @@ export function ScraperStatusProvider({ children }: { children: ReactNode }) {
     let timer: ReturnType<typeof setTimeout> | undefined;
 
     const tick = async () => {
-      await load();
+      if (isPageVisible()) await load();
       if (cancelled) return;
       timer = setTimeout(tick, busyRef.current ? RUNS_POLL_MS : IDLE_POLL_MS);
     };
+
+    const onVisibility = () => {
+      if (!isPageVisible() || cancelled) return;
+      if (timer) clearTimeout(timer);
+      void tick();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     // Primera comprobacion inmediata para que el indicador salga al entrar.
     timer = setTimeout(tick, 0);
@@ -84,6 +93,7 @@ export function ScraperStatusProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
       refreshRef.current = null;
+      document.removeEventListener("visibilitychange", onVisibility);
       if (timer) clearTimeout(timer);
     };
   }, [load]);
