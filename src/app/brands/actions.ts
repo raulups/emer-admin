@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 import { getBrandById, getBrandsUrlIndex } from "@/lib/queries/brands";
 import { deleteByPublicUrl } from "@/lib/storage";
@@ -12,7 +13,13 @@ import {
   type BrandFieldErrors,
   type BrandFormInput,
 } from "@/lib/validation/brand";
-import type { AdminDeleteBrandResult, Brand, Uuid } from "@/types/db";
+import {
+  BRAND_TAGS,
+  type AdminDeleteBrandResult,
+  type Brand,
+  type BrandTag,
+  type Uuid,
+} from "@/types/db";
 
 export type BrandActionResult =
   { ok: true; id: Uuid } | { ok: false; error: string; fieldErrors?: BrandFieldErrors };
@@ -219,6 +226,25 @@ export async function deleteBrand(id: Uuid, confirmName: string): Promise<Delete
 
     revalidateBrand(id);
     return { ok: true, deletedProducts: Number.isFinite(deletedProducts) ? deletedProducts : 0 };
+  } catch (error) {
+    return { ok: false, error: toMessage(error) };
+  }
+}
+
+const brandTagsSchema = z.array(z.enum(BRAND_TAGS)).max(BRAND_TAGS.length);
+
+/** Cambia solo los tags de una marca (chips de la vista previa). */
+export async function updateBrandTags(id: Uuid, tags: BrandTag[]): Promise<BrandActionResult> {
+  const parsed = brandTagsSchema.safeParse(Array.from(new Set(tags)));
+  if (!parsed.success) return { ok: false, error: "Tags no válidos." };
+
+  try {
+    const supabase = getSupabase();
+    const { error } = await supabase.from("brands").update({ tags: parsed.data }).eq("id", id);
+    if (error) return { ok: false, error: toMessage(error) };
+
+    revalidateBrand(id);
+    return { ok: true, id };
   } catch (error) {
     return { ok: false, error: toMessage(error) };
   }

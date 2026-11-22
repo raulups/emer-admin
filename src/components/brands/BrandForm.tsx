@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { createBrand, updateBrand } from "@/app/brands/actions";
 import { Button, buttonClasses } from "@/components/ui/Button";
@@ -27,6 +27,14 @@ export interface BrandFormProps {
   /** Obligatorio en modo edicion. */
   brandId?: Uuid;
   initial: BrandFormInput;
+  /** `modal`: version compacta para el pop-up de edicion rapida. */
+  variant?: "page" | "modal";
+  /** Si se pasa, se llama al guardar en lugar de navegar al detalle. */
+  onSaved?: (id: Uuid) => void;
+  /** Si se pasa, el boton Cancelar lo llama en lugar de ser un enlace. */
+  onCancel?: () => void;
+  /** Avisa cuando hay cambios sin guardar. */
+  onDirtyChange?: (dirty: boolean) => void;
 }
 
 const HEX6 = /^#[0-9A-Fa-f]{6}$/;
@@ -40,7 +48,29 @@ function pickerValue(color: string): string {
   return "#000000";
 }
 
-export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
+function sameInput(a: BrandFormInput, b: BrandFormInput): boolean {
+  return (
+    a.name === b.name &&
+    a.url === b.url &&
+    a.color === b.color &&
+    a.founded_year === b.founded_year &&
+    a.style === b.style &&
+    a.tags.length === b.tags.length &&
+    a.tags.every((tag) => b.tags.includes(tag))
+  );
+}
+
+export function BrandForm({
+  mode,
+  brandId,
+  initial,
+  variant = "page",
+  onSaved,
+  onCancel,
+  onDirtyChange,
+}: BrandFormProps) {
+  const isModal = variant === "modal";
+  const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const { showToast } = useToast();
 
@@ -62,6 +92,26 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
     file: null,
     url: initial.logo === "" ? null : initial.logo,
   });
+
+  const dirty =
+    !sameInput(values, initial) ||
+    desktop.file !== null ||
+    mobile.file !== null ||
+    logo.file !== null ||
+    (desktop.url ?? "") !== initial.img_desktop ||
+    (mobile.url ?? "") !== initial.img_mobile ||
+    (logo.url ?? "") !== initial.logo;
+
+  useEffect(() => {
+    onDirtyChange?.(dirty);
+  }, [dirty, onDirtyChange]);
+
+  function onKeyDown(event: React.KeyboardEvent<HTMLFormElement>) {
+    if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+      event.preventDefault();
+      formRef.current?.requestSubmit();
+    }
+  }
 
   function setField<K extends keyof BrandFormInput>(key: K, value: BrandFormInput[K]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -187,7 +237,9 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
       }
 
       showToast(mode === "create" ? "Marca creada." : "Cambios guardados.", "ok");
-      router.push(`/brands/${result.id}`);
+      onDirtyChange?.(false);
+      if (onSaved) onSaved(result.id);
+      else router.push(`/brands/${result.id}`);
     } catch (error) {
       showToast(error instanceof Error ? error.message : "Error al guardar la marca.", "error");
     } finally {
@@ -196,37 +248,62 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
   }
 
   const cancelHref = mode === "edit" && brandId ? `/brands/${brandId}` : "/brands";
+  const panel = isModal
+    ? "flex flex-col gap-4"
+    : "border-ink bg-paper shadow-hard flex flex-col gap-4 border-2 p-4";
+  const submitLabel = uploading
+    ? "Subiendo imagen…"
+    : mode === "create"
+      ? "Crear marca"
+      : "Guardar cambios";
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-      <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-        {/* Datos principales */}
-        <div className="border-ink bg-paper shadow-hard flex flex-col gap-4 border-2 p-4">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      onKeyDown={onKeyDown}
+      className="flex flex-col gap-4"
+      noValidate
+    >
+      <div
+        className={cn(
+          "grid gap-4",
+          isModal ? "lg:grid-cols-[3fr_2fr] lg:gap-6" : "lg:grid-cols-[2fr_1fr]",
+        )}
+      >
+        <div className={panel}>
           <h2 className="border-ink border-b-2 pb-2 text-sm tracking-wider">Datos de la marca</h2>
 
-          <Input
-            label="Nombre *"
-            name="name"
-            value={values.name}
-            onChange={(event) => setField("name", event.target.value)}
-            error={errors.name}
-            placeholder="Nombre de la marca"
-            autoComplete="off"
-            required
-          />
+          <div className={cn("grid gap-4", isModal && "sm:grid-cols-2")}>
+            <Input
+              label="Nombre *"
+              name="name"
+              value={values.name}
+              onChange={(event) => setField("name", event.target.value)}
+              error={errors.name}
+              placeholder="Nombre de la marca"
+              autoComplete="off"
+              autoFocus={isModal}
+              required
+            />
 
-          <Input
-            label="URL de la tienda *"
-            name="url"
-            value={values.url}
-            onChange={(event) => setField("url", event.target.value)}
-            error={errors.url}
-            hint="Se guarda sin la barra final. El scraper le añade /products.json."
-            placeholder="https://mimarca.com"
-            inputMode="url"
-            autoComplete="off"
-            required
-          />
+            <Input
+              label="URL de la tienda *"
+              name="url"
+              value={values.url}
+              onChange={(event) => setField("url", event.target.value)}
+              error={errors.url}
+              hint={
+                isModal
+                  ? undefined
+                  : "Se guarda sin la barra final. El scraper le añade /products.json."
+              }
+              placeholder="https://mimarca.com"
+              inputMode="url"
+              autoComplete="off"
+              required
+            />
+          </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
@@ -255,7 +332,6 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
             />
           </div>
 
-          {/* Color */}
           <div className="flex flex-col gap-1.5">
             <span className="label-caps">Color de marca</span>
             <div className="flex items-start gap-2">
@@ -285,36 +361,68 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
             </div>
           </div>
 
-          {/* Tags */}
           <div className="flex flex-col gap-2">
             <span className="label-caps">Tags</span>
-            <div className="flex flex-col gap-1.5">
-              {BRAND_TAGS.map((tag) => {
-                const active = values.tags.includes(tag);
-                return (
-                  <div key={tag} className="flex items-center gap-3">
+            {isModal ? (
+              <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+                {BRAND_TAGS.map((tag) => {
+                  const active = values.tags.includes(tag);
+                  return (
                     <button
+                      key={tag}
                       type="button"
                       onClick={() => toggleTag(tag)}
                       aria-pressed={active}
+                      title={BRAND_TAG_DESCRIPTIONS[tag]}
                       className={cn(
-                        "border-ink w-32 shrink-0 cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
+                        "border-ink flex cursor-pointer flex-col items-start gap-0.5 border-2 px-2 py-1.5 text-left transition-colors duration-[120ms]",
                         active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
                       )}
                     >
-                      {tag}
+                      <span className="text-[10px] font-bold tracking-widest uppercase">
+                        {active ? "✓ " : ""}
+                        {tag}
+                      </span>
+                      <span
+                        className={cn(
+                          "line-clamp-1 text-[10px]",
+                          active ? "text-cream/70" : "text-ink/50",
+                        )}
+                      >
+                        {BRAND_TAG_DESCRIPTIONS[tag]}
+                      </span>
                     </button>
-                    <span className="text-ink/60 text-xs">{BRAND_TAG_DESCRIPTIONS[tag]}</span>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1.5">
+                {BRAND_TAGS.map((tag) => {
+                  const active = values.tags.includes(tag);
+                  return (
+                    <div key={tag} className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => toggleTag(tag)}
+                        aria-pressed={active}
+                        className={cn(
+                          "border-ink w-32 shrink-0 cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
+                          active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+                        )}
+                      >
+                        {tag}
+                      </button>
+                      <span className="text-ink/60 text-xs">{BRAND_TAG_DESCRIPTIONS[tag]}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {errors.tags ? <p className="text-error text-xs font-bold">{errors.tags}</p> : null}
           </div>
         </div>
 
-        {/* Imagenes */}
-        <div className="border-ink bg-paper shadow-hard flex flex-col gap-4 border-2 p-4">
+        <div className={panel}>
           <h2 className="border-ink border-b-2 pb-2 text-sm tracking-wider">Imágenes</h2>
 
           <ImageDropzone
@@ -326,33 +434,58 @@ export function BrandForm({ mode, brandId, initial }: BrandFormProps) {
             hint="Proporción 16/9. Hasta 1920 px de ancho; se guarda en WEBP."
           />
 
-          <ImageDropzone
-            label="App · vertical"
-            aspect="9/16"
-            value={mobile}
-            onChange={setMobile}
-            error={errors.img_mobile}
-            hint="Proporción 9/16. Hasta 1080 px de ancho; se guarda en WEBP."
-          />
+          <div className={cn("flex flex-col gap-4", isModal && "grid grid-cols-2 items-start")}>
+            <ImageDropzone
+              label="App · vertical"
+              aspect="9/16"
+              value={mobile}
+              onChange={setMobile}
+              error={errors.img_mobile}
+              hint={
+                isModal
+                  ? "9/16 · WEBP"
+                  : "Proporción 9/16. Hasta 1080 px de ancho; se guarda en WEBP."
+              }
+            />
 
-          <ImageDropzone
-            label="Logo"
-            variant="logo"
-            value={logo}
-            onChange={setLogo}
-            error={errors.logo}
-            hint="Hasta 800 px. Se conserva la transparencia; los SVG se suben tal cual."
-          />
+            <ImageDropzone
+              label="Logo"
+              variant="logo"
+              value={logo}
+              onChange={setLogo}
+              error={errors.logo}
+              hint={
+                isModal
+                  ? "Hasta 800 px"
+                  : "Hasta 800 px. Se conserva la transparencia; los SVG se suben tal cual."
+              }
+            />
+          </div>
         </div>
       </div>
 
-      {/* Acciones */}
-      <div className="border-ink bg-paper shadow-hard flex items-center justify-end gap-2 border-2 p-3">
-        <Link href={cancelHref} className={buttonClasses("secondary", "md")}>
-          Cancelar
-        </Link>
+      <div
+        className={cn(
+          "border-ink bg-paper flex items-center justify-end gap-2",
+          isModal
+            ? "sticky -bottom-4 -mx-4 -mb-4 border-t-2 px-4 py-2.5"
+            : "shadow-hard border-2 p-3",
+        )}
+      >
+        <span className="text-ink/50 mr-auto hidden text-[11px] sm:inline">
+          {dirty ? "Cambios sin guardar · " : ""}Ctrl/⌘ + Enter para guardar
+        </span>
+        {onCancel ? (
+          <Button variant="secondary" onClick={onCancel} disabled={pending}>
+            Cancelar
+          </Button>
+        ) : (
+          <Link href={cancelHref} className={buttonClasses("secondary", "md")}>
+            Cancelar
+          </Link>
+        )}
         <Button type="submit" loading={pending}>
-          {uploading ? "Subiendo imagen…" : mode === "create" ? "Crear marca" : "Guardar cambios"}
+          {submitLabel}
         </Button>
       </div>
     </form>

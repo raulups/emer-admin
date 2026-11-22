@@ -107,7 +107,7 @@ src/
     layout.tsx          # html lang="es", fuente, ToastProvider, Sidebar
     page.tsx            # "/" resumen con contadores
     globals.css         # tokens de diseño Tailwind v4
-    brands/             # listado, /new, /[id], /[id]/edit, actions.ts
+    brands/             # listado (edicion rapida en pop-up: ?edit=<id>, ?new=1), /new, /[id], /[id]/edit, actions.ts
     products/           # listado con filtros en la URL, /[id] con 3 pestañas, actions.ts
     scraper/            # lanzamiento, contadores, ejecuciones (auto-refresco) y /[id] con productos
     classification/     # 4 pestañas: sin categoría, revisión, reglas, mappings
@@ -171,6 +171,21 @@ src/
   no se consulta nada (`usePageVisible`); al volver se comprueba
   al momento. Supabase está en el plan Free: cada consulta periódica cuenta. Al terminar un run, el detalle de
   marca llama a `router.refresh()` para recargar contadores y repartos.
+
+## Marcas: edición rápida
+
+- El listado (`BrandsBrowser`) abre `BrandQuickEditModal` con `?edit=<id>` o `?new=1` en la URL: se
+  puede enlazar y el botón Atrás lo cierra. La ficha (`/brands/[id]`) abre el mismo pop-up con
+  `EditBrandButton`. `/brands/new` y `/brands/[id]/edit` siguen existiendo como páginas completas.
+- `BrandForm` tiene `variant="modal"` (compacto, botonera fija abajo, Ctrl/⌘ + Enter guarda) y avisa
+  de cambios sin guardar con `onDirtyChange`; al cerrar con cambios se pide confirmación.
+- Los tags se cambian con un clic en la card o en la tabla (`QuickTags` → `updateBrandTags`), con
+  actualización optimista.
+- Filtro "Por revisar": sin tienda, sin alguna imagen, con productos sin categoría o con el último
+  scrape en error/parcial.
+- Atajos: `/` buscar, `N` nueva marca, `Enter` en el buscador abre la única coincidencia.
+- `Modal` admite `size="xl"`, `subtitle`, cuerpo con scroll propio y solo cierra con Escape el
+  modal de más arriba (el zoom de `ImageDropzone` dentro del pop-up no cierra los dos).
 
 ## Clasificación
 

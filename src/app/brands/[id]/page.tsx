@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ColorSwatch } from "@/components/brands/ColorSwatch";
 import { DeleteBrandButton } from "@/components/brands/DeleteBrandButton";
 import { DistributionBars } from "@/components/brands/DistributionBars";
+import { EditBrandButton } from "@/components/brands/EditBrandButton";
 import { RemoteImage } from "@/components/brands/RemoteImage";
 import { RunsHistory } from "@/components/brands/RunsHistory";
 import { BrandScrapeProgress } from "@/components/scraper/BrandScrapeProgress";
@@ -139,9 +140,7 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
           </div>
 
           <div className="flex flex-wrap items-start gap-2">
-            <Link href={`/brands/${brand.id}/edit`} className={buttonClasses("primary", "md")}>
-              Editar
-            </Link>
+            <EditBrandButton brand={brand} />
             <BrandScrapeProgress
               brandId={brand.id}
               brandName={brand.name}
