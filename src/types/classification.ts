@@ -17,7 +17,8 @@ export interface UnclassifiedGroup {
   /** El mismo, en minúsculas: es como se guarda en los mapeos. */
   productTypeKey: string;
   count: number;
-  samples: ProductSample[];
+  /** Todos los productos del grupo (para asignarles categoria desde la lista). */
+  products: ProductSample[];
 }
 
 /** Fila de la pestaña REVISIÓN: marca × product_type × categoría asignada. */

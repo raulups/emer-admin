@@ -109,13 +109,13 @@ export async function getUnclassifiedGroups(): Promise<
           productType,
           productTypeKey,
           count: 0,
-          samples: [],
+          products: [],
         };
         groups.set(key, group);
       }
 
       group.count += 1;
-      if (group.samples.length < 3) group.samples.push({ id: row.id, name: row.name });
+      group.products.push({ id: row.id, name: row.name });
     }
 
     const sorted = [...groups.values()].sort(

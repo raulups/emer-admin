@@ -65,7 +65,7 @@ export default async function ProductsPage({
         />
       ) : (
         <>
-          <ProductsTable products={page.items} />
+          <ProductsTable products={page.items} categories={options.categories} />
           <ProductsPagination page={page} filters={filters} />
         </>
       )}

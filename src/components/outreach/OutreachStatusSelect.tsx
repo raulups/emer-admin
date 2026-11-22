@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 
 import { setOutreachStatus } from "@/app/outreach/actions";
+import { Select } from "@/components/ui/Select";
 import { Spinner } from "@/components/ui/Spinner";
 import { useToast } from "@/components/ui/Toast";
 import { OUTREACH_STATUS_LABELS } from "@/lib/validation/outreach";
@@ -53,19 +54,14 @@ export function OutreachStatusSelect({
       // Que el clic en el selector no abra la marca (la fila entera es un enlace).
       onClick={(event) => event.stopPropagation()}
     >
-      <select
+      <Select
         aria-label={`Estado de ${brandName}`}
         value={value}
         disabled={isPending}
         onChange={(event) => handleChange(event.target.value as OutreachStatus)}
-        className="border-line bg-paper text-ink focus-visible:outline-ink min-w-36 shrink-0 cursor-pointer border py-1 pr-6 pl-2 text-base font-semibold transition-shadow duration-150 hover:shadow-xs focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:text-xs"
-      >
-        {OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+        options={OPTIONS}
+        className="h-8 min-w-40 text-xs font-medium"
+      />
       {isPending ? <Spinner size="sm" label="Guardando" /> : null}
     </div>
   );

@@ -98,6 +98,7 @@ Rediseño del 22/11/2026: se dejó el estilo brutalista por uno neutro y moderno
 - **Layout**: sidebar blanca de 240px con iconos SVG en línea y el ítem activo en `bg-subtle`
   con el icono en `accent`. Por debajo de `1024px`, barra superior de 60px y panel deslizante.
   El contenido va centrado con `max-w-[1400px]`.
+- **Desplegables**: `ui/Select` es propio (no el `<select>` nativo): botón con el aspecto de los campos y lista flotante en un portal (`position: fixed`, no la recortan tablas ni modales), con teclado completo y buscador a partir de 9 opciones. Misma API: `options` o `<option>` como children, `placeholder`, `value` + `onChange(event.target.value)`, `name` (input oculto para formularios).
 - **Carga**: `Spinner` (tres puntos que laten, `currentColor`); `app/loading.tsx` con skeletons.
 
 Utilidades propias en `globals.css`: `press`, `title-xl`, `label-caps` (etiqueta pequeña gris, ya
@@ -214,6 +215,11 @@ copias se separan, el PROBADOR de `/classification` mentirá.
 
 Tests: `npm test` (vitest) en `tests/classify.test.ts`, contra las reglas **reales** de la base.
 El fixture se regenera con `npm run export-rules` (lee `.env.local`) → `tests/fixtures/category-rules.json`.
+
+### Clasificar a mano rápido
+
+- **Sin categoría**: cada grupo (marca × product_type) enseña sus productos (3 y «Ver los N») con un desplegable por producto que guarda al elegir, y «Asignar a los N» para todo el grupo (`setProductsCategory`, por tandas de 200). Ambos bloquean la categoría (`category_locked`). Lo asignado desaparece al momento.
+- **Productos**: en la tabla, los productos sin categoría llevan el desplegable en la celda de categoría (no abre el producto).
 
 ### Rendimiento de las pestañas
 
