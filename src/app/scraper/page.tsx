@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { LaunchAllButton } from "@/components/scraper/LaunchAllButton";
 import { ProblemBrands } from "@/components/scraper/ProblemBrands";
 import { ScrapesFilters } from "@/components/scrapes/ScrapesFilters";
-import { ScrapesRealtime } from "@/components/scrapes/ScrapesRealtime";
+import { ScrapesAutoRefresh } from "@/components/scrapes/ScrapesAutoRefresh";
 import { ScrapesTable } from "@/components/scrapes/ScrapesTable";
 import { StatCard } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -32,7 +32,6 @@ export default async function ScraperPage({
 
   const brands = brandsResult.ok ? brandsResult.data : [];
   const counts = countsResult.ok ? countsResult.data : null;
-  const hasRunning = (counts?.running ?? 0) > 0;
   const now = new Date().toISOString();
 
   return (
@@ -42,7 +41,7 @@ export default async function ScraperPage({
         description="Lanza el flujo de n8n y sigue las ejecuciones marca a marca en tiempo real."
         actions={
           <>
-            <ScrapesRealtime hasRunning={hasRunning} />
+            <ScrapesAutoRefresh />
             <LaunchAllButton brandsCount={brands.length} />
           </>
         }

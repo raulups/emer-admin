@@ -109,11 +109,10 @@ src/
     globals.css         # tokens de diseño Tailwind v4
     brands/             # listado, /new, /[id], /[id]/edit, actions.ts
     products/           # listado con filtros en la URL, /[id] con 3 pestañas, actions.ts
-    scraper/            # lanzamiento, contadores, ejecuciones (Realtime) y /[id] con productos
+    scraper/            # lanzamiento, contadores, ejecuciones (auto-refresco) y /[id] con productos
     classification/     # 4 pestañas: sin categoría, revisión, reglas, mappings
     outreach/           # contacto con marcas: listado con filtros y /[brandId] con estado y mensajes
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
-    api/scrapes/stream/ # SSE: reenvia Realtime de scrape_runs al navegador
     api/classification/ # review (agregado por marca)
     api/brands/upload/  # subida de imágenes de marca (sharp + Storage)
     tiendas/
@@ -121,7 +120,7 @@ src/
     brands/             # tarjetas, tabla, formulario, borrado, repartos
     products/           # filtros, tabla, galería, tallas, gráfica, visor JSON
     scraper/            # lanzadores, marcas con problemas, progreso del detalle de marca
-    scrapes/            # tabla y filtros de ejecuciones, indicador Realtime, detalle de run
+    scrapes/            # tabla y filtros de ejecuciones, indicador de auto-refresco, detalle de run
     outreach/           # formulario de estado, mensajes, filtros y tabla de contacto
     classification/     # pestañas, probador de reglas, editores inline
     layout/             # Sidebar, PageHeader, Placeholder
@@ -157,10 +156,11 @@ src/
 - **Pantalla `/scraper`**: lee de la vista `scrape_runs_admin` (que añade `brand_name` y el estado
   `stuck`) con filtros `brand` y `status` en la URL; el detalle `/scraper/[id]` lista
   `scrape_run_products`. `/scrapes` redirige aquí (`next.config.ts`).
-- **Realtime**: el navegador no tiene clave de Supabase, así que `GET /api/scrapes/stream` se
-  suscribe a `scrape_runs` en el servidor y reenvía los cambios por SSE; el cliente hace
-  `router.refresh()` (agrupado en 2 s). El paso a `stuck` no genera evento: mientras haya runs en curso se refresca
-  además cada 60 s.
+- **Sin Realtime**: se quitó el 22/11/2026. La suscripción `postgres_changes` obligaba a Postgres a
+  decodificar todo el WAL (miles de upserts del scraper) y, junto con los refrescos de la página,
+  dejó sin CPU la instancia Free. `ScrapesAutoRefresh` hace `router.refresh()` de `/scraper` cuando
+  cambia el estado que ya vigila la sidebar (runs en curso, atascados, avance y fallos de la pasada):
+  no añade consultas propias. No vuelvas a meter Realtime sin medir la carga.
 - **Polling**: `GET /api/scraper/runs` sigue sirviendo `?mode=counts` (indicador de la sidebar) y
   `?mode=latest&brand=<id>` (progreso del detalle de marca).
 - **Runs atascados**: un run que sigue en `running` más de `STALE_RUN_MINUTES` (30, igual que la vista) se considera
@@ -168,7 +168,7 @@ src/
   refrescando cada 3 s para siempre. Se marca en la tabla como "Sin terminar".
 - **Ritmo del polling**: 5 s mientras hay algo en curso; la sidebar comprueba cada 60 s cuando no
   hay actividad (un scrape puede arrancarlo n8n por su cuenta). Con la pestaña en segundo plano
-  no se consulta nada y el stream de Realtime se cierra (`usePageVisible`); al volver se comprueba
+  no se consulta nada (`usePageVisible`); al volver se comprueba
   al momento. Supabase está en el plan Free: cada consulta periódica cuenta. Al terminar un run, el detalle de
   marca llama a `router.refresh()` para recargar contadores y repartos.
 

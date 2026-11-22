@@ -12,8 +12,8 @@ export function isPageVisible(): boolean {
 }
 
 /**
- * `true` mientras la pestana esta a la vista. Los bucles de polling y el
- * stream de Realtime se pausan en segundo plano para no cargar Supabase.
+ * `true` mientras la pestana esta a la vista. Los bucles de polling se
+ * pausan en segundo plano para no cargar Supabase.
  */
 export function usePageVisible(): boolean {
   return useSyncExternalStore(subscribe, isPageVisible, () => true);
