@@ -206,6 +206,28 @@ export async function getCategories(): Promise<QueryResult<Array<Pick<Category, 
   }
 }
 
+/** Categorias en el orden de `position` (sin posicion, al final por nombre). */
+export async function getCategoryOrder(): Promise<
+  QueryResult<Array<Pick<Category, "id" | "name" | "position">>>
+> {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("categories")
+      .select("id, name, position")
+      .order("position", { ascending: true, nullsFirst: false })
+      .order("name", { ascending: true });
+
+    if (error) return { ok: false, error: toMessage(error) };
+    return {
+      ok: true,
+      data: (data ?? []) as unknown as Array<Pick<Category, "id" | "name" | "position">>,
+    };
+  } catch (error) {
+    return { ok: false, error: toMessage(error) };
+  }
+}
+
 /** Historial de precios: como mucho los ultimos 500 puntos. */
 const PRICE_HISTORY_LIMIT = 500;
 

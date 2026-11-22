@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { CategoryOrderTab } from "@/components/classification/CategoryOrderTab";
 import { MappingsTab } from "@/components/classification/MappingsTab";
 import { ReviewTab } from "@/components/classification/ReviewTab";
 import { RulesTab } from "@/components/classification/RulesTab";
@@ -10,7 +11,7 @@ import { LoadingBlock } from "@/components/ui/Spinner";
 import { Tabs } from "@/components/ui/Tabs";
 import { getMappings, getRules, getUnclassifiedGroups } from "@/lib/queries/classification";
 import { getBrandsForFilter } from "@/lib/queries/scraper";
-import { getCategories } from "@/lib/queries/products";
+import { getCategories, getCategoryOrder } from "@/lib/queries/products";
 
 export const dynamic = "force-dynamic";
 
@@ -49,11 +50,12 @@ async function UnclassifiedSection({
 }
 
 export default async function ClassificationPage() {
-  const [rules, mappings, brandsResult, categoriesResult] = await Promise.all([
+  const [rules, mappings, brandsResult, categoriesResult, orderResult] = await Promise.all([
     getRules(),
     getMappings(),
     getBrandsForFilter(),
     getCategories(),
+    getCategoryOrder(),
   ]);
 
   const brands = brandsResult.ok ? brandsResult.data : [];
@@ -105,6 +107,19 @@ export default async function ClassificationPage() {
                 tone="error"
                 title="No se han podido cargar los mapeos"
                 description={mappings.error}
+              />
+            ),
+          },
+          {
+            id: "orden",
+            label: "Orden",
+            content: orderResult.ok ? (
+              <CategoryOrderTab categories={orderResult.data} />
+            ) : (
+              <EmptyState
+                tone="error"
+                title="No se ha podido cargar el orden de las categorías"
+                description={`${orderResult.error}. Si falta la columna position, despliega el backend (migración V5).`}
               />
             ),
           },

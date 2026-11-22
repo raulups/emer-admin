@@ -114,7 +114,7 @@ src/
     brands/             # listado (edicion rapida en pop-up: ?edit=<id>, ?new=1), /new, /[id], /[id]/edit, actions.ts
     products/           # listado con filtros en la URL, /[id] con 3 pestañas, actions.ts
     scraper/            # lanzamiento, contadores, ejecuciones (auto-refresco) y /[id] con productos
-    classification/     # 4 pestañas: sin categoría, revisión, reglas, mappings
+    classification/     # 5 pestañas: sin categoría, revisión, reglas, mappings, orden de categorías
     outreach/           # contacto con marcas: listado con filtros y /[brandId] con estado y mensajes
     api/scraper/        # run (POST a n8n) y runs (fuente del polling)
     api/classification/ # review (agregado por marca)
@@ -254,7 +254,7 @@ Postgres en Supabase, schema `public`.
   tener 8 dígitos o venir vacío/null), `created_at`, `tags brand_tag[]` (not null, default `{}`),
   `founded_year int`, `style`.
   Enum **`brand_tag`**: `popular | emergente | novedad | destacada | sostenible | drops`.
-- **categories** — `id`, `name` (único), `created_at`. **15 categorías planas**, sin jerarquía.
+- **categories** — `id`, `name` (único), `position int` (orden en la app, la web y el `sort=recommended` del Marketplace; menor primero, null al final por nombre; lo crea la migración V5 del backend), `created_at`. **15 categorías planas**, sin jerarquía. Se ordenan en `/classification` → pestaña **Orden** (`reorderCategories` guarda 10, 20, 30…).
 - **products** — `id`, `brand_id → brands`, `category_id → categories` (nullable),
   `category_locked boolean` (si es `true`, **el scraper NO sobrescribe la categoría**),
   `external_id` (id de Shopify), `handle`, `name`, `description`, `product_url`, `currency char(3)`,

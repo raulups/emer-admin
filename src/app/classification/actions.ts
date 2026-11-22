@@ -301,3 +301,59 @@ export async function deleteShopCategoryMapping(id: Uuid): Promise<ActionResult>
     return { ok: false, error: toMessage(error) };
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Orden de las categorias                                             */
+/* ------------------------------------------------------------------ */
+
+/** Hueco entre posiciones: deja sitio para meter una categoria a mano en SQL. */
+const POSITION_STEP = 10;
+
+const categoryOrderSchema = z
+  .array(uuid)
+  .min(1, "No hay categorías que ordenar.")
+  .refine((ids) => new Set(ids).size === ids.length, "Hay categorías repetidas.");
+
+/**
+ * Guarda el orden de las categorias: `position` = 10, 20, 30... en el orden recibido. Tienen que
+ * venir todas, para que ninguna se quede con una posicion vieja en medio.
+ */
+export async function reorderCategories(ids: Uuid[]): Promise<ActionResult> {
+  const parsed = categoryOrderSchema.safeParse(ids);
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues[0]?.message ?? "Orden no válido." };
+  }
+
+  try {
+    const supabase = getSupabase();
+    const { data: current, error: readError } = await supabase.from("categories").select("id");
+    if (readError) return { ok: false, error: toMessage(readError) };
+
+    const known = new Set((current ?? []).map((row) => row.id as string));
+    if (known.size !== parsed.data.length || !parsed.data.every((id) => known.has(id))) {
+      return {
+        ok: false,
+        error: "Las categorías han cambiado mientras ordenabas. Recarga la página.",
+      };
+    }
+
+    const results = await Promise.all(
+      parsed.data.map((id, index) =>
+        supabase
+          .from("categories")
+          .update({ position: (index + 1) * POSITION_STEP })
+          .eq("id", id),
+      ),
+    );
+    const failed = results.find((result) => result.error);
+    if (failed?.error) return { ok: false, error: toMessage(failed.error) };
+
+    revalidatePath("/classification");
+    return {
+      ok: true,
+      message: "Orden guardado. La app y la web lo usan en cuanto caduque su caché.",
+    };
+  } catch (error) {
+    return { ok: false, error: toMessage(error) };
+  }
+}

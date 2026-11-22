@@ -86,14 +86,24 @@ export type BrandUpdate = Partial<Omit<Brand, "id">>;
 /* categories                                                          */
 /* ------------------------------------------------------------------ */
 
-/** 15 categorias planas (sin jerarquia). `name` es unico. */
+/**
+ * 15 categorias planas (sin jerarquia). `name` es unico. `position` es el orden en la app, la
+ * web y el Marketplace (menor primero; null al final, por nombre). Lo crea la migracion V5 del
+ * backend.
+ */
 export interface Category {
   id: Uuid;
   name: string;
+  position: number | null;
   created_at: IsoDateTime | null;
 }
 
-export type CategoryInsert = { id?: Uuid; name: string; created_at?: IsoDateTime | null };
+export type CategoryInsert = {
+  id?: Uuid;
+  name: string;
+  position?: number | null;
+  created_at?: IsoDateTime | null;
+};
 export type CategoryUpdate = Partial<Omit<Category, "id">>;
 
 /* ------------------------------------------------------------------ */
