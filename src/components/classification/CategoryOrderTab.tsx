@@ -50,7 +50,7 @@ export function CategoryOrderTab({ categories }: CategoryOrderTabProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="border-ink bg-cream border-2 p-3 text-xs">
+      <p className="border-line bg-subtle rounded-lg border p-3 text-xs">
         Orden de las categorías en el <strong>Marketplace</strong> de la web y la app, en sus menús
         y en el orden recomendado: se enseña la primera categoría entera antes de pasar a la
         siguiente. Se guarda como <code className="font-mono">categories.position</code> (10, 20,
@@ -58,7 +58,7 @@ export function CategoryOrderTab({ categories }: CategoryOrderTabProps) {
       </p>
 
       {unpositioned > 0 ? (
-        <p className="border-ink bg-progress border-2 p-3 text-xs">
+        <p className="border-progress/30 bg-progress-soft rounded-lg border p-3 text-xs">
           {unpositioned === 1 ? "Hay 1 categoría" : `Hay ${unpositioned} categorías`} sin posición:
           van al final, por nombre. Guarda el orden para fijarlas.
         </p>
@@ -86,9 +86,9 @@ export function CategoryOrderTab({ categories }: CategoryOrderTabProps) {
             {rows.map((row, index) => {
               const moved = row.id !== categories[index]?.id;
               return (
-                <TR key={row.id} className={moved ? "bg-cream" : undefined}>
-                  <TD className="text-right font-mono text-xs">{index + 1}</TD>
-                  <TD className="font-bold">{row.name}</TD>
+                <TR key={row.id} className={moved ? "bg-accent-soft" : undefined}>
+                  <TD className="text-ink/55 text-right font-mono text-xs">{index + 1}</TD>
+                  <TD className="font-medium">{row.name}</TD>
                   <TD>
                     <div className="flex justify-end gap-1">
                       <Button
