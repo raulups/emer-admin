@@ -12,8 +12,11 @@ import { TagBadges } from "@/components/brands/TagBadges";
 import { buttonClasses } from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Badge } from "@/components/ui/Badge";
+import { googleMapsUrl } from "@/lib/geo";
 import { getBrandDetail } from "@/lib/queries/brands";
 import { getLatestRunForBrand } from "@/lib/queries/scraper";
+import { getStores } from "@/lib/queries/stores";
 import { displayUrl } from "@/lib/url";
 import { formatDate, formatNumber } from "@/lib/utils";
 import { BRAND_TAG_DESCRIPTIONS } from "@/lib/validation/brand";
@@ -47,9 +50,10 @@ function SummaryItem({
 
 export default async function BrandDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [result, latestRunResult] = await Promise.all([
+  const [result, latestRunResult, storesResult] = await Promise.all([
     getBrandDetail(id),
     getLatestRunForBrand(id),
+    getStores(id),
   ]);
 
   if (!result.ok) {
@@ -223,6 +227,56 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
           </div>
         </Card>
       </div>
+
+      {/* Tiendas fisicas */}
+      <Card>
+        <CardHeader
+          title="Tiendas físicas"
+          actions={
+            <>
+              <Link href={`/stores?brand=${brand.id}`} className={buttonClasses("secondary", "sm")}>
+                Gestionar
+              </Link>
+              <Link
+                href={`/stores?brand=${brand.id}&new=1`}
+                className={buttonClasses("primary", "sm")}
+              >
+                Añadir tienda
+              </Link>
+            </>
+          }
+        />
+        {!storesResult.ok ? (
+          <p className="text-error p-4 text-xs">{storesResult.error}</p>
+        ) : storesResult.data.length === 0 ? (
+          <p className="text-ink/55 p-4 text-sm">Esta marca no tiene tiendas físicas.</p>
+        ) : (
+          <ul className="divide-line divide-y">
+            {storesResult.data.map((store) => (
+              <li key={store.id} className="flex items-center justify-between gap-3 px-4 py-2.5">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">{store.name ?? store.address}</p>
+                  <p className="text-ink/55 truncate text-xs">
+                    {store.name ? `${store.address} · ` : ""}
+                    {store.city}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  {!store.isActive ? <Badge tone="muted">Oculta</Badge> : null}
+                  <a
+                    href={googleMapsUrl(store.latitude, store.longitude, store.placeId)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-accent text-xs font-medium hover:underline"
+                  >
+                    Mapa ↗
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
 
       {/* Historial de scrapes */}
       <Card>

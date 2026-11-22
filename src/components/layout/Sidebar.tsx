@@ -68,7 +68,7 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
-    href: "/tiendas",
+    href: "/stores",
     label: "Tiendas",
     icon: (
       <Icon>
