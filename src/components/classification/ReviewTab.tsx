@@ -82,7 +82,7 @@ export function ReviewTab({ brands, categories }: ReviewTabProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <p className="border-ink bg-cream border-2 p-2 text-xs">
+      <p className="border-line bg-subtle border p-2 text-xs">
         Cada fila es un <strong>product_type</strong> de la marca y la categoría a la que ha ido a
         parar. Si una misma columna de la izquierda aparece con dos categorías distintas, ahí hay
         algo que revisar. Se consulta marca a marca porque la base no sabe agrupar por sí sola.
@@ -115,7 +115,7 @@ export function ReviewTab({ brands, categories }: ReviewTabProps) {
       ) : loading ? (
         <LoadingBlock text="Agrupando los productos de la marca…" />
       ) : visible.length === 0 ? (
-        <div className="border-ink bg-paper border-2 p-8 text-center">
+        <div className="border-line bg-paper border p-8 text-center">
           <p className="text-ink/60 text-sm">
             Esta marca no tiene productos clasificados con esos filtros.
           </p>
@@ -156,7 +156,7 @@ export function ReviewTab({ brands, categories }: ReviewTabProps) {
                         )}
                       </Link>
                     </TD>
-                    <TD className="text-right font-bold">
+                    <TD className="text-right font-semibold">
                       <Link href={href} className="block">
                         {formatNumber(group.count)}
                       </Link>

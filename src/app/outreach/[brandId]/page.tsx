@@ -119,7 +119,7 @@ export default async function OutreachDetailPage({
               defaultChannel={defaultChannel}
               currentStatus={status}
             />
-            <div className="border-ink border-t-2 pt-4">
+            <div className="border-line border-t pt-4">
               <MessageTimeline brandId={brand.id} messages={messages} />
             </div>
           </CardBody>

@@ -22,23 +22,25 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "bg-paper shadow-hard animate-rise flex flex-col items-center justify-center gap-3 border-2 p-10 text-center",
-        tone === "error" ? "border-error" : "border-ink",
+        "bg-paper animate-rise flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed p-10 text-center",
+        tone === "error" && "border-error/40 bg-error-soft/40",
         className,
       )}
     >
       <div
         aria-hidden
         className={cn(
-          "animate-float shadow-hard-sm size-8 rotate-45 border-2",
-          tone === "error" ? "border-error bg-error" : "border-ink bg-cream",
+          "mb-1 flex size-10 items-center justify-center rounded-full text-lg",
+          tone === "error" ? "bg-error-soft text-error" : "bg-subtle text-ink/40",
         )}
-      />
-      <h3 className={cn("text-base", tone === "error" && "text-error")}>{title}</h3>
+      >
+        {tone === "error" ? "!" : "∅"}
+      </div>
+      <h3 className={cn("text-sm font-semibold", tone === "error" && "text-error")}>{title}</h3>
       {description ? (
-        <p className="text-ink/70 max-w-prose text-sm whitespace-pre-line">{description}</p>
+        <p className="text-ink/55 max-w-prose text-sm whitespace-pre-line">{description}</p>
       ) : null}
-      {action ? <div className="mt-1 flex items-center gap-2">{action}</div> : null}
+      {action ? <div className="mt-3 flex items-center gap-2">{action}</div> : null}
     </div>
   );
 }

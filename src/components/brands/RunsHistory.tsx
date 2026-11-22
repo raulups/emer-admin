@@ -53,12 +53,12 @@ export function RunsHistory({ runs }: { runs: ScrapeRun[] }) {
                         type="button"
                         onClick={() => setExpanded(isExpanded ? null : run.id)}
                         aria-expanded={isExpanded}
-                        className="text-error cursor-pointer text-left text-xs font-bold uppercase underline"
+                        className="text-error cursor-pointer text-left text-xs font-semibold underline"
                       >
                         {isExpanded ? "Ocultar" : "Ver error"}
                       </button>
                       {isExpanded ? (
-                        <pre className="border-error bg-cream text-error max-w-xl overflow-x-auto border-2 p-2 text-[11px] whitespace-pre-wrap">
+                        <pre className="border-error/25 bg-error-soft text-error max-w-xl overflow-x-auto rounded-md border p-2 font-mono text-[11px] whitespace-pre-wrap">
                           {run.error_message}
                         </pre>
                       ) : null}

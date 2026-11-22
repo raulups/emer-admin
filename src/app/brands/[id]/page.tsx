@@ -30,13 +30,13 @@ function SummaryItem({
   alert?: boolean;
 }) {
   return (
-    <div className="border-ink flex flex-col gap-0.5 border-2 p-3">
+    <div className="border-line flex flex-col gap-0.5 border p-3">
       <span className="label-caps text-ink/60">{label}</span>
       <span
         className={
           alert && value > 0
-            ? "text-error text-3xl leading-none font-bold tracking-tighter"
-            : "text-3xl leading-none font-bold tracking-tighter"
+            ? "text-error text-3xl leading-none font-semibold tracking-tight"
+            : "text-3xl leading-none font-semibold tracking-tight"
         }
       >
         {formatNumber(value)}
@@ -74,7 +74,7 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
   return (
     <div className="flex flex-col gap-4">
       {/* Cabecera */}
-      <div className="border-ink bg-paper shadow-hard border-2">
+      <div className="border-line bg-paper border shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4 p-4">
           <div className="flex min-w-0 items-start gap-4">
             <RemoteImage
@@ -82,12 +82,12 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
               alt={`Logo de ${brand.name}`}
               fallbackLabel="Logo"
               fit="contain"
-              className="border-ink size-20 shrink-0 border-2 p-1"
+              className="border-line size-20 shrink-0 border p-1"
             />
 
             <div className="flex min-w-0 flex-col gap-2">
               <div className="flex items-baseline gap-3">
-                <Link href="/brands" className="text-ink/50 text-xs uppercase hover:underline">
+                <Link href="/brands" className="text-ink/50 text-xs hover:underline">
                   Marcas /
                 </Link>
               </div>
@@ -130,8 +130,7 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
                 <ul className="text-ink/50 flex flex-col gap-0.5 text-[11px]">
                   {brand.tags.map((tag) => (
                     <li key={tag}>
-                      <span className="font-bold uppercase">{tag}</span> ·{" "}
-                      {BRAND_TAG_DESCRIPTIONS[tag]}
+                      <span className="font-semibold">{tag}</span> · {BRAND_TAG_DESCRIPTIONS[tag]}
                     </li>
                   ))}
                 </ul>
@@ -159,7 +158,9 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
       </div>
 
       {warning ? (
-        <p className="border-error bg-paper text-error border-2 p-3 text-xs">{warning}</p>
+        <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
+          {warning}
+        </p>
       ) : null}
 
       {/* Imagenes */}
@@ -172,7 +173,7 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
               src={brand.img_desktop}
               alt={`Imagen desktop de ${brand.name}`}
               fallbackLabel="Sin imagen"
-              className="border-ink aspect-video w-full border-2"
+              className="border-line aspect-video w-full border"
             />
           </figure>
           <figure className="flex w-full max-w-44 flex-col gap-1.5 sm:max-w-none">
@@ -181,7 +182,7 @@ export default async function BrandDetailPage({ params }: { params: Promise<{ id
               src={brand.img_mobile}
               alt={`Imagen app de ${brand.name}`}
               fallbackLabel="Sin imagen"
-              className="border-ink aspect-[9/16] w-full border-2"
+              className="border-line aspect-[9/16] w-full border"
             />
           </figure>
         </div>

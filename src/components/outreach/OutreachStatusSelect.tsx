@@ -58,7 +58,7 @@ export function OutreachStatusSelect({
         value={value}
         disabled={isPending}
         onChange={(event) => handleChange(event.target.value as OutreachStatus)}
-        className="border-ink bg-paper text-ink focus-visible:outline-ink hover:shadow-hard-sm min-w-36 shrink-0 cursor-pointer border-2 py-1 pr-6 pl-2 text-base font-bold transition-shadow duration-[120ms] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:text-xs"
+        className="border-line bg-paper text-ink focus-visible:outline-ink min-w-36 shrink-0 cursor-pointer border py-1 pr-6 pl-2 text-base font-semibold transition-shadow duration-150 hover:shadow-xs focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:text-xs"
       >
         {OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>

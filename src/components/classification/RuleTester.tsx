@@ -32,9 +32,9 @@ export function RuleTester({ rules, categories }: RuleTesterProps) {
   }, [title, productType, rules]);
 
   return (
-    <div className="border-ink bg-paper flex flex-col gap-3 border-2 p-3">
+    <div className="border-line bg-paper flex flex-col gap-3 border p-3">
       <div>
-        <h3 className="text-sm tracking-wider">Probador</h3>
+        <h3 className="text-sm">Probador</h3>
         <p className="text-ink/60 mt-0.5 text-xs">
           Escribe un título y un product_type y verás qué regla ganaría, sin guardar nada.
         </p>
@@ -60,7 +60,7 @@ export function RuleTester({ rules, categories }: RuleTesterProps) {
       {result === null ? (
         <p className="text-ink/40 text-xs">Escribe algo para ver el resultado.</p>
       ) : (
-        <div className="border-ink bg-cream flex flex-col gap-2 border-2 p-3">
+        <div className="border-line bg-subtle flex flex-col gap-2 border p-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="label-caps text-ink/60">Categoría resultante</span>
             {result.categoryId ? (
@@ -80,7 +80,7 @@ export function RuleTester({ rules, categories }: RuleTesterProps) {
               <dd>
                 {result.rule ? (
                   <>
-                    <span className="font-mono font-bold">{result.rule.keyword}</span>
+                    <span className="font-mono font-semibold">{result.rule.keyword}</span>
                     <span className="text-ink/50"> · prioridad {result.rule.priority}</span>
                   </>
                 ) : (
@@ -90,7 +90,7 @@ export function RuleTester({ rules, categories }: RuleTesterProps) {
             </div>
           </dl>
 
-          <div className="border-ink/20 text-ink/60 grid gap-x-6 gap-y-1 border-t-2 pt-2 text-[11px] sm:grid-cols-2">
+          <div className="border-line text-ink/60 grid gap-x-6 gap-y-1 border-t pt-2 text-[11px] sm:grid-cols-2">
             <div>
               <span className="label-caps text-ink/40">Título normalizado</span>
               <p className="font-mono break-words">{prep(title) || "—"}</p>

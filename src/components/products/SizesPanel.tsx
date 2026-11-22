@@ -31,10 +31,10 @@ export function SizesPanel({ sizes, currency }: { sizes: ProductSize[]; currency
               key={size.id}
               title={inStock ? "Con stock" : "Sin stock"}
               className={cn(
-                "border-2 px-2 py-1 text-xs font-bold tracking-wide uppercase",
+                "border px-2 py-1 text-xs font-semibold",
                 inStock
-                  ? "border-ink bg-paper text-ink"
-                  : "border-ink/30 bg-cream text-ink/40 line-through",
+                  ? "border-line bg-paper text-ink"
+                  : "border-line bg-subtle text-ink/40 line-through",
               )}
             >
               {sizeLabel(size)}
@@ -45,7 +45,7 @@ export function SizesPanel({ sizes, currency }: { sizes: ProductSize[]; currency
 
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-ink/60 text-xs">
-          <span className={available === 0 ? "text-error font-bold" : "text-ink font-bold"}>
+          <span className={available === 0 ? "text-error font-semibold" : "text-ink font-semibold"}>
             {formatNumber(available)}
           </span>{" "}
           con stock de {formatNumber(sizes.length)}
@@ -73,7 +73,7 @@ export function SizesPanel({ sizes, currency }: { sizes: ProductSize[]; currency
             <TBody>
               {sizes.map((size) => (
                 <TR key={size.id}>
-                  <TD className="font-bold">{sizeLabel(size)}</TD>
+                  <TD className="font-semibold">{sizeLabel(size)}</TD>
                   <TD className="font-mono text-[11px]">{size.variant_id ?? "—"}</TD>
                   <TD className="text-xs">{size.size_label ?? "—"}</TD>
                   <TD className="font-mono text-[11px]">{size.sku ?? "—"}</TD>
@@ -91,7 +91,7 @@ export function SizesPanel({ sizes, currency }: { sizes: ProductSize[]; currency
                   <TD>
                     <span
                       className={cn(
-                        "text-xs font-bold",
+                        "text-xs font-semibold",
                         size.available === true ? "text-ok" : "text-error",
                       )}
                     >

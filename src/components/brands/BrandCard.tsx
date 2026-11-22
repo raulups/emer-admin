@@ -23,10 +23,10 @@ function Stat({
   const highlighted = alert && (value ?? 0) > 0;
   return (
     <div className="flex flex-col px-3 py-2">
-      <span className="text-ink/50 text-[9px] font-bold tracking-widest uppercase">{label}</span>
+      <span className="text-ink/50 text-[11px] font-semibold">{label}</span>
       <span
         className={cn(
-          "text-lg leading-tight font-bold tracking-tight",
+          "text-lg leading-tight font-semibold tracking-tight",
           highlighted && "text-error",
         )}
       >
@@ -44,8 +44,8 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
   ].filter((item): item is string => typeof item === "string");
 
   return (
-    <article className="group border-ink bg-paper shadow-hard hover:shadow-hard-lg flex flex-col border-2 transition-shadow duration-[120ms]">
-      <div className="border-ink relative border-b-2">
+    <article className="group border-line bg-paper flex flex-col overflow-hidden border shadow-sm transition-shadow duration-150 hover:shadow-md">
+      <div className="border-line relative border-b">
         <button
           type="button"
           onClick={onEdit}
@@ -60,7 +60,7 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
           />
         </button>
 
-        <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-end gap-1 p-2 opacity-0 transition-opacity duration-[120ms] group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-end gap-1 p-2 opacity-0 transition-opacity duration-150 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
           <button type="button" onClick={onEdit} className={buttonClasses("primary", "sm")}>
             Editar
           </button>
@@ -70,7 +70,7 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
         </div>
 
         {missing.length > 0 ? (
-          <span className="bg-progress border-ink absolute bottom-2 left-2 border-2 px-1.5 py-0.5 text-[9px] font-bold tracking-widest uppercase">
+          <span className="bg-progress border-line absolute bottom-2 left-2 border px-1.5 py-0.5 text-[11px] font-semibold">
             Falta {missing.join(", ")}
           </span>
         ) : null}
@@ -82,13 +82,13 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
           alt={`Logo de ${brand.name}`}
           fallbackLabel="Logo"
           fit="contain"
-          className="border-ink size-12 shrink-0 border-2 p-0.5"
+          className="border-line size-12 shrink-0 border p-0.5"
         />
         <div className="min-w-0 flex-1">
           <button
             type="button"
             onClick={onEdit}
-            className="block max-w-full cursor-pointer truncate text-left text-base leading-tight font-bold tracking-tight uppercase hover:underline"
+            className="block max-w-full cursor-pointer truncate text-left text-base leading-tight font-semibold tracking-tight hover:underline"
           >
             {brand.name}
           </button>
@@ -102,7 +102,7 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
               {displayUrl(brand.url)} ↗
             </a>
           ) : (
-            <span className="text-error text-xs font-bold">Sin tienda</span>
+            <span className="text-error text-xs font-semibold">Sin tienda</span>
           )}
           <div className="text-ink/60 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
             <ColorSwatch color={brand.color} />
@@ -116,14 +116,14 @@ export function BrandCard({ brand, onEdit }: { brand: BrandListItem; onEdit: () 
         <QuickTags brandId={brand.id} brandName={brand.name} tags={brand.tags} />
       </div>
 
-      <div className="border-ink divide-ink mt-auto grid grid-cols-3 divide-x-2 border-t-2">
+      <div className="border-line divide-line mt-auto grid grid-cols-3 divide-x border-t">
         <Stat label="Productos" value={brand.productsCount} />
         <Stat label="Sin cat." value={brand.unclassifiedCount} alert />
         <div className="flex min-w-0 flex-col justify-center gap-0.5 px-3 py-2">
           {brand.lastRun ? (
             <>
               <ScrapeStatusBadge status={brand.lastRun.status} />
-              <span className="text-ink/60 truncate text-[10px]">
+              <span className="text-ink/60 truncate text-[11px]">
                 {formatRelativeTime(brand.lastRun.started_at)}
               </span>
             </>

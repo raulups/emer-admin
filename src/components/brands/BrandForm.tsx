@@ -250,7 +250,7 @@ export function BrandForm({
   const cancelHref = mode === "edit" && brandId ? `/brands/${brandId}` : "/brands";
   const panel = isModal
     ? "flex flex-col gap-4"
-    : "border-ink bg-paper shadow-hard flex flex-col gap-4 border-2 p-4";
+    : "border-line bg-paper shadow-sm flex flex-col gap-4 border p-4";
   const submitLabel = uploading
     ? "Subiendo imagen…"
     : mode === "create"
@@ -272,7 +272,7 @@ export function BrandForm({
         )}
       >
         <div className={panel}>
-          <h2 className="border-ink border-b-2 pb-2 text-sm tracking-wider">Datos de la marca</h2>
+          <h2 className="border-line border-b pb-2 text-sm">Datos de la marca</h2>
 
           <div className={cn("grid gap-4", isModal && "sm:grid-cols-2")}>
             <Input
@@ -340,7 +340,7 @@ export function BrandForm({
                 aria-label="Selector de color"
                 value={pickerValue(values.color)}
                 onChange={(event) => onPickColor(event.target.value)}
-                className="border-ink bg-paper h-10 w-14 shrink-0 cursor-pointer border-2 p-0.5"
+                className="border-line bg-paper h-10 w-14 shrink-0 cursor-pointer border p-0.5"
               />
               <Input
                 name="color"
@@ -375,18 +375,20 @@ export function BrandForm({
                       aria-pressed={active}
                       title={BRAND_TAG_DESCRIPTIONS[tag]}
                       className={cn(
-                        "border-ink flex cursor-pointer flex-col items-start gap-0.5 border-2 px-2 py-1.5 text-left transition-colors duration-[120ms]",
-                        active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+                        "flex cursor-pointer flex-col items-start gap-0.5 border px-2.5 py-2 text-left transition-colors duration-150",
+                        active
+                          ? "border-accent/50 bg-accent-soft"
+                          : "border-line bg-paper hover:border-line-strong",
                       )}
                     >
-                      <span className="text-[10px] font-bold tracking-widest uppercase">
+                      <span className={cn("text-xs font-medium", active && "text-accent")}>
                         {active ? "✓ " : ""}
                         {tag}
                       </span>
                       <span
                         className={cn(
-                          "line-clamp-1 text-[10px]",
-                          active ? "text-cream/70" : "text-ink/50",
+                          "line-clamp-1 text-[11px]",
+                          active ? "text-accent/70" : "text-ink/50",
                         )}
                       >
                         {BRAND_TAG_DESCRIPTIONS[tag]}
@@ -406,8 +408,10 @@ export function BrandForm({
                         onClick={() => toggleTag(tag)}
                         aria-pressed={active}
                         className={cn(
-                          "border-ink w-32 shrink-0 cursor-pointer border-2 px-2 py-1 text-[10px] font-bold tracking-widest uppercase transition-colors duration-[120ms]",
-                          active ? "bg-ink text-cream" : "bg-paper hover:bg-cream",
+                          "w-32 shrink-0 cursor-pointer rounded-full border px-2.5 py-1 text-xs font-medium transition-colors duration-150",
+                          active
+                            ? "border-accent/40 bg-accent-soft text-accent"
+                            : "border-line bg-paper hover:border-line-strong",
                         )}
                       >
                         {tag}
@@ -418,12 +422,12 @@ export function BrandForm({
                 })}
               </div>
             )}
-            {errors.tags ? <p className="text-error text-xs font-bold">{errors.tags}</p> : null}
+            {errors.tags ? <p className="text-error text-xs font-semibold">{errors.tags}</p> : null}
           </div>
         </div>
 
         <div className={panel}>
-          <h2 className="border-ink border-b-2 pb-2 text-sm tracking-wider">Imágenes</h2>
+          <h2 className="border-line border-b pb-2 text-sm">Imágenes</h2>
 
           <ImageDropzone
             label="Desktop · horizontal"
@@ -466,10 +470,10 @@ export function BrandForm({
 
       <div
         className={cn(
-          "border-ink bg-paper flex items-center justify-end gap-2",
+          "border-line bg-paper flex items-center justify-end gap-2",
           isModal
-            ? "sticky -bottom-4 -mx-4 -mb-4 border-t-2 px-4 py-2.5"
-            : "shadow-hard border-2 p-3",
+            ? "bg-paper/95 sticky -bottom-5 -mx-5 -mb-5 border-t px-5 py-3 backdrop-blur"
+            : "border p-3 shadow-sm",
         )}
       >
         <span className="text-ink/50 mr-auto hidden text-[11px] sm:inline">

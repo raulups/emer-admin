@@ -39,7 +39,7 @@ export async function ShopifyJsonTab({
 /** Esqueleto mientras se espera a la tienda (hasta 10 s). */
 export function ShopifyJsonSkeleton() {
   return (
-    <div className="border-ink bg-paper flex flex-col items-center justify-center gap-3 border-2 p-10">
+    <div className="border-line bg-paper flex flex-col items-center justify-center gap-3 border p-10">
       <Spinner size="lg" />
       <p className="label-caps text-ink/60">Pidiendo el JSON a la tienda…</p>
       <p className="text-ink/50 text-xs">Se cancela a los 10 segundos.</p>

@@ -177,7 +177,7 @@ export function CategoryEditor({
   }));
 
   return (
-    <div className="border-ink bg-paper flex flex-col gap-3 border-2 p-3">
+    <div className="border-line bg-paper flex flex-col gap-3 border p-3">
       <div className="flex flex-wrap items-end gap-2">
         <Select
           label="Categoría"
@@ -215,7 +215,7 @@ export function CategoryEditor({
           : "La categoría la deciden las reglas de clasificación en cada scrape."}
       </p>
 
-      <div className="border-ink flex flex-wrap items-center gap-2 border-t-2 pt-2.5">
+      <div className="border-line flex flex-wrap items-center gap-2 border-t pt-2.5">
         <span className="label-caps text-ink/60">Para que no se repita:</span>
         <Button variant="secondary" size="sm" onClick={() => setRuleOpen(true)}>
           Crear regla con palabra clave
@@ -281,7 +281,7 @@ export function CategoryEditor({
             hint="A mayor número, más manda frente a otras reglas. Por defecto 20."
           />
 
-          <p className="border-ink bg-cream border-2 p-2 text-xs">
+          <p className="border-line bg-subtle border p-2 text-xs">
             Este cambio <strong>no reclasifica lo que ya hay</strong>: se aplica en el próximo
             scrape de cada marca.
           </p>
@@ -308,13 +308,13 @@ export function CategoryEditor({
         <div className="flex flex-col gap-3">
           <p className="text-ink/70 text-sm">
             Todos los productos de <strong>{brandName ?? "esta marca"}</strong> cuyo{" "}
-            <code className="bg-cream px-1 font-mono text-xs">product_type</code> sea el de abajo se
-            clasificarán en la categoría elegida.
+            <code className="bg-subtle px-1 font-mono text-xs">product_type</code> sea el de abajo
+            se clasificarán en la categoría elegida.
           </p>
 
           <div className="flex flex-col gap-1.5">
             <span className="label-caps">product_type (en minúsculas)</span>
-            <p className="border-ink bg-cream border-2 px-3 py-2 font-mono text-sm">
+            <p className="border-line bg-subtle border px-3 py-2 font-mono text-sm">
               {productType ?? "—"}
             </p>
           </div>
@@ -327,7 +327,7 @@ export function CategoryEditor({
             options={categoryOptions}
           />
 
-          <p className="border-ink bg-cream border-2 p-2 text-xs">
+          <p className="border-line bg-subtle border p-2 text-xs">
             Si ya existía un mapeo para este <code className="font-mono">product_type</code>, se
             actualiza. El cambio <strong>se aplica en el próximo scrape</strong> de la marca.
           </p>

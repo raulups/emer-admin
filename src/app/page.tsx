@@ -73,13 +73,13 @@ export default async function HomePage() {
           }
         />
 
-        <div className="border-ink bg-paper shadow-hard col-span-2 flex flex-col gap-2 border-2 p-4">
+        <div className="border-line bg-paper col-span-2 flex flex-col gap-2 border p-4 shadow-sm">
           <span className="label-caps text-ink/70">Último scrape</span>
 
           {lastRun && lastRunStatus ? (
             <>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="text-2xl leading-none font-bold tracking-tighter">
+                <span className="text-2xl leading-none font-semibold tracking-tight">
                   {formatDateTime(lastRun.started_at)}
                 </span>
                 <ScrapeStatusBadge status={lastRunStatus} />
@@ -105,7 +105,7 @@ export default async function HomePage() {
               </dl>
 
               {lastRun.error_message ? (
-                <p className="border-error text-error mt-1 border-2 p-2 text-xs">
+                <p className="border-error/25 bg-error-soft text-error mt-1 rounded-md border p-2 text-xs">
                   {lastRun.error_message}
                 </p>
               ) : null}

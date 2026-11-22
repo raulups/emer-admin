@@ -65,7 +65,7 @@ export default async function ScraperPage({
             />
           </div>
         ) : (
-          <p className="border-error bg-paper text-error border-2 p-3 text-xs">
+          <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
             No se han podido calcular los contadores: {!countsResult.ok ? countsResult.error : ""}
           </p>
         )}
@@ -73,7 +73,7 @@ export default async function ScraperPage({
         {problemsResult.ok ? (
           <ProblemBrands brands={problemsResult.data} />
         ) : (
-          <p className="border-error bg-paper text-error border-2 p-3 text-xs">
+          <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
             No se han podido calcular las marcas con problemas: {problemsResult.error}
           </p>
         )}

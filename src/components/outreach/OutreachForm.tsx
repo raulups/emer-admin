@@ -20,11 +20,11 @@ import {
 import { OUTREACH_STATUSES, type OutreachStatus, type Uuid } from "@/types/db";
 
 const SELECTED_TONES: Record<string, string> = {
-  muted: "bg-ink text-cream",
-  neutral: "bg-ink text-cream",
-  progress: "bg-progress text-ink",
-  ok: "bg-ok text-paper",
-  error: "bg-error text-paper",
+  muted: "border-ink/30 bg-subtle text-ink",
+  neutral: "border-accent/40 bg-accent-soft text-accent",
+  progress: "border-progress/60 bg-progress-soft text-[#8a5a00]",
+  ok: "border-ok/40 bg-ok-soft text-ok",
+  error: "border-error/40 bg-error-soft text-error",
 };
 
 export interface OutreachFormProps {
@@ -104,10 +104,10 @@ export function OutreachForm({ brandId, initial }: OutreachFormProps) {
                 onClick={() => set("status", status)}
                 title={OUTREACH_STATUS_DESCRIPTIONS[status]}
                 className={cn(
-                  "press border-ink cursor-pointer border-2 px-2 py-2 text-left text-xs font-bold tracking-wide uppercase",
+                  "press border-line cursor-pointer border px-2 py-2 text-left text-xs font-semibold",
                   selected
                     ? SELECTED_TONES[OUTREACH_STATUS_TONES[status]]
-                    : "bg-paper text-ink hover:bg-cream",
+                    : "bg-paper text-ink hover:bg-subtle",
                 )}
               >
                 {OUTREACH_STATUS_LABELS[status]}

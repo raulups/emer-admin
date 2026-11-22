@@ -23,7 +23,7 @@ function ColorCell({ hex, name }: { hex: string | null; name: string | null }) {
       {valid ? (
         <span
           aria-hidden
-          className="border-ink size-3.5 shrink-0 border-2"
+          className="border-line size-3.5 shrink-0 border"
           style={{ backgroundColor: `#${value}` }}
           title={`#${value.toUpperCase()}`}
         />
@@ -38,7 +38,7 @@ function PriceCell({ product }: { product: ProductListItem }) {
 
   return (
     <span className="flex flex-col items-end leading-tight">
-      <span className="font-bold whitespace-nowrap">
+      <span className="font-semibold whitespace-nowrap">
         {formatPrice(product.current_price, product.currency)}
       </span>
       {onSale ? (
@@ -70,7 +70,7 @@ function ProductRow({ product }: { product: ProductListItem }) {
           src={product.thumbnail_image_url ?? product.main_image_url}
           alt={product.name ?? "Producto"}
           fallbackLabel="—"
-          className="border-ink size-10 border-2"
+          className="border-line size-10 border"
         />
       </TD>
 
@@ -79,7 +79,7 @@ function ProductRow({ product }: { product: ProductListItem }) {
         <Link
           href={href}
           onClick={(event) => event.stopPropagation()}
-          className="block truncate font-bold hover:underline"
+          className="block truncate font-semibold hover:underline"
         >
           {product.name ?? "(sin nombre)"}
         </Link>
@@ -121,7 +121,7 @@ function ProductRow({ product }: { product: ProductListItem }) {
       <TD className="text-center">
         <span
           className={cn(
-            "text-xs font-bold",
+            "text-xs font-semibold",
             product.available === true
               ? "text-ok"
               : product.available === false
@@ -138,7 +138,7 @@ function ProductRow({ product }: { product: ProductListItem }) {
           <span className="text-ink/30">—</span>
         ) : (
           <span className={product.sizesAvailable === 0 ? "text-error" : undefined}>
-            <span className="font-bold">{product.sizesAvailable}</span>
+            <span className="font-semibold">{product.sizesAvailable}</span>
             <span className="text-ink/50">/{product.sizesTotal}</span>
           </span>
         )}

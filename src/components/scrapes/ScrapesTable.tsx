@@ -65,7 +65,7 @@ export function ScrapesTable({ runs, now }: ScrapesTableProps) {
                 onClick={clickable ? () => router.push(href) : undefined}
                 className={cn(ROW_TONES[run.status])}
               >
-                <TD className="font-bold whitespace-nowrap">
+                <TD className="font-semibold whitespace-nowrap">
                   {run.brand_name ?? <span className="text-ink/40">(marca borrada)</span>}
                 </TD>
                 <TD className="whitespace-nowrap">
@@ -79,7 +79,7 @@ export function ScrapesTable({ runs, now }: ScrapesTableProps) {
                   {run.status === "error" || run.error_message ? (
                     <div className="flex flex-col gap-0.5">
                       {run.status === "error" ? (
-                        <span className="text-error text-xs font-bold uppercase">
+                        <span className="text-error text-xs font-semibold">
                           {errorCodeLabel(run.error_code)}
                         </span>
                       ) : null}
@@ -101,7 +101,7 @@ export function ScrapesTable({ runs, now }: ScrapesTableProps) {
                     <Link
                       href={href}
                       onClick={(event) => event.stopPropagation()}
-                      className="text-xs font-bold uppercase underline"
+                      className="text-xs font-semibold underline"
                     >
                       Ver
                     </Link>

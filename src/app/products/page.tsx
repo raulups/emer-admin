@@ -46,7 +46,7 @@ export default async function ProductsPage({
       />
 
       {!optionsResult.ok ? (
-        <p className="border-error bg-paper text-error mb-4 border-2 p-3 text-xs">
+        <p className="border-error/25 bg-error-soft text-error mb-4 rounded-lg border p-3 text-xs">
           No se han podido cargar las marcas y categorías de los filtros: {optionsResult.error}
         </p>
       ) : null}

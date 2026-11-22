@@ -145,13 +145,13 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
       </div>
 
       {truncated ? (
-        <p className="border-error bg-paper text-error border-2 p-3 text-xs">
+        <p className="border-error/25 bg-error-soft text-error rounded-lg border p-3 text-xs">
           Hay más productos sin categoría de los que se leen de una vez: la lista está recortada.
         </p>
       ) : null}
 
       {visible.length === 0 ? (
-        <div className="border-ink bg-paper border-2 p-8 text-center">
+        <div className="border-line bg-paper border p-8 text-center">
           <p className="text-ok text-sm">
             {groups.length === 0
               ? "No hay productos sin categoría. Todo el catálogo está clasificado."
@@ -176,7 +176,10 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
                 return (
                   <TR key={key}>
                     <TD className="whitespace-nowrap">
-                      <Link href={`/brands/${group.brandId}`} className="font-bold hover:underline">
+                      <Link
+                        href={`/brands/${group.brandId}`}
+                        className="font-semibold hover:underline"
+                      >
                         {group.brandName}
                       </Link>
                     </TD>
@@ -189,7 +192,7 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
                       )}
                     </TD>
 
-                    <TD className="text-right font-bold">{formatNumber(group.count)}</TD>
+                    <TD className="text-right font-semibold">{formatNumber(group.count)}</TD>
 
                     <TD>
                       <ul className="flex flex-col gap-0.5">
@@ -298,7 +301,7 @@ export function UnclassifiedTab({ groups, total, truncated, categories }: Unclas
             hint="A mayor número, más manda. Por defecto 20."
           />
 
-          <p className="border-ink bg-cream border-2 p-2 text-xs">
+          <p className="border-line bg-subtle border p-2 text-xs">
             No reclasifica lo que ya hay: se aplica en el <strong>próximo scrape</strong>.
           </p>
         </div>

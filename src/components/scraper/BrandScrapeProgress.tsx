@@ -138,12 +138,12 @@ export function BrandScrapeProgress({ brandId, brandName, initialRun }: BrandScr
       </Button>
 
       {isRunning || waiting ? (
-        <div className="border-ink bg-progress flex flex-col gap-1 border-2 p-2 text-xs">
+        <div className="border-line bg-progress flex flex-col gap-1 border p-2 text-xs">
           {waiting ? (
-            <span className="font-bold">Esperando a que n8n cree la ejecución…</span>
+            <span className="font-semibold">Esperando a que n8n cree la ejecución…</span>
           ) : (
             <>
-              <span className="flex items-center gap-2 font-bold">
+              <span className="flex items-center gap-2 font-semibold">
                 <RunStatusBadge status="running" />
                 Empezó {formatRelativeTime(run?.started_at)}
               </span>

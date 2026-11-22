@@ -29,10 +29,10 @@ export function RunProductsPagination({
   return (
     <nav
       aria-label="Paginación"
-      className="border-ink flex flex-wrap items-center justify-between gap-3 border-t-2 p-3"
+      className="border-line flex flex-wrap items-center justify-between gap-3 border-t p-3"
     >
       <p className="text-ink/70 text-xs">
-        <span className="text-ink font-bold">
+        <span className="text-ink font-semibold">
           {formatNumber(first)}–{formatNumber(last)}
         </span>{" "}
         de {formatNumber(page.total)} · página {formatNumber(page.page)} de{" "}

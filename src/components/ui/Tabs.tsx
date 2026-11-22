@@ -34,8 +34,8 @@ export function Tabs({ items, defaultTabId, activeTabId, onTabChange, className 
   const active = items.find((item) => item.id === currentId) ?? items[0];
 
   return (
-    <div className={cn("flex flex-col", className)}>
-      <div role="tablist" className="border-ink flex flex-wrap gap-0 border-b-2">
+    <div className={cn("flex flex-col gap-3", className)}>
+      <div role="tablist" className="bg-subtle flex flex-wrap gap-1 self-start rounded-lg p-1">
         {items.map((item) => {
           const isActive = item.id === active?.id;
           return (
@@ -47,11 +47,9 @@ export function Tabs({ items, defaultTabId, activeTabId, onTabChange, className 
               disabled={item.disabled}
               onClick={() => selectTab(item.id)}
               className={cn(
-                "border-ink -mb-0.5 cursor-pointer border-2 border-b-0 px-2.5 py-2 text-[11px] font-bold tracking-wider uppercase transition-[background-color,color,translate] duration-[120ms] sm:px-4 sm:text-xs sm:tracking-widest",
+                "cursor-pointer rounded-md px-3 py-1.5 text-xs font-medium transition-[background-color,color,box-shadow] duration-150 sm:text-sm",
                 "disabled:cursor-not-allowed disabled:opacity-45",
-                isActive
-                  ? "bg-ink text-cream"
-                  : "bg-paper text-ink hover:bg-cream hover:-translate-y-0.5",
+                isActive ? "bg-paper text-ink shadow-sm" : "text-ink/60 hover:text-ink",
               )}
             >
               {item.label}
@@ -60,7 +58,7 @@ export function Tabs({ items, defaultTabId, activeTabId, onTabChange, className 
         })}
       </div>
 
-      <div role="tabpanel" className="border-ink bg-paper shadow-hard border-2 border-t-0 p-4">
+      <div role="tabpanel" className="bg-paper rounded-xl border p-4 shadow-xs">
         {active?.content}
       </div>
     </div>

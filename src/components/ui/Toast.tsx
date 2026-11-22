@@ -20,10 +20,10 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
-const TONES: Record<ToastTone, string> = {
-  ok: "bg-ok text-paper",
-  error: "bg-error text-paper",
-  info: "bg-ink text-cream",
+const DOTS: Record<ToastTone, string> = {
+  ok: "bg-ok",
+  error: "bg-error",
+  info: "bg-accent",
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -54,19 +54,20 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={cn(
-              "border-ink shadow-hard animate-slide-in pointer-events-auto flex items-start justify-between gap-3 border-2 p-3",
-              TONES[toast.tone],
-            )}
+            className="bg-ink animate-slide-in pointer-events-auto flex items-start gap-3 rounded-xl p-3 pr-2 text-white shadow-lg"
           >
-            <p className="text-sm font-bold">{toast.message}</p>
+            <span
+              aria-hidden
+              className={cn("mt-1.5 size-2 shrink-0 rounded-full", DOTS[toast.tone])}
+            />
+            <p className="flex-1 text-sm">{toast.message}</p>
             <button
               type="button"
               onClick={() => dismissToast(toast.id)}
               aria-label="Cerrar aviso"
-              className="cursor-pointer text-xs font-bold opacity-80 hover:opacity-100"
+              className="flex size-6 cursor-pointer items-center justify-center rounded-md text-white/60 hover:bg-white/10 hover:text-white"
             >
-              X
+              ✕
             </button>
           </div>
         ))}

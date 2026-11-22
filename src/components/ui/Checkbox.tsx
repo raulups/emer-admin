@@ -26,8 +26,8 @@ export function Checkbox({
         id={inputId}
         name={name}
         className={cn(
-          "border-ink bg-paper hover:shadow-hard-sm mt-0.5 size-4 shrink-0 cursor-pointer appearance-none border-2 transition-[background-color,box-shadow] duration-[120ms]",
-          "checked:bg-ink checked:shadow-[inset_0_0_0_2px_var(--color-paper)]",
+          "border-line-strong bg-paper hover:border-ink/40 mt-0.5 size-4 shrink-0 cursor-pointer appearance-none rounded-[5px] border transition-colors duration-150",
+          "checked:border-accent checked:bg-accent checked:bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E\")] checked:bg-center checked:bg-no-repeat",
           "disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
@@ -36,7 +36,7 @@ export function Checkbox({
       {label || hint ? (
         <div className="flex flex-col gap-0.5">
           {label ? (
-            <label htmlFor={inputId} className="cursor-pointer text-sm leading-tight font-bold">
+            <label htmlFor={inputId} className="cursor-pointer text-sm leading-tight font-medium">
               {label}
             </label>
           ) : null}

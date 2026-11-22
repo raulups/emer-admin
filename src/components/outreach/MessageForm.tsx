@@ -101,11 +101,13 @@ export function MessageForm({ brandId, defaultChannel, currentStatus }: MessageF
               aria-checked={selected}
               onClick={() => set("direction", direction)}
               className={cn(
-                "press border-ink flex cursor-pointer flex-col border-2 px-3 py-2 text-left",
-                selected ? "bg-ink text-cream" : "bg-paper text-ink hover:bg-cream",
+                "press border-line flex cursor-pointer flex-col border px-3 py-2 text-left",
+                selected
+                  ? "border-accent/50 bg-accent-soft text-accent"
+                  : "bg-paper text-ink hover:bg-subtle",
               )}
             >
-              <span className="text-xs font-bold tracking-wide uppercase">
+              <span className="text-xs font-semibold">
                 {direction === "outbound" ? "→ " : "← "}
                 {MESSAGE_DIRECTION_LABELS[direction]}
               </span>

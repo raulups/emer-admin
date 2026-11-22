@@ -49,11 +49,9 @@ export function BrandsTable({
                     alt={`Logo de ${brand.name}`}
                     fallbackLabel="—"
                     fit="contain"
-                    className="border-ink size-7 shrink-0 border-2"
+                    className="border-line size-7 shrink-0 border"
                   />
-                  <span className="font-bold tracking-tight uppercase hover:underline">
-                    {brand.name}
-                  </span>
+                  <span className="font-semibold tracking-tight hover:underline">{brand.name}</span>
                 </button>
               </TD>
 
@@ -68,7 +66,7 @@ export function BrandsTable({
                     {displayUrl(brand.url)} ↗
                   </a>
                 ) : (
-                  <span className="text-error text-xs font-bold">Sin tienda</span>
+                  <span className="text-error text-xs font-semibold">Sin tienda</span>
                 )}
               </TD>
 
@@ -80,11 +78,11 @@ export function BrandsTable({
                 <QuickTags brandId={brand.id} brandName={brand.name} tags={brand.tags} size="sm" />
               </TD>
 
-              <TD className="text-right font-bold">
+              <TD className="text-right font-semibold">
                 {brand.productsCount === null ? "—" : formatNumber(brand.productsCount)}
               </TD>
 
-              <TD className="text-right font-bold">
+              <TD className="text-right font-semibold">
                 {brand.unclassifiedCount === null ? (
                   "—"
                 ) : (

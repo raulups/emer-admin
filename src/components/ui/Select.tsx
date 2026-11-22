@@ -39,7 +39,12 @@ export function Select({
     <select
       id={inputId}
       name={name}
-      className={cn(fieldClasses, "cursor-pointer pr-8", error && "border-error", className)}
+      className={cn(
+        fieldClasses,
+        "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238a8a93' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E\")] cursor-pointer appearance-none bg-[length:16px] bg-[position:right_0.6rem_center] bg-no-repeat pr-9",
+        error && "border-error",
+        className,
+      )}
       aria-invalid={error ? true : undefined}
       {...props}
     >
