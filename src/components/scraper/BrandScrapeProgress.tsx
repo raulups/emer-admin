@@ -8,6 +8,7 @@ import { useScraperStatus } from "@/components/scraper/ScraperStatusProvider";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 import { launchScraper } from "@/lib/scraper-client";
+import { isPageVisible } from "@/lib/use-page-visible";
 import { formatDateTime, formatDuration, formatNumber, formatRelativeTime } from "@/lib/utils";
 import { RUNS_POLL_MS, type ScrapeRunRow } from "@/types/scraper";
 import type { Uuid } from "@/types/db";
@@ -68,6 +69,10 @@ export function BrandScrapeProgress({ brandId, brandName, initialRun }: BrandScr
     let timer: ReturnType<typeof setTimeout> | undefined;
 
     const tick = async () => {
+      if (!isPageVisible()) {
+        if (!cancelled) timer = setTimeout(tick, RUNS_POLL_MS);
+        return;
+      }
       try {
         const response = await fetch(`/api/scraper/runs?mode=latest&brand=${brandId}`, {
           cache: "no-store",

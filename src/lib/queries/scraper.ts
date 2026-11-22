@@ -169,8 +169,8 @@ export async function getProblemBrands(): Promise<QueryResult<ProblemBrand[]>> {
 
     const [brandsResult, runsResult] = await Promise.all([
       supabase
-        .from("brands_with_preview_products")
-        .select("id, name, total_product_count")
+        .from("brands")
+        .select("id, name, products(count)")
         .order("name", { ascending: true }),
       supabase
         .from("scrape_runs")
@@ -204,14 +204,14 @@ export async function getProblemBrands(): Promise<QueryResult<ProblemBrand[]>> {
     const brands = (brandsResult.data ?? []) as unknown as Array<{
       id: Uuid;
       name: string;
-      total_product_count: number | null;
+      products: Array<{ count: number }> | null;
     }>;
 
     const problems: ProblemBrand[] = [];
 
     for (const brand of brands) {
       const run = lastRun.get(brand.id) ?? null;
-      const productsCount = Number(brand.total_product_count ?? 0);
+      const productsCount = Number(brand.products?.[0]?.count ?? 0);
       const reasons: ProblemReason[] = [];
 
       if (run?.status === "error") reasons.push("error");

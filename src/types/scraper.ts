@@ -60,10 +60,10 @@ export const PROBLEM_REASON_LABELS: Record<ProblemReason, string> = {
 export const STALE_RUN_MINUTES = 30;
 
 /** Cada cuanto se refresca mientras hay actividad. */
-export const RUNS_POLL_MS = 3000;
+export const RUNS_POLL_MS = 5000;
 
 /** Cada cuanto comprueba la sidebar si ha arrancado algo (sin actividad conocida). */
-export const IDLE_POLL_MS = 15000;
+export const IDLE_POLL_MS = 60000;
 
 /** Marca que la pasada completa no ha podido scrapear (o no ha visto terminar). */
 export interface QueueFailure {
